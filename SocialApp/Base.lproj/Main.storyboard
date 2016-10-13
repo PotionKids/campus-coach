@@ -17,12 +17,62 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image=" Login" translatesAutoresizingMaskIntoConstraints="NO" id="bmV-HO-HIR"/>
+                            <stackView opaque="NO" contentMode="scaleAspectFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="64c-Fc-a38">
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image=" Coach Watch and Weights Trimmed" translatesAutoresizingMaskIntoConstraints="NO" id="Xbo-xb-ABo">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="163" id="8De-z7-gUB"/>
+                                            <constraint firstAttribute="width" constant="181" id="RZm-cs-BE3"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Campus Coach" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hM0-aV-nX4">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="0zy-lv-uOv"/>
+                                            <constraint firstAttribute="width" constant="116" id="XVf-2w-PBk"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="18"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dej-3M-XeW">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="48" id="Gka-ad-XU3"/>
+                                            <constraint firstAttribute="width" constant="176" id="JV7-k2-jv2"/>
+                                        </constraints>
+                                        <state key="normal" backgroundImage=" Facebook"/>
+                                        <connections>
+                                            <action selector="facebookLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AXH-Ft-nfA"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="bmV-HO-HIR" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="F6F-0m-ibN"/>
+                            <constraint firstAttribute="trailing" secondItem="bmV-HO-HIR" secondAttribute="trailing" id="JFp-B3-EJW"/>
+                            <constraint firstItem="64c-Fc-a38" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bnP-Gb-PiD"/>
+                            <constraint firstItem="bmV-HO-HIR" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="drS-be-guA"/>
+                            <constraint firstItem="64c-Fc-a38" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ekG-27-Q8O"/>
+                            <constraint firstItem="bmV-HO-HIR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ezO-Jb-ir0"/>
+                            <constraint firstItem="bmV-HO-HIR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="lPA-oI-QdN"/>
+                            <constraint firstItem="bmV-HO-HIR" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="vbk-bY-xtJ"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="facebookLoginButton" destination="dej-3M-XeW" id="kDp-Po-eAT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-393" y="10"/>
+            <point key="canvasLocation" x="-394.39999999999998" y="9.4452773613193415"/>
         </scene>
     </scenes>
+    <resources>
+        <image name=" Coach Watch and Weights Trimmed" width="90" height="81"/>
+        <image name=" Facebook" width="88" height="24"/>
+        <image name=" Login" width="187" height="333"/>
+    </resources>
 </document>

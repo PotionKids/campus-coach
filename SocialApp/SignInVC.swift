@@ -10,6 +10,10 @@ import UIKit
 
 class SignInVC: UIViewController {
 
+    @IBOutlet weak var facebookLoginButton: UIButton!
+    
+    @IBAction func facebookLogin(_ sender: AnyObject) {
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
