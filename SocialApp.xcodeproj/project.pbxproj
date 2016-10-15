@@ -64,6 +64,7 @@
 		0D3745C71DB04DFF009F061C /* SocialApp */ = {
 			isa = PBXGroup;
 			children = (
+				0D3745DA1DB04E8D009F061C /* GoogleService-Info.plist */,
 				0DB910701DB1B565002EFAC9 /* SocialApp.entitlements */,
 				0D3745E01DB0508E009F061C /* Model */,
 				0D3745DE1DB05072009F061C /* View */,
@@ -77,7 +78,6 @@
 		0D3745DC1DB0504E009F061C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				0D3745DA1DB04E8D009F061C /* GoogleService-Info.plist */,
 				0D3745C81DB04DFF009F061C /* AppDelegate.swift */,
 				0D3745CF1DB04DFF009F061C /* Assets.xcassets */,
 				0D3745D11DB04DFF009F061C /* LaunchScreen.storyboard */,
