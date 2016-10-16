@@ -14,7 +14,5 @@ pod 'FBSDKLoginKit'
 
 pod 'SwiftKeychainWrapper'
 
-pod 'Kanna', '~> 2.0.0'
-
 end
 

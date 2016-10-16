@@ -34,7 +34,7 @@ class SignInVC: UIViewController {
             {
                 print("KRIS: Successfully authenticated with Facebook.")
                 let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
-                firebaseAuth(credential)
+                firebaseAuth(credential, vc: self)
             }
         }
     }

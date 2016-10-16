@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -105,6 +106,9 @@
                                             <constraint firstAttribute="width" constant="176" id="f1C-L9-Ilg"/>
                                         </constraints>
                                         <state key="normal" backgroundImage=" Facebook"/>
+                                        <connections>
+                                            <action selector="facebookClockIn:" destination="WWQ-Oc-wcr" eventType="touchUpInside" id="nyM-Bs-uQM"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -207,11 +211,84 @@
                         <outlet property="emailTextField" destination="wQy-pP-EaT" id="NUj-7E-hRf"/>
                         <outlet property="passwordTextField" destination="urC-o1-Qzh" id="VOr-EJ-XnQ"/>
                         <outlet property="signInButton" destination="Wc9-fQ-oyi" id="fAR-Nq-1eM"/>
+                        <segue destination="0ix-NG-ZUG" kind="show" identifier="SignUpToSetGym" id="zIe-gk-Sei"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4br-U9-oUp" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-642.39999999999998" y="-896.40179910044981"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Hio-nh-Okk">
+            <objects>
+                <viewController id="0ix-NG-ZUG" customClass="ViewController" customModule="SocialApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wue-se-39i"/>
+                        <viewControllerLayoutGuide type="bottom" id="FIZ-iq-a7J"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bj9-au-BLA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ogd-M6-LDd">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Cca-yB-qb1"/>
+                                    <constraint firstAttribute="width" constant="39" id="RKG-WQ-SP1"/>
+                                </constraints>
+                                <state key="normal" title="Fetch"/>
+                                <connections>
+                                    <action selector="fetch:" destination="0ix-NG-ZUG" eventType="touchUpInside" id="C71-KJ-F2c"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VlT-lr-mur">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="42" id="XVl-jC-ivJ"/>
+                                    <constraint firstAttribute="height" constant="21" id="hXz-ks-Gl0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fZ-54-sPO">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="Ago-0L-lwk"/>
+                                    <constraint firstAttribute="width" constant="42" id="z4e-NY-gWf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tu9-Iw-Ibx">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="42" id="CgF-Sl-LLN"/>
+                                    <constraint firstAttribute="height" constant="21" id="gFB-vg-8rn"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="VlT-lr-mur" firstAttribute="top" secondItem="wue-se-39i" secondAttribute="bottom" constant="8" id="0Uv-39-lk2"/>
+                            <constraint firstItem="ogd-M6-LDd" firstAttribute="centerY" secondItem="bj9-au-BLA" secondAttribute="centerY" id="1Vp-Q1-5H8"/>
+                            <constraint firstItem="Tu9-Iw-Ibx" firstAttribute="top" secondItem="wue-se-39i" secondAttribute="bottom" constant="8" id="bHy-7E-EXa"/>
+                            <constraint firstItem="ogd-M6-LDd" firstAttribute="centerX" secondItem="bj9-au-BLA" secondAttribute="centerX" id="bn9-NB-F77"/>
+                            <constraint firstItem="0fZ-54-sPO" firstAttribute="top" secondItem="wue-se-39i" secondAttribute="bottom" constant="8" id="dZn-aN-VP2"/>
+                            <constraint firstItem="Tu9-Iw-Ibx" firstAttribute="centerX" secondItem="bj9-au-BLA" secondAttribute="centerX" id="jGz-F6-eFJ"/>
+                            <constraint firstItem="0fZ-54-sPO" firstAttribute="trailing" secondItem="bj9-au-BLA" secondAttribute="trailingMargin" id="uFV-Zl-F5w"/>
+                            <constraint firstItem="VlT-lr-mur" firstAttribute="leading" secondItem="bj9-au-BLA" secondAttribute="leadingMargin" id="wWo-Q7-6rM"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="IMBldg" destination="0fZ-54-sPO" id="Yk3-qV-pcy"/>
+                        <outlet property="recHall" destination="Tu9-Iw-Ibx" id="rMJ-Ja-GvQ"/>
+                        <outlet property="whiteBldg" destination="VlT-lr-mur" id="Gal-Xk-FA8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cz2-WK-DrH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="266" y="-896"/>
         </scene>
     </scenes>
     <resources>

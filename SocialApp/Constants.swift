@@ -24,6 +24,7 @@ struct Constants {
             static let LogInToRiderOnMap = "ShowRiderOnMap"
             static let Logout = "Logout"
             static let LogInToDriverViewController = "ShowDriverViewController"
+            static let SignUpToSetGym = "SignUpToSetGym"
         }
     }
     
@@ -369,8 +370,29 @@ struct Constants {
     }
 }
 
-
-let ConstantsDict: [String: [String: [String: String]]] = [
+let ConstantsDictionary: [String : [String : [String : String]]] = [
+    Constants.Mirror.Key.Gym : [
+        Constants.Mirror.Gym.Key.Statistic : [
+            Constants.Mirror.Gym.Statistic.CurrentVal : Constants.Gym.Statistic.CurrentVal,
+            Constants.Mirror.Gym.Statistic.FullCapacityWaiTime : Constants.Gym.Statistic.FullCapacityWaiTime,
+            Constants.Mirror.Gym.Statistic.GUID : Constants.Gym.Statistic.GUID,
+            Constants.Mirror.Gym.Statistic.LocationDescription : Constants.Gym.Statistic.LocationDescription,
+            Constants.Mirror.Gym.Statistic.MaxVal : Constants.Gym.Statistic.MaxVal
+        ],
+        Constants.Mirror.Gym.Key.Synonyms : [
+            Constants.Gym.Name.WhiteBuilding : Constants.Gym.Name.WhiteBldg,
+            Constants.Gym.Name.HepperFitness : Constants.Gym.Name.RecHall,
+            Constants.Gym.Name.IMWeightRoom : Constants.Gym.Name.IMBldg
+        ]
+    ],
+    Constants.Mirror.Key.CURLscraping : [
+        Constants.Mirror.CURLscraping.Key.HeadersPSUFitness : [
+            Constants.Mirror.CURLscraping.Header.Accept : Constants.CURLscraping.HeaderValue.Accept,
+            Constants.Mirror.CURLscraping.Header.XRequestedWith : Constants.CURLscraping.HeaderValue.XRequestedWith,
+            Constants.Mirror.CURLscraping.Header.Connection : Constants.CURLscraping.HeaderValue.Connection,
+            Constants.Mirror.CURLscraping.Header.Referer: Constants.CURLscraping.HeaderValue.RefererPSUFitness
+        ]
+    ],
     Constants.Mirror.Key.Display: [
         Constants.Mirror.Key.Message: [
             Constants.Mirror.Key.LogInSuccessful: Constants.Display.Message.LogInSuccessful,

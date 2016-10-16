@@ -35,6 +35,28 @@ class SignUpVC: UIViewController {
     
     var isCoach = false
 
+    
+    @IBAction func facebookClockIn(_ sender: AnyObject)
+    {
+        let facebookLogin = FBSDKLoginManager()
+        facebookLogin.logIn(withReadPermissions: ["email"], from: self) { (result, error) in
+            if let error = error
+            {
+                print("KRIS ERROR: Unable to authenticate with Facebook = \(error)")
+            }
+            else if result?.isCancelled == true
+            {
+                print("KRIS ERROR: Sorry, the user cancelled Facebook authentication.")
+            }
+            else
+            {
+                print("KRIS: Successfully authenticated with Facebook.")
+                let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+                firebaseAuth(credential, vc: self)
+            }
+        }
+    }
+    
     @IBAction func userIndicate(_ sender: AnyObject)
     {
         if isCoach
@@ -96,7 +118,7 @@ class SignUpVC: UIViewController {
                                 print("KRIS: Successfully created a new user with email in Firebase.")
                                 if let user = user
                                 {
-                                    completeSignIn(id: user.uid)
+                                    completeSignIn(id: user.uid, vc: self)
                                 }
                                 
                             }
@@ -107,7 +129,7 @@ class SignUpVC: UIViewController {
                         print("KRIS: User email authenticated with Firebase.")
                         if let user = user
                         {
-                            completeSignIn(id: user.uid)
+                            completeSignIn(id: user.uid, vc: self)
                         }
                     }
                 })
@@ -119,6 +141,11 @@ class SignUpVC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        if let _ = KeychainWrapper.defaultKeychainWrapper.string(forKey: Constants.Firebase.KeychainWrapper.KeyUID)
+        {
+            performSegue(withIdentifier: Constants.ViewController.Segue.SignUpToSetGym, sender: nil)
+        }
     }
 
     override func didReceiveMemoryWarning() {

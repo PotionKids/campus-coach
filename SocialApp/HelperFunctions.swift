@@ -22,7 +22,7 @@ func displayAlert(_ target: UIViewController, title: String, message: String, ac
     target.present(alertController, animated: true, completion: nil)
 }
 
-func firebaseAuth(_ credential: FIRAuthCredential)
+func firebaseAuth(_ credential: FIRAuthCredential, vc: UIViewController)
 {
     FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
         if let error = error
@@ -34,15 +34,16 @@ func firebaseAuth(_ credential: FIRAuthCredential)
             print("KRIS: Successfully authenticated with Firebase.")
             if let user = user
             {
-                completeSignIn(id: user.uid)
+                completeSignIn(id: user.uid, vc: vc)
             }
         }
     })
 }
 
-func completeSignIn(id: String)
+func completeSignIn(id: String, vc: UIViewController)
 {
     KeychainWrapper.defaultKeychainWrapper.set(id, forKey: Constants.Firebase.KeychainWrapper.KeyUID)
+    vc.performSegue(withIdentifier: Constants.ViewController.Segue.SignUpToSetGym, sender: nil)
 }
 
 

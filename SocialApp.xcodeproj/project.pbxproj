@@ -15,6 +15,7 @@
 		0D3745DB1DB04E8D009F061C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D3745DA1DB04E8D009F061C /* GoogleService-Info.plist */; };
 		0D9D78DF1DB4041E006F7081 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D9D78D21DB40373006F7081 /* Alamofire.framework */; };
 		0D9D78E01DB4041E006F7081 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0D9D78D21DB40373006F7081 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0D9D79061DB409FC006F7081 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9D79051DB409FC006F7081 /* ViewController.swift */; };
 		0DB001F01DB309CB00EF1921 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB001EF1DB309CB00EF1921 /* SignUpVC.swift */; };
 		0DB001F21DB316A400EF1921 /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB001F11DB316A400EF1921 /* HelperFunctions.swift */; };
 		0DB001F41DB3179100EF1921 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB001F31DB3179100EF1921 /* Constants.swift */; };
@@ -106,6 +107,7 @@
 		0D3745D41DB04DFF009F061C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D3745DA1DB04E8D009F061C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0D9D78C61DB40373006F7081 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
+		0D9D79051DB409FC006F7081 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0DB001EF1DB309CB00EF1921 /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		0DB001F11DB316A400EF1921 /* HelperFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		0DB001F31DB3179100EF1921 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				0DB001F31DB3179100EF1921 /* Constants.swift */,
 				0D3745CA1DB04DFF009F061C /* SignInVC.swift */,
 				0DB001EF1DB309CB00EF1921 /* SignUpVC.swift */,
+				0D9D79051DB409FC006F7081 /* ViewController.swift */,
 				0DB001F11DB316A400EF1921 /* HelperFunctions.swift */,
 			);
 			name = Controller;
@@ -429,6 +432,7 @@
 				0D3745CB1DB04DFF009F061C /* SignInVC.swift in Sources */,
 				0DB001F21DB316A400EF1921 /* HelperFunctions.swift in Sources */,
 				0DB001F01DB309CB00EF1921 /* SignUpVC.swift in Sources */,
+				0D9D79061DB409FC006F7081 /* ViewController.swift in Sources */,
 				0D3745C91DB04DFF009F061C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
