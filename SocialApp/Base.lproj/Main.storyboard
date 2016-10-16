@@ -267,11 +267,23 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dmM-gc-E8l">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Mnq-x2-Wqk"/>
+                                    <constraint firstAttribute="width" constant="60" id="cte-Wz-GdF"/>
+                                </constraints>
+                                <state key="normal" title="Sign Out"/>
+                                <connections>
+                                    <action selector="signOut:" destination="0ix-NG-ZUG" eventType="touchUpInside" id="WJy-b0-2tl"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="VlT-lr-mur" firstAttribute="top" secondItem="wue-se-39i" secondAttribute="bottom" constant="8" id="0Uv-39-lk2"/>
                             <constraint firstItem="ogd-M6-LDd" firstAttribute="centerY" secondItem="bj9-au-BLA" secondAttribute="centerY" id="1Vp-Q1-5H8"/>
+                            <constraint firstItem="dmM-gc-E8l" firstAttribute="centerX" secondItem="bj9-au-BLA" secondAttribute="centerX" id="Iz0-dJ-6rO"/>
+                            <constraint firstItem="dmM-gc-E8l" firstAttribute="top" secondItem="ogd-M6-LDd" secondAttribute="bottom" constant="8" id="Rhs-Vi-UA1"/>
                             <constraint firstItem="Tu9-Iw-Ibx" firstAttribute="top" secondItem="wue-se-39i" secondAttribute="bottom" constant="8" id="bHy-7E-EXa"/>
                             <constraint firstItem="ogd-M6-LDd" firstAttribute="centerX" secondItem="bj9-au-BLA" secondAttribute="centerX" id="bn9-NB-F77"/>
                             <constraint firstItem="0fZ-54-sPO" firstAttribute="top" secondItem="wue-se-39i" secondAttribute="bottom" constant="8" id="dZn-aN-VP2"/>
@@ -284,6 +296,7 @@
                         <outlet property="IMBldg" destination="0fZ-54-sPO" id="Yk3-qV-pcy"/>
                         <outlet property="recHall" destination="Tu9-Iw-Ibx" id="rMJ-Ja-GvQ"/>
                         <outlet property="whiteBldg" destination="VlT-lr-mur" id="Gal-Xk-FA8"/>
+                        <segue destination="WWQ-Oc-wcr" kind="show" identifier="SetGymToSignIn" id="QrO-lT-BAm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cz2-WK-DrH" userLabel="First Responder" sceneMemberID="firstResponder"/>

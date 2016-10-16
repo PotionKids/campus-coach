@@ -42,7 +42,7 @@ func firebaseAuth(_ credential: FIRAuthCredential, vc: UIViewController)
 
 func completeSignIn(id: String, vc: UIViewController)
 {
-    KeychainWrapper.defaultKeychainWrapper.set(id, forKey: Constants.Firebase.KeychainWrapper.KeyUID)
+    KeychainWrapper.standard.set(id, forKey: Constants.Firebase.KeychainWrapper.KeyUID)
     vc.performSegue(withIdentifier: Constants.ViewController.Segue.SignUpToSetGym, sender: nil)
 }
 

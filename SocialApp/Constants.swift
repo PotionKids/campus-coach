@@ -17,6 +17,11 @@ struct Constants {
             static let KeyUID = "uid"
         }
     }
+    
+    struct SignUp
+    {
+        static let SignUpToSetGym = "SignUpToSetGym"
+    }
     struct ViewController
     {
         struct Segue
@@ -25,6 +30,7 @@ struct Constants {
             static let Logout = "Logout"
             static let LogInToDriverViewController = "ShowDriverViewController"
             static let SignUpToSetGym = "SignUpToSetGym"
+            static let SetGymToSignIn = "SetGymToSignIn"
         }
     }
     

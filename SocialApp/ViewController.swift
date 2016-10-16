@@ -7,12 +7,24 @@
 //
 
 import UIKit
+
+import Firebase
+import FirebaseAuth
+
 import Alamofire
+
+import SwiftKeychainWrapper
 
 class ViewController: UIViewController {
     
     private var gymStats: GymStat = [:]
     
+    @IBAction func signOut(_ sender: AnyObject)
+    {
+        KeychainWrapper.standard.removeObject(forKey: Constants.Firebase.KeychainWrapper.KeyUID)
+        try! FIRAuth.auth()?.signOut()
+        performSegue(withIdentifier: Constants.ViewController.Segue.SetGymToSignIn, sender: nil)
+    }
     @IBOutlet weak var whiteBldg: UILabel!
     @IBOutlet weak var recHall: UILabel!
     @IBOutlet weak var IMBldg: UILabel!
