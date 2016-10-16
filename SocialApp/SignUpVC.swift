@@ -13,6 +13,8 @@ import FirebaseAuth
 import FBSDKCoreKit
 import FBSDKLoginKit
 
+import SwiftKeychainWrapper
+
 extension String
 {
     func isEmpty() -> Bool
@@ -92,12 +94,21 @@ class SignUpVC: UIViewController {
                             else
                             {
                                 print("KRIS: Successfully created a new user with email in Firebase.")
+                                if let user = user
+                                {
+                                    completeSignIn(id: user.uid)
+                                }
+                                
                             }
                         })
                     }
                     else
                     {
                         print("KRIS: User email authenticated with Firebase.")
+                        if let user = user
+                        {
+                            completeSignIn(id: user.uid)
+                        }
                     }
                 })
             }

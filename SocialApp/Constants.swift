@@ -10,6 +10,13 @@ import UIKit
 import MapKit
 
 struct Constants {
+    struct Firebase
+    {
+        struct KeychainWrapper
+        {
+            static let KeyUID = "uid"
+        }
+    }
     struct ViewController
     {
         struct Segue

@@ -34,23 +34,23 @@ class SignInVC: UIViewController {
             {
                 print("KRIS: Successfully authenticated with Facebook.")
                 let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
-                self.firebaseAuth(credential)
+                firebaseAuth(credential)
             }
         }
     }
-    func firebaseAuth(_ credential: FIRAuthCredential)
-    {
-        FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
-            if let error = error
-            {
-                print("KRIS ERROR: Unable to authenticate with Firebase = \(error)")
-            }
-            else
-            {
-                print("KRIS: Successfully authenticated with Firebase.")
-            }
-        })
-    }
+//    func firebaseAuth(_ credential: FIRAuthCredential)
+//    {
+//        FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
+//            if let error = error
+//            {
+//                print("KRIS ERROR: Unable to authenticate with Firebase = \(error)")
+//            }
+//            else
+//            {
+//                print("KRIS: Successfully authenticated with Firebase.")
+//            }
+//        })
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
