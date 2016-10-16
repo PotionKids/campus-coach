@@ -10,7 +10,7 @@
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "1613A6B7-3C51-475E-B9B0-A95E08F5ED66",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "41D05478BB1FE1DFD0507246F63529C7D18BD52E" : "SocialApp\/",
-    "67620B5EFA902936DF04070AF595B76AB0333747" : "..\/..\/..\/..\/iOS10\/Web%20Scraping\/upcoming-metal-shows-ios\/Alamofire"
+    "67620B5EFA902936DF04070AF595B76AB0333747" : "SocialApp\/Alamofire\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "SocialApp",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
