@@ -105,9 +105,6 @@
                                             <constraint firstAttribute="width" constant="176" id="f1C-L9-Ilg"/>
                                         </constraints>
                                         <state key="normal" backgroundImage=" Facebook"/>
-                                        <connections>
-                                            <action selector="facebookLogin:" destination="WWQ-Oc-wcr" eventType="touchUpInside" id="8F8-yz-n0c"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -119,6 +116,9 @@
                                             <constraint firstAttribute="width" constant="94" id="gxo-SR-NcP"/>
                                         </constraints>
                                         <state key="normal" backgroundImage=" User"/>
+                                        <connections>
+                                            <action selector="userIndicate:" destination="WWQ-Oc-wcr" eventType="touchUpInside" id="R5s-gs-syh"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EBM-K3-PDa">
                                         <constraints>
@@ -126,6 +126,9 @@
                                             <constraint firstAttribute="width" constant="104" id="gKY-Uc-S6X"/>
                                         </constraints>
                                         <state key="normal" backgroundImage=" Coach"/>
+                                        <connections>
+                                            <action selector="coachIndicate:" destination="WWQ-Oc-wcr" eventType="touchUpInside" id="voS-d0-PR0"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -162,6 +165,20 @@
                                     <constraint firstAttribute="width" constant="125" id="g60-W2-d2x"/>
                                 </constraints>
                                 <state key="normal" backgroundImage=" Sign In"/>
+                                <connections>
+                                    <action selector="signIn:" destination="WWQ-Oc-wcr" eventType="touchUpInside" id="Fd2-ug-gcQ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFf-pu-gKM">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="62" id="AuZ-78-V6v"/>
+                                    <constraint firstAttribute="height" constant="30" id="CwC-9O-EU8"/>
+                                </constraints>
+                                <state key="normal" title="SignInVC"/>
+                                <connections>
+                                    <action selector="goToSignInScreen:" destination="WWQ-Oc-wcr" eventType="touchUpInside" id="yA6-el-dys"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="SignUpToSignIn" id="JM9-hY-gpQ"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -173,6 +190,7 @@
                             <constraint firstItem="OGr-8Y-CAy" firstAttribute="centerX" secondItem="y7p-AP-d42" secondAttribute="centerX" id="Kmf-ek-E71"/>
                             <constraint firstItem="wQy-pP-EaT" firstAttribute="top" secondItem="PJn-2s-OQ1" secondAttribute="bottom" constant="20" id="LsC-RE-giZ"/>
                             <constraint firstItem="urC-o1-Qzh" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="OmM-En-m2J"/>
+                            <constraint firstAttribute="trailing" secondItem="hFf-pu-gKM" secondAttribute="trailing" constant="8" id="ZMt-Kt-EqF"/>
                             <constraint firstItem="y7p-AP-d42" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="adp-On-IW9"/>
                             <constraint firstItem="y7p-AP-d42" firstAttribute="centerY" secondItem="nqk-wU-JRL" secondAttribute="centerY" id="cnu-mg-sM4"/>
                             <constraint firstItem="PJn-2s-OQ1" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="hYJ-DH-f2n"/>
@@ -180,12 +198,15 @@
                             <constraint firstAttribute="trailing" secondItem="y7p-AP-d42" secondAttribute="trailing" id="ikA-TZ-DZ4"/>
                             <constraint firstItem="urC-o1-Qzh" firstAttribute="top" secondItem="wQy-pP-EaT" secondAttribute="bottom" constant="20" id="mY1-zt-rFq"/>
                             <constraint firstItem="Wc9-fQ-oyi" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="tU5-j9-ukN"/>
+                            <constraint firstItem="aei-jC-smk" firstAttribute="top" secondItem="hFf-pu-gKM" secondAttribute="bottom" constant="20" id="tvK-Wn-Jgu"/>
                             <constraint firstItem="y7p-AP-d42" firstAttribute="top" secondItem="nqk-wU-JRL" secondAttribute="top" id="v7d-ov-eXv"/>
                             <constraint firstItem="y7p-AP-d42" firstAttribute="bottom" secondItem="aei-jC-smk" secondAttribute="top" id="wYA-R5-xuj"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="facebookLoginButton" destination="EXo-gV-ZGe" id="8jK-jg-EoF"/>
+                        <outlet property="emailTextField" destination="wQy-pP-EaT" id="NUj-7E-hRf"/>
+                        <outlet property="passwordTextField" destination="urC-o1-Qzh" id="VOr-EJ-XnQ"/>
+                        <outlet property="signInButton" destination="Wc9-fQ-oyi" id="fAR-Nq-1eM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4br-U9-oUp" sceneMemberID="firstResponder"/>
