@@ -13,6 +13,7 @@
 		0D3745D01DB04DFF009F061C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D3745CF1DB04DFF009F061C /* Assets.xcassets */; };
 		0D3745D31DB04DFF009F061C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D3745D11DB04DFF009F061C /* LaunchScreen.storyboard */; };
 		0D3745DB1DB04E8D009F061C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D3745DA1DB04E8D009F061C /* GoogleService-Info.plist */; };
+		0DB001F01DB309CB00EF1921 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB001EF1DB309CB00EF1921 /* SignUpVC.swift */; };
 		982CDC6EA7FE0E496070F067 /* Pods_SocialApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B0BA4C830293FEDC9E91481 /* Pods_SocialApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +26,7 @@
 		0D3745D21DB04DFF009F061C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0D3745D41DB04DFF009F061C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D3745DA1DB04E8D009F061C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0DB001EF1DB309CB00EF1921 /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		0DB910701DB1B565002EFAC9 /* SocialApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SocialApp.entitlements; sourceTree = "<group>"; };
 		8B0BA4C830293FEDC9E91481 /* Pods_SocialApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SocialApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D59A66993E69C268A3308B02 /* Pods-SocialApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SocialApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-SocialApp/Pods-SocialApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				0D3745CA1DB04DFF009F061C /* SignInVC.swift */,
+				0DB001EF1DB309CB00EF1921 /* SignUpVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D3745CB1DB04DFF009F061C /* SignInVC.swift in Sources */,
+				0DB001F01DB309CB00EF1921 /* SignUpVC.swift in Sources */,
 				0D3745C91DB04DFF009F061C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

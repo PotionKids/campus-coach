@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="WWQ-Oc-wcr">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -67,12 +67,138 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-394.39999999999998" y="9.4452773613193415"/>
+            <point key="canvasLocation" x="-642" y="-198"/>
+        </scene>
+        <!--Sign UpVC-->
+        <scene sceneID="AGV-Mw-tkV">
+            <objects>
+                <viewController id="WWQ-Oc-wcr" customClass="SignUpVC" customModule="SocialApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="U6q-f1-pYg"/>
+                        <viewControllerLayoutGuide type="bottom" id="aei-jC-smk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nqk-wU-JRL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image=" Login" translatesAutoresizingMaskIntoConstraints="NO" id="y7p-AP-d42"/>
+                            <stackView opaque="NO" contentMode="scaleAspectFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="OGr-8Y-CAy">
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image=" Coach Watch and Weights Trimmed" translatesAutoresizingMaskIntoConstraints="NO" id="UEI-Te-zpA">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="163" id="wL9-YS-f4p"/>
+                                            <constraint firstAttribute="width" constant="181" id="wN8-U5-Qn4"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Campus Coach" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2BH-rR-oYL">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="JZV-g2-Rt9"/>
+                                            <constraint firstAttribute="width" constant="116" id="NWU-Re-0Ju"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="18"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EXo-gV-ZGe">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="48" id="Ets-iZ-o0U"/>
+                                            <constraint firstAttribute="width" constant="176" id="f1C-L9-Ilg"/>
+                                        </constraints>
+                                        <state key="normal" backgroundImage=" Facebook"/>
+                                        <connections>
+                                            <action selector="facebookLogin:" destination="WWQ-Oc-wcr" eventType="touchUpInside" id="8F8-yz-n0c"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PJn-2s-OQ1">
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nb4-Zj-Kzt">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="65" id="ABa-4f-Zc5"/>
+                                            <constraint firstAttribute="width" constant="94" id="gxo-SR-NcP"/>
+                                        </constraints>
+                                        <state key="normal" backgroundImage=" User"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EBM-K3-PDa">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="78" id="bog-6g-dlL"/>
+                                            <constraint firstAttribute="width" constant="104" id="gKY-Uc-S6X"/>
+                                        </constraints>
+                                        <state key="normal" backgroundImage=" Coach"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="nb4-Zj-Kzt" firstAttribute="leading" secondItem="PJn-2s-OQ1" secondAttribute="leading" constant="26" id="392-1p-jzN"/>
+                                    <constraint firstItem="EBM-K3-PDa" firstAttribute="centerY" secondItem="PJn-2s-OQ1" secondAttribute="centerY" id="HRb-TW-4zK"/>
+                                    <constraint firstItem="nb4-Zj-Kzt" firstAttribute="centerY" secondItem="PJn-2s-OQ1" secondAttribute="centerY" id="KBO-7d-zxH"/>
+                                    <constraint firstAttribute="width" constant="240" id="LKe-40-ZpM"/>
+                                    <constraint firstAttribute="trailing" secondItem="EBM-K3-PDa" secondAttribute="trailing" constant="8" id="ig3-zz-3Ys"/>
+                                    <constraint firstAttribute="height" constant="90" id="p85-WV-OQ2"/>
+                                </constraints>
+                            </view>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wQy-pP-EaT">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="55j-gy-y5E"/>
+                                    <constraint firstAttribute="width" constant="181" id="7HH-e1-JMT"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="urC-o1-Qzh">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="181" id="5a8-5O-104"/>
+                                    <constraint firstAttribute="height" constant="30" id="VJL-xM-CIO"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wc9-fQ-oyi">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="EIP-Pc-0vH"/>
+                                    <constraint firstAttribute="width" constant="125" id="g60-W2-d2x"/>
+                                </constraints>
+                                <state key="normal" backgroundImage=" Sign In"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="wQy-pP-EaT" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="37u-If-s44"/>
+                            <constraint firstItem="OGr-8Y-CAy" firstAttribute="top" secondItem="U6q-f1-pYg" secondAttribute="bottom" constant="76" id="9Ig-l6-SC4"/>
+                            <constraint firstItem="Wc9-fQ-oyi" firstAttribute="top" secondItem="urC-o1-Qzh" secondAttribute="bottom" constant="20" id="9Ur-BQ-s9y"/>
+                            <constraint firstItem="PJn-2s-OQ1" firstAttribute="top" secondItem="OGr-8Y-CAy" secondAttribute="bottom" constant="28" id="CYe-MJ-BFA"/>
+                            <constraint firstItem="OGr-8Y-CAy" firstAttribute="centerX" secondItem="y7p-AP-d42" secondAttribute="centerX" id="Kmf-ek-E71"/>
+                            <constraint firstItem="wQy-pP-EaT" firstAttribute="top" secondItem="PJn-2s-OQ1" secondAttribute="bottom" constant="20" id="LsC-RE-giZ"/>
+                            <constraint firstItem="urC-o1-Qzh" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="OmM-En-m2J"/>
+                            <constraint firstItem="y7p-AP-d42" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="adp-On-IW9"/>
+                            <constraint firstItem="y7p-AP-d42" firstAttribute="centerY" secondItem="nqk-wU-JRL" secondAttribute="centerY" id="cnu-mg-sM4"/>
+                            <constraint firstItem="PJn-2s-OQ1" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="hYJ-DH-f2n"/>
+                            <constraint firstItem="y7p-AP-d42" firstAttribute="leading" secondItem="nqk-wU-JRL" secondAttribute="leading" id="iO9-vO-3EO"/>
+                            <constraint firstAttribute="trailing" secondItem="y7p-AP-d42" secondAttribute="trailing" id="ikA-TZ-DZ4"/>
+                            <constraint firstItem="urC-o1-Qzh" firstAttribute="top" secondItem="wQy-pP-EaT" secondAttribute="bottom" constant="20" id="mY1-zt-rFq"/>
+                            <constraint firstItem="Wc9-fQ-oyi" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="tU5-j9-ukN"/>
+                            <constraint firstItem="y7p-AP-d42" firstAttribute="top" secondItem="nqk-wU-JRL" secondAttribute="top" id="v7d-ov-eXv"/>
+                            <constraint firstItem="y7p-AP-d42" firstAttribute="bottom" secondItem="aei-jC-smk" secondAttribute="top" id="wYA-R5-xuj"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="facebookLoginButton" destination="EXo-gV-ZGe" id="8jK-jg-EoF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4br-U9-oUp" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-642.39999999999998" y="-896.40179910044981"/>
         </scene>
     </scenes>
     <resources>
+        <image name=" Coach" width="52" height="39"/>
         <image name=" Coach Watch and Weights Trimmed" width="90" height="81"/>
         <image name=" Facebook" width="88" height="24"/>
         <image name=" Login" width="187" height="333"/>
+        <image name=" Sign In" width="62" height="20"/>
+        <image name=" User" width="47" height="32"/>
     </resources>
 </document>
