@@ -138,6 +138,87 @@ struct Constants {
             static let LogIn = Constants.Key.LogIn
             static let LogInSuccessful = "logInSuccessful"
             static let SignUpSuccessful = "signUpSuccessful"
+            
+            static let Gym = "Gym"
+            static let Web = "Web"
+            static let Scraping = "Scraping"
+            static let CURLscraping = "CURLscraping"
+        }
+        
+        struct Web
+        {
+            struct Key
+            {
+                static let Link = "Link"
+            }
+            
+            struct Link
+            {
+                static let PSUfitnessScraping = "PSUfitnessScraping"
+                static let PSUfitnessCURLscraping = "PSUfitnessCURLscraping"
+            }
+        }
+        
+        struct Scraping
+        {
+            struct Key
+            {
+                
+            }
+        }
+        
+        struct CURLscraping
+        {
+            struct Key
+            {
+                static let HeadersPSUFitness = "HeadersPSUFitness"
+                static let HeaderValue = "HeaderValue"
+            }
+            
+            struct Header {
+                static let Accept = "Accept"
+                static let XRequestedWith = "X-Requested-With"
+                static let Connection = "Connection"
+                static let Referer = "Referer"
+            }
+        }
+        
+        struct Gym
+        {
+            struct Key
+            {
+                static let Name = "Name"
+                static let Statistic = "Statistic"
+                static let Parsing = "Parsing"
+                static let Synonyms = "Synonyms"
+            }
+            
+            struct Name
+            {
+                static let WhiteBuilding = "WhiteBuilding"
+                static let WhiteBldg = "WhiteBldg"
+                static let RecHall = "RecHall"
+                static let IMBuilding = "IMBuilding"
+                static let IMBldg = "IMBldg"
+                static let HepperFitness = "HepperFitness"
+                static let IMWeightRoom = "IMWeightRoom"
+                
+            }
+            
+            struct Statistic
+            {
+                static let CurrentVal = Constants.Gym.Parsing.CurrentVal
+                static let FullCapacityWaiTime = Constants.Gym.Parsing.FullCapacityWaiTime
+                static let GUID = Constants.Gym.Parsing.GUID
+                static let LocationDescription = Constants.Gym.Parsing.LocationDescription
+                static let MaxVal = Constants.Gym.Parsing.MaxVal
+            }
+            
+            struct Parsing
+            {
+                static let GymDataSeparator = "GymDataSeparator"
+                static let GymParameterKeys = "GymParameterKeys"
+            }
         }
     }
     
@@ -206,6 +287,84 @@ struct Constants {
         struct Query
         {
             static let DefaultLimit: Int = 10
+        }
+    }
+    struct Web
+    {
+        struct Link
+        {
+            static let PSUfitnessScraping = "https://studentaffairs.psu.edu/CurrentFitnessAttendance/"
+            static let PSUfitnessCURLscraping = "https://studentaffairs.psu.edu/CurrentFitnessAttendance/api/CounterAPI"
+        }
+    }
+    
+    struct Scraping
+    {
+        
+    }
+    
+    /*
+     
+     "Accept": "application/json, text/javascript, /; q=0.01",
+     "X-Requested-With": "XMLHttpRequest",
+     "Connection": "keep-alive",
+     "Referer": "https://studentaffairs.psu.edu/CurrentFitnessAttendance/"
+     
+     */
+    
+    struct CURLscraping
+    {
+        struct Header
+        {
+            static let Accept = "Accept"
+            static let XRequestedWith = "X-Requested-With"
+            static let Connection = "Connection"
+            static let Referer = "Referer"
+        }
+        
+        struct HeaderValue {
+            static let Accept = "application/json, text/javascript, /; q=0.01"
+            static let XRequestedWith = "XMLHttpRequest"
+            static let Connection = "keep-alive"
+            static let RefererPSUFitness = "https://studentaffairs.psu.edu/CurrentFitnessAttendance/"
+        }
+    }
+    
+    struct Parsing
+    {
+        
+    }
+    
+    struct Gym
+    {
+        struct Statistic
+        {
+            static let CurrentVal = "Occupancy"
+            static let FullCapacityWaiTime = "Wait Time"
+            static let GUID = "GUID"
+            static let LocationDescription = "Gym"
+            static let MaxVal = "Capacity"
+            static let numberOfParameters: Int = 5
+        }
+        
+        struct Parsing
+        {
+            static let GymDataSeparator = " = "
+            static let CurrentVal = "CurrentVal"
+            static let FullCapacityWaiTime = "FullCapacityWaiTime"
+            static let GUID = "GUID"
+            static let LocationDescription = "LocationDescription"
+            static let MaxVal = "MaxVal"        }
+        
+        struct Name
+        {
+            static let WhiteBuilding = "White Building"
+            static let WhiteBldg = "White Bldg"
+            static let RecHall = "Rec Hall"
+            static let IMBuilding = "IM Building"
+            static let IMBldg = "IM Bldg"
+            static let HepperFitness = "Hepper Fitness Center"
+            static let IMWeightRoom = "IM Weight Room"
         }
     }
 }
