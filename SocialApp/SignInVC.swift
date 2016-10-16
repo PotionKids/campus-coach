@@ -38,19 +38,6 @@ class SignInVC: UIViewController {
             }
         }
     }
-//    func firebaseAuth(_ credential: FIRAuthCredential)
-//    {
-//        FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
-//            if let error = error
-//            {
-//                print("KRIS ERROR: Unable to authenticate with Firebase = \(error)")
-//            }
-//            else
-//            {
-//                print("KRIS: Successfully authenticated with Firebase.")
-//            }
-//        })
-//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

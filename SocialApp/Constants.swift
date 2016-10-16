@@ -18,9 +18,10 @@ struct Constants {
         }
     }
     
-    struct SignUp
+    struct SignUpVC
     {
         static let SignUpToSetGym = "SignUpToSetGym"
+        static let SignUpToSetGymMap = "SignUpToSetGymMap"
     }
     struct ViewController
     {
@@ -31,6 +32,14 @@ struct Constants {
             static let LogInToDriverViewController = "ShowDriverViewController"
             static let SignUpToSetGym = "SignUpToSetGym"
             static let SetGymToSignIn = "SetGymToSignIn"
+        }
+    }
+    
+    struct SetGymVC
+    {
+        struct Segue
+        {
+            static let SetGymToSignIn = "SetGymMapToSignIn"
         }
     }
     
