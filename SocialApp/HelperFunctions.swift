@@ -8,7 +8,7 @@
 
 import UIKit
 
-func displayAlert(target: UIViewController, title: String, message: String, actionTitle: String? = Constants.Alert.Title.OK, actionStyle: UIAlertActionStyle? = .default) {
+func displayAlert(_ target: UIViewController, title: String, message: String, actionTitle: String? = Constants.Alert.Title.OK, actionStyle: UIAlertActionStyle? = .default) {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
     if let actionTitle = actionTitle, let actionStyle = actionStyle
     {

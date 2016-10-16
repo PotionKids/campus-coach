@@ -87,9 +87,11 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-SocialApp/Bolts.framework"
   install_framework "Pods-SocialApp/FBSDKCoreKit.framework"
   install_framework "Pods-SocialApp/FBSDKLoginKit.framework"
+  install_framework "Pods-SocialApp/SwiftKeychainWrapper.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-SocialApp/Bolts.framework"
   install_framework "Pods-SocialApp/FBSDKCoreKit.framework"
   install_framework "Pods-SocialApp/FBSDKLoginKit.framework"
+  install_framework "Pods-SocialApp/SwiftKeychainWrapper.framework"
 fi
