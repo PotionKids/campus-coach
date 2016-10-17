@@ -17,6 +17,12 @@ import Alamofire
 
 class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
+    var coachOnTheWay = false
+    var locationManager = CLLocationManager()
+    var mapHasCenteredOnce = false
+    var gymButtonClicked: String?
+    var userLocation: CLLocationCoordinate2D = Constants.Map.Location.BaseInitializer
+    
     
     //MARK: Outlets
     
@@ -57,10 +63,6 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
     }
     
-    var locationManager = CLLocationManager()
-    var mapHasCenteredOnce = false
-    var gymButtonClicked: String?
-    
     private func CURLscrapeWebPage(link: String) {
         let CURLscraping = ConstantsDictionary[Constants.Mirror.Key.CURLscraping]!
         let headers = CURLscraping[Constants.Mirror.CURLscraping.Key.HeadersPSUFitness]!
@@ -74,26 +76,26 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                 let whiteBldgStats = Gym.statistics[Constants.Gym.Name.WhiteBldg]!
                 let whiteBldgOccupancy = Int(whiteBldgStats[Constants.Gym.Parsing.CurrentVal]!)
                 let whiteBldgCapacity = Int(whiteBldgStats[Constants.Gym.Parsing.MaxVal]!)
-                let whiteBldgOccupancyPercentage = Int(whiteBldgOccupancy! / whiteBldgCapacity!)
+                let whiteBldgOccupancyPercentage = Int(whiteBldgOccupancy! * 100 / whiteBldgCapacity!)
                 
                 let recHallStats = Gym.statistics[Constants.Gym.Name.RecHall]!
                 let recHallOccupancy = Int(recHallStats[Constants.Gym.Parsing.CurrentVal]!)
                 let recHallCapacity = Int(recHallStats[Constants.Gym.Parsing.MaxVal]!)
-                let recHallOccupancyPercentage = Int(recHallOccupancy! / recHallCapacity!)
+                let recHallOccupancyPercentage = Int(recHallOccupancy! * 100 / recHallCapacity!)
                 
                 let imBldgStats = Gym.statistics[Constants.Gym.Name.IMBldg]!
                 let imBldgOccupancy = Int(imBldgStats[Constants.Gym.Parsing.CurrentVal]!)
                 let imBldgCapacity = Int(imBldgStats[Constants.Gym.Parsing.MaxVal]!)
-                let imBldgOccupancyPercentage = Int(imBldgOccupancy! / imBldgCapacity!)
+                let imBldgOccupancyPercentage = Int(imBldgOccupancy! * 100 / imBldgCapacity!)
                 
-                let gymStatisticsDisplay: [(name: String, occupancy: Int)] = [
+                var gymStatisticsDisplay: [(name: String, occupancy: Int)] = [
                     (Constants.Gym.Name.WhiteBldg, whiteBldgOccupancyPercentage),
                     (Constants.Gym.Name.RecHall, recHallOccupancyPercentage),
                     (Constants.Gym.Name.IMBldg, imBldgOccupancyPercentage)
                 ]
                 
-                gymStatisticsDisplay.sorted(by: { (first, second) -> Bool in
-                    first.occupancy < second.occupancy
+                gymStatisticsDisplay = gymStatisticsDisplay.sorted(by: { (first, second) -> Bool in
+                    first.occupancy <= second.occupancy
                 })
                 
                 print("KRIS: GYM STATISTICS DISPLAY = \(gymStatisticsDisplay)")
@@ -104,30 +106,45 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                 weakSelf?.gymSecondChoiceLabel.text = "\(gymStatisticsDisplay[1].name)"
                 weakSelf?.gymThirdChoiceLabel.text = "\(gymStatisticsDisplay[2].name)"
                 
-                weakSelf?.gymFirstChoiceOccupancyLabel.text = "\(gymStatisticsDisplay[0].occupancy)"
-                weakSelf?.gymSecondChoiceOccupancyLabel.text = "\(gymStatisticsDisplay[1].occupancy)"
-                weakSelf?.gymThirdChoiceOccupancyLabel.text = "\(gymStatisticsDisplay[2].occupancy)"
+                weakSelf?.gymFirstChoiceOccupancyLabel.text = "\(gymStatisticsDisplay[0].occupancy) %"
+                weakSelf?.gymSecondChoiceOccupancyLabel.text = "\(gymStatisticsDisplay[1].occupancy) %"
+                weakSelf?.gymThirdChoiceOccupancyLabel.text = "\(gymStatisticsDisplay[2].occupancy) %"
             }
         }
     }
 
-    
-    private func locationManager(manager: CLLocationManager, didUpdateLocations: [CLLocation]) {
-        if let location = manager.location?.coordinate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        if let location = manager.location?.coordinate
+        {
+            userLocation = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
             
-            let center = CLLocationCoordinate2DMake(location.latitude, location.longitude)
-            let region = MKCoordinateRegionMakeWithDistance(center, 1000, 1000)
-            self.userLocationMap.setRegion(region, animated: true)
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = center
-            annotation.title = "You"
-            self.userLocationMap.addAnnotation(annotation)
+            if coachOnTheWay == false
+            {
+                let region = MKCoordinateRegionMakeWithDistance(userLocation, Constants.Map.Distance.SpanHeight, Constants.Map.Distance.SpanWidth)
+                
+                self.userLocationMap.setRegion(region, animated: true)
+                
+                self.userLocationMap.removeAnnotations(self.userLocationMap.annotations)
+                
+                let annotation = MKPointAnnotation()
+                
+                annotation.coordinate = userLocation
+                
+                annotation.title = Constants.Map.Annotation.TitleForCurrentLocation
+                
+                self.userLocationMap.addAnnotation(annotation)
+            }
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
         
         CURLscrapeWebPage(link: Constants.Web.Link.PSUfitnessCURLscraping)
     }
@@ -157,14 +174,14 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         userLocationMap.setRegion(coordinateRegion, animated: true)
     }
     
-    func userLocationMap(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation)
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation)
     {
         if let location = userLocation.location
         {
             if !mapHasCenteredOnce
             {
                 translateMapCenter(toLocation: location)
-                mapHasCenteredOnce = true
+                //mapHasCenteredOnce = true
             }
         }
     }
