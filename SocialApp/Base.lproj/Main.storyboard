@@ -329,6 +329,16 @@
                                 </constraints>
                                 <blurEffect style="light"/>
                             </visualEffectView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jiE-Lr-wRd">
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="HRm-mc-gH5">
+                                    <frame key="frameInset"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="115" id="cfd-nO-bTs"/>
+                                </constraints>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
                             <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iJh-SA-wax">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="125" id="tOS-03-RCb"/>
@@ -440,35 +450,25 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jiE-Lr-wRd">
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="HRm-mc-gH5">
-                                    <frame key="frameInset"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I5x-KK-g0m">
-                                            <frame key="frameInset" minX="149" minY="6" width="76" height="76"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" backgroundImage=" Sign Out"/>
-                                            <connections>
-                                                <action selector="signOut:" destination="rfn-7V-i1c" eventType="touchUpInside" id="Fxa-BV-p2f"/>
-                                            </connections>
-                                        </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sign Out" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZZL-bc-SkD">
-                                            <frame key="frameInset" minX="153" minY="87" width="68" height="24"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I5x-KK-g0m">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="115" id="cfd-nO-bTs"/>
+                                    <constraint firstAttribute="height" constant="76" id="YrW-OH-qxg"/>
+                                    <constraint firstAttribute="width" constant="76" id="hMS-hS-ufz"/>
                                 </constraints>
-                                <vibrancyEffect>
-                                    <blurEffect style="light"/>
-                                </vibrancyEffect>
-                            </visualEffectView>
+                                <state key="normal" backgroundImage=" Sign Out"/>
+                                <connections>
+                                    <action selector="signOut:" destination="rfn-7V-i1c" eventType="touchUpInside" id="Fxa-BV-p2f"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign Out" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZZL-bc-SkD">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="68" id="HjO-Ye-ZG2"/>
+                                    <constraint firstAttribute="height" constant="24" id="gsS-n3-oMg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -483,7 +483,9 @@
                             <constraint firstItem="8ad-MV-3eP" firstAttribute="leading" secondItem="KAS-qJ-4zV" secondAttribute="leading" id="AaL-PN-Kyb"/>
                             <constraint firstAttribute="trailing" secondItem="FMt-yR-CLO" secondAttribute="trailing" id="Apm-FF-uQW"/>
                             <constraint firstItem="ZSc-0P-Nk6" firstAttribute="top" secondItem="Aad-mt-wK1" secondAttribute="bottom" constant="2" id="BYs-Ca-5of"/>
+                            <constraint firstItem="I5x-KK-g0m" firstAttribute="centerX" secondItem="KAS-qJ-4zV" secondAttribute="centerX" id="CgX-CM-i3R"/>
                             <constraint firstItem="sAN-RP-py7" firstAttribute="leading" secondItem="KAS-qJ-4zV" secondAttribute="leading" id="D7P-Sp-77L"/>
+                            <constraint firstItem="ZZL-bc-SkD" firstAttribute="centerX" secondItem="KAS-qJ-4zV" secondAttribute="centerX" id="DCw-Po-hMZ"/>
                             <constraint firstItem="jiE-Lr-wRd" firstAttribute="centerX" secondItem="KAS-qJ-4zV" secondAttribute="centerX" id="EBt-DL-Z9y"/>
                             <constraint firstItem="Aad-mt-wK1" firstAttribute="centerX" secondItem="KAS-qJ-4zV" secondAttribute="centerX" id="FfZ-rC-FDH"/>
                             <constraint firstItem="8ad-MV-3eP" firstAttribute="top" secondItem="iJh-SA-wax" secondAttribute="bottom" constant="28" id="HgO-Sq-cmA"/>
@@ -502,6 +504,7 @@
                             <constraint firstItem="uMa-GJ-HfT" firstAttribute="leading" secondItem="KAS-qJ-4zV" secondAttribute="leading" id="V4N-gb-dFe"/>
                             <constraint firstItem="FMt-yR-CLO" firstAttribute="top" secondItem="izb-CV-qXG" secondAttribute="bottom" constant="2" id="VAW-v6-1BP"/>
                             <constraint firstItem="DPp-lc-iEs" firstAttribute="top" secondItem="qZi-ZT-Sz7" secondAttribute="bottom" constant="6" id="WJ2-Ab-BKa"/>
+                            <constraint firstItem="ZZL-bc-SkD" firstAttribute="top" secondItem="I5x-KK-g0m" secondAttribute="bottom" constant="6" id="Yvh-x7-f7U"/>
                             <constraint firstItem="W6n-S3-Agg" firstAttribute="top" secondItem="8ad-MV-3eP" secondAttribute="bottom" constant="2" id="aTl-Nx-jk6"/>
                             <constraint firstItem="W6n-S3-Agg" firstAttribute="top" secondItem="8ad-MV-3eP" secondAttribute="bottom" constant="2" id="aYl-tk-88S"/>
                             <constraint firstItem="izb-CV-qXG" firstAttribute="top" secondItem="DPp-lc-iEs" secondAttribute="bottom" constant="28" id="ceN-xH-8Ls"/>
@@ -510,6 +513,7 @@
                             <constraint firstAttribute="trailing" secondItem="qRk-iL-sel" secondAttribute="trailing" id="hUr-Rd-Ngl"/>
                             <constraint firstItem="sAN-RP-py7" firstAttribute="top" secondItem="KAS-qJ-4zV" secondAttribute="top" id="iR3-tP-JDJ"/>
                             <constraint firstItem="bZ2-bl-jjs" firstAttribute="top" secondItem="sAN-RP-py7" secondAttribute="bottom" id="j7v-M5-Sxc"/>
+                            <constraint firstItem="bZ2-bl-jjs" firstAttribute="top" secondItem="ZZL-bc-SkD" secondAttribute="bottom" constant="3" id="mEP-g7-2vF"/>
                             <constraint firstItem="bZ2-bl-jjs" firstAttribute="top" secondItem="jiE-Lr-wRd" secondAttribute="bottom" id="pdh-ev-hSw"/>
                             <constraint firstItem="jiE-Lr-wRd" firstAttribute="leading" secondItem="KAS-qJ-4zV" secondAttribute="leading" id="v1B-0r-K7U"/>
                             <constraint firstItem="W6n-S3-Agg" firstAttribute="leading" secondItem="KAS-qJ-4zV" secondAttribute="leading" id="xA7-4Y-QNo"/>
@@ -533,29 +537,6 @@
                         <segue destination="WWQ-Oc-wcr" kind="show" identifier="SetGymMapToSignIn" id="ehu-ZY-uP1"/>
                     </connections>
                 </viewController>
-                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zGh-La-hih">
-                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="apy-Je-9k6">
-                        <frame key="frameInset"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wQa-fk-AlZ">
-                                <frame key="frameInset"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="vuS-3r-7ed">
-                                    <frame key="frameInset"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                </view>
-                                <vibrancyEffect>
-                                    <blurEffect style="light"/>
-                                </vibrancyEffect>
-                            </visualEffectView>
-                        </subviews>
-                    </view>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="185" id="8xm-bR-quU"/>
-                    </constraints>
-                    <blurEffect style="light"/>
-                </visualEffectView>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oz2-XB-rcJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="1" id="BDq-wo-1gl"/>
             </objects>

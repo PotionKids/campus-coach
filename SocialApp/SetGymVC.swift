@@ -70,11 +70,43 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             DispatchQueue.main.async {
                 let string = "\(response)"
                 Gym.statistics = stringParser(string: string)
+                
                 let whiteBldgStats = Gym.statistics[Constants.Gym.Name.WhiteBldg]!
-                let whiteBldgOccupancy = Gym.statistics[Constants.Gym.Name.WhiteBldg]![Constants.Gym.Parsing.CurrentVal]!
-                weakSelf?.gymFirstChoiceOccupancyLabel.text = Gym.statistics[Constants.Gym.Name.WhiteBldg]![Constants.Gym.Parsing.CurrentVal]!
-                weakSelf?.gymSecondChoiceOccupancyLabel.text = Gym.statistics[Constants.Gym.Name.IMBldg]![Constants.Gym.Parsing.CurrentVal]!
-                weakSelf?.gymThirdChoiceOccupancyLabel.text = Gym.statistics[Constants.Gym.Name.RecHall]![Constants.Gym.Parsing.CurrentVal]!
+                let whiteBldgOccupancy = Int(whiteBldgStats[Constants.Gym.Parsing.CurrentVal]!)
+                let whiteBldgCapacity = Int(whiteBldgStats[Constants.Gym.Parsing.MaxVal]!)
+                let whiteBldgOccupancyPercentage = Int(whiteBldgOccupancy! / whiteBldgCapacity!)
+                
+                let recHallStats = Gym.statistics[Constants.Gym.Name.RecHall]!
+                let recHallOccupancy = Int(recHallStats[Constants.Gym.Parsing.CurrentVal]!)
+                let recHallCapacity = Int(recHallStats[Constants.Gym.Parsing.MaxVal]!)
+                let recHallOccupancyPercentage = Int(recHallOccupancy! / recHallCapacity!)
+                
+                let imBldgStats = Gym.statistics[Constants.Gym.Name.IMBldg]!
+                let imBldgOccupancy = Int(imBldgStats[Constants.Gym.Parsing.CurrentVal]!)
+                let imBldgCapacity = Int(imBldgStats[Constants.Gym.Parsing.MaxVal]!)
+                let imBldgOccupancyPercentage = Int(imBldgOccupancy! / imBldgCapacity!)
+                
+                let gymStatisticsDisplay: [(name: String, occupancy: Int)] = [
+                    (Constants.Gym.Name.WhiteBldg, whiteBldgOccupancyPercentage),
+                    (Constants.Gym.Name.RecHall, recHallOccupancyPercentage),
+                    (Constants.Gym.Name.IMBldg, imBldgOccupancyPercentage)
+                ]
+                
+                gymStatisticsDisplay.sorted(by: { (first, second) -> Bool in
+                    first.occupancy < second.occupancy
+                })
+                
+                print("KRIS: GYM STATISTICS DISPLAY = \(gymStatisticsDisplay)")
+                
+                print("KRIS: White Building Occupancy = \(whiteBldgOccupancy)")
+                
+                weakSelf?.gymFirstChoiceLabel.text = "\(gymStatisticsDisplay[0].name)"
+                weakSelf?.gymSecondChoiceLabel.text = "\(gymStatisticsDisplay[1].name)"
+                weakSelf?.gymThirdChoiceLabel.text = "\(gymStatisticsDisplay[2].name)"
+                
+                weakSelf?.gymFirstChoiceOccupancyLabel.text = "\(gymStatisticsDisplay[0].occupancy)"
+                weakSelf?.gymSecondChoiceOccupancyLabel.text = "\(gymStatisticsDisplay[1].occupancy)"
+                weakSelf?.gymThirdChoiceOccupancyLabel.text = "\(gymStatisticsDisplay[2].occupancy)"
             }
         }
     }
@@ -97,6 +129,7 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        CURLscrapeWebPage(link: Constants.Web.Link.PSUfitnessCURLscraping)
     }
 
     override func viewDidAppear(_ animated: Bool) {
