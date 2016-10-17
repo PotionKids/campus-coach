@@ -31,19 +31,28 @@ func firebaseAuth(_ credential: FIRAuthCredential, vc: UIViewController)
         }
         else
         {
-            print("KRIS: Successfully authenticated with Firebase.")
-            if let user = user
-            {
-                completeSignIn(id: user.uid, vc: vc)
-            }
+//            if let user = user
+//            {
+//                let id = user.uid
+//                let userData = [Constants.DataService.User.Provider : user.providerID]
+//                completeSignIn(id: id, userData: userData, vc: vc)
+//                print("KRIS: Successfully authenticated with Firebase.")
+//            }
+            completeSignIn(user: user, vc: vc)
         }
     })
 }
 
-func completeSignIn(id: String, vc: UIViewController)
+func completeSignIn(user: FIRUser? , vc: UIViewController)
 {
-    KeychainWrapper.standard.set(id, forKey: Constants.Firebase.KeychainWrapper.KeyUID)
-    vc.performSegue(withIdentifier: Constants.SignUpVC.SignUpToSetGymMap, sender: nil)
+    if let user = user
+    {
+        let id = user.uid
+        let userData = [Constants.DataService.User.Provider : user.providerID]
+        KeychainWrapper.standard.set(id, forKey: Constants.Firebase.KeychainWrapper.KeyUID)
+        DataService.ds.createFirebaseDBUser(uid: id, userData: userData)
+        vc.performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToSetGymMap, sender: nil)
+    }
 }
 
 

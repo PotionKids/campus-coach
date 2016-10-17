@@ -9,7 +9,47 @@
 import UIKit
 import MapKit
 
+import Firebase
+
+extension String
+{
+    func removeLast() -> String
+    {
+        var trimmed = self
+        trimmed.remove(at: trimmed.index(before: trimmed.endIndex))
+        return trimmed
+    }
+}
+
 struct Constants {
+    struct DataService
+    {
+        struct Firebase
+        {
+            static let BaseURL = FIRDatabase.database().reference()
+            static let Provider = "firebase"
+            static let Locations = "locations"
+            static let Requests = "requests"
+            static let Users = "users"
+            static let Coaches = "coaches"
+        }
+        struct Mirror
+        {
+            static let Firebase = Constants.DataService.Firebase.Provider.capitalized
+            static let Locations = Constants.DataService.Firebase.Locations.capitalized
+            static let Requests = Constants.DataService.Firebase.Requests.capitalized
+            static let Users = Constants.DataService.Firebase.Users.capitalized
+            static let Coaches = Constants.DataService.Firebase.Coaches.capitalized
+        }
+        struct User
+        {
+            static let UID = Constants.Firebase.KeychainWrapper.KeyUID
+            static let Location = Constants.DataService.Firebase.Locations.removeLast()
+            static let Name = "name"
+            static let Provider = "provider"
+            static let Requests = Constants.DataService.Firebase.Requests
+        }
+    }
     struct Firebase
     {
         struct KeychainWrapper
@@ -20,8 +60,11 @@ struct Constants {
     
     struct SignUpVC
     {
-        static let SignUpToSetGym = "SignUpToSetGym"
-        static let SignUpToSetGymMap = "SignUpToSetGymMap"
+        struct Segue
+        {
+            static let SignUpToSetGym = "SignUpToSetGym"
+            static let SignUpToSetGymMap = "SignUpToSetGymMap"
+        }
     }
     struct ViewController
     {

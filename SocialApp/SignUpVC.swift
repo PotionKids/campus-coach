@@ -111,26 +111,31 @@ class SignUpVC: UIViewController {
                         FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
                             if let error = error
                             {
-                                print("KRIS: Unable to create user using email in Firebase.")
+                                print("KRIS: Unable to create user using email in Firebase. Erro \(error)")
                             }
                             else
                             {
                                 print("KRIS: Successfully created a new user with email in Firebase.")
-                                if let user = user
-                                {
-                                    completeSignIn(id: user.uid, vc: self)
-                                }
-                                
+//                                if let user = user
+//                                {
+//                                    let id = user.uid
+//                                    let userData = [Constants.DataService.User.Provider : user.providerID]
+//                                    completeSignIn(id: id, userData: userData, vc: self)
+//                                }
+                                completeSignIn(user: user, vc: self)
                             }
                         })
                     }
                     else
                     {
-                        print("KRIS: User email authenticated with Firebase.")
-                        if let user = user
-                        {
-                            completeSignIn(id: user.uid, vc: self)
-                        }
+//                        if let user = user
+//                        {
+//                            let id = user.uid
+//                            let userData = [Constants.DataService.User.Provider : user.providerID]
+//                            completeSignIn(id: id, userData: userData, vc: self)
+//                            print("KRIS: User email authenticated with Firebase.")
+//                        }
+                        completeSignIn(user: user, vc: self)
                     }
                 })
             }
@@ -148,7 +153,7 @@ class SignUpVC: UIViewController {
         if let _ = KeychainWrapper.standard.string(forKey: Constants.Firebase.KeychainWrapper.KeyUID)
         {
             print("KRIS: ID found in Keychain.")
-            performSegue(withIdentifier: Constants.SignUpVC.SignUpToSetGymMap, sender: nil)
+            performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToSetGymMap, sender: nil)
         }
     }
 
