@@ -116,26 +116,13 @@ class SignUpVC: UIViewController {
                             else
                             {
                                 print("KRIS: Successfully created a new user with email in Firebase.")
-//                                if let user = user
-//                                {
-//                                    let id = user.uid
-//                                    let userData = [Constants.DataService.User.Provider : user.providerID]
-//                                    completeSignIn(id: id, userData: userData, vc: self)
-//                                }
-                                completeSignIn(user: user, vc: self)
+                                completeSignIn(user: user, credential: nil, vc: self)
                             }
                         })
                     }
                     else
                     {
-//                        if let user = user
-//                        {
-//                            let id = user.uid
-//                            let userData = [Constants.DataService.User.Provider : user.providerID]
-//                            completeSignIn(id: id, userData: userData, vc: self)
-//                            print("KRIS: User email authenticated with Firebase.")
-//                        }
-                        completeSignIn(user: user, vc: self)
+                        completeSignIn(user: user, credential: nil, vc: self)
                     }
                 })
             }
