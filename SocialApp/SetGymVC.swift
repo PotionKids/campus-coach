@@ -98,10 +98,6 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                     first.occupancy <= second.occupancy
                 })
                 
-                print("KRIS: GYM STATISTICS DISPLAY = \(gymStatisticsDisplay)")
-                
-                print("KRIS: White Building Occupancy = \(whiteBldgOccupancy)")
-                
                 weakSelf?.gymFirstChoiceLabel.text = "\(gymStatisticsDisplay[0].name)"
                 weakSelf?.gymSecondChoiceLabel.text = "\(gymStatisticsDisplay[1].name)"
                 weakSelf?.gymThirdChoiceLabel.text = "\(gymStatisticsDisplay[2].name)"
@@ -147,6 +143,11 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
         
         CURLscrapeWebPage(link: Constants.Web.Link.PSUfitnessCURLscraping)
+       
+        DataService.ds.refLocations.observe(.value, with: { (snapshot) in
+            
+            print("\(snapshot.value)")
+        })
     }
 
     override func viewDidAppear(_ animated: Bool) {
