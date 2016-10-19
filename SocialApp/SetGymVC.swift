@@ -148,8 +148,15 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
         
         DataService.ds.refLocations.observe(.value, with: { snapshot in
-         
-            print("KRIS: Snapshot = \(snapshot.value)")
+            if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot]
+            {
+                var counter = 0
+                for snap in snapshots
+                {
+                    counter += 1
+                    print("KRIS: Snap Number \(counter) = \(snap.value)")
+                }
+            }
         })
         
         CURLscrapeWebPage(link: Constants.Web.Link.PSUfitnessCURLscraping)

@@ -253,6 +253,8 @@ struct Constants {
                 static let Synonyms = "Synonyms"
             }
             
+            
+            
             struct Name
             {
                 static let WhiteBuilding = "WhiteBuilding"
@@ -414,7 +416,8 @@ struct Constants {
             static let FullCapacityWaiTime = "FullCapacityWaiTime"
             static let GUID = "GUID"
             static let LocationDescription = "LocationDescription"
-            static let MaxVal = "MaxVal"        }
+            static let MaxVal = "MaxVal"
+        }
         
         struct Name
         {
@@ -425,6 +428,13 @@ struct Constants {
             static let IMBldg = "IM Bldg"
             static let HepperFitness = "Hepper Fitness Center"
             static let IMWeightRoom = "IM Weight Room"
+        }
+        
+        struct Location
+        {
+            static let WhiteBldg = CLLocation(latitude: 42.05, longitude: 57.92)
+            static let RecHall = CLLocation(latitude: 53.29, longitude: 64.83)
+            static let IMBldg = CLLocation(latitude: 82.15, longitude: 15.76)
         }
     }
 }
