@@ -6,14 +6,17 @@
 //  Copyright © 2016 Campus Coach. All rights reserved.
 //
 
+
+
 import UIKit
 import MapKit
+
+import SwiftKeychainWrapper
 
 import Firebase
 import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
-import SwiftKeychainWrapper
 
 import Alamofire
 
@@ -144,12 +147,20 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
+//        DataService.ds.refBase.observe(.value, with: { (snapshot) in
+//            let postDict = snapshot.value as! [String : Any]
+//            print("KRIS: Ref Locations = \(DataService.ds.refLocations)")
+//            print("KRIS: Snapshot = \(postDict)")
+//        })
+
+        
+        DataService.ds.refLocations.observe(.value, with: { snapshot in
+         
+            print(snapshot.value)
+        })
+        
         CURLscrapeWebPage(link: Constants.Web.Link.PSUfitnessCURLscraping)
        
-        DataService.ds.refLocations.observe(.value) { (snapshot: FIRDataSnapshot) in
-            let abc = snapshot.value
-            print("KRIS: Snapshot = \(snapshot.value)")
-        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
