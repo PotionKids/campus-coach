@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import FirebaseDatabase
 
 typealias FirebaseData = [String : String]
 
@@ -55,8 +56,6 @@ class DataService: DataServiceType
     {
         return RefCoachesPrivate
     }
-    
-    
     
     func createFirebaseDBUser(uid: String, userData: FirebaseData)
     {

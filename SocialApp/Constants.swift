@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 
 import Firebase
+import FirebaseDatabase
 
 extension String
 {

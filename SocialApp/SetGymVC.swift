@@ -11,6 +11,8 @@ import MapKit
 
 import Firebase
 import FirebaseAuth
+import FirebaseDatabase
+import FirebaseStorage
 import SwiftKeychainWrapper
 
 import Alamofire
@@ -144,10 +146,10 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
         CURLscrapeWebPage(link: Constants.Web.Link.PSUfitnessCURLscraping)
        
-        DataService.ds.refLocations.observe(.value, with: { (snapshot) in
-            
-            print("\(snapshot.value)")
-        })
+        DataService.ds.refLocations.observe(.value) { (snapshot: FIRDataSnapshot) in
+            let abc = snapshot.value
+            print("KRIS: Snapshot = \(snapshot.value)")
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
