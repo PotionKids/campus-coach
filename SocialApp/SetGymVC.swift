@@ -146,10 +146,11 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
         CURLscrapeWebPage(link: Constants.Web.Link.PSUfitnessCURLscraping)
        
-        DataService.ds.refLocations.observe(.value) { (snapshot: FIRDataSnapshot) in
+        DataService.ds.refLocations.observe(.value, with: {
+            snapshot in
             let abc = snapshot.value
             print("KRIS: Snapshot = \(snapshot.value)")
-        }
+        })
     }
 
     override func viewDidAppear(_ animated: Bool) {
