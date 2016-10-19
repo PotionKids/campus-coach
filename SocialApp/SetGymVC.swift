@@ -147,16 +147,9 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
-//        DataService.ds.refBase.observe(.value, with: { (snapshot) in
-//            let postDict = snapshot.value as! [String : Any]
-//            print("KRIS: Ref Locations = \(DataService.ds.refLocations)")
-//            print("KRIS: Snapshot = \(postDict)")
-//        })
-
-        
         DataService.ds.refLocations.observe(.value, with: { snapshot in
          
-            print(snapshot.value)
+            print("KRIS: Snapshot = \(snapshot.value)")
         })
         
         CURLscrapeWebPage(link: Constants.Web.Link.PSUfitnessCURLscraping)

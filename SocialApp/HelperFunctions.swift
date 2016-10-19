@@ -41,7 +41,7 @@ func completeSignIn(user: FIRUser?, credential: FIRAuthCredential?, vc: UIViewCo
     if let user = user
     {
         let id = user.uid
-        var userData: [String : String] = [:]
+        var userData: FirebaseData = [:]
         if let credential = credential
         {
             userData = [Constants.DataService.User.Provider : credential.provider]

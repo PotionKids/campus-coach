@@ -19,7 +19,7 @@ class DataService
     static let ds = DataService()
     
     private var RefBasePrivate = FirebaseBaseURL
-    private var RefLocationsPrivate = FirebaseBaseURL.child("locations")
+    private var RefLocationsPrivate = FirebaseBaseURL.child(Constants.DataService.Firebase.Locations)
     private var RefRequestsPrivate = FirebaseBaseURL.child(Constants.DataService.Firebase.Requests)
     private var RefUsersPrivate = FirebaseBaseURL.child(Constants.DataService.Firebase.Users)
     private var RefCoachesPrivate = FirebaseBaseURL.child(Constants.DataService.Firebase.Coaches)
