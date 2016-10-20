@@ -22,7 +22,7 @@ func displayAlert(_ target: UIViewController, title: String, message: String, ac
     target.present(alertController, animated: true, completion: nil)
 }
 
-func firebaseAuth(_ credential: FIRAuthCredential, vc: UIViewController)
+func firebaseAuth(_ isCoach: Bool, credential: FIRAuthCredential, vc: UIViewController)
 {
     FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
         if let error = error
@@ -31,7 +31,7 @@ func firebaseAuth(_ credential: FIRAuthCredential, vc: UIViewController)
         }
         else
         {
-            completeSignIn(user: user, credential: credential, vc: vc)
+            completeSignIn(isCoach: isCoach, user: user, credential: credential, vc: vc)
         }
     })
 }
@@ -50,7 +50,8 @@ func extractUserData(user: FIRUser?, credential: FIRAuthCredential?) -> (String?
         {
             userData = [
                 Constants.Firebase.Key.UID : id,
-                Constants.DataService.User.Provider : user.providerID
+                Constants.DataService.User.Provider : user.providerID,
+                Constants.DataService.User.Email : (user.email)!
             ]
         }
         return (id, userData)
@@ -85,9 +86,9 @@ func extractProviderData(user: FIRUser, credential: FIRAuthCredential) -> Fireba
                 userData = [
                     Constants.Firebase.Key.UID : user.uid,
                     Constants.Facebook.Key.Provider : credential.provider,
+                    Constants.Facebook.Key.UID : uid,
                     Constants.Facebook.Key.Name : name,
                     Constants.Facebook.Key.Email : email,
-                    Constants.Facebook.Key.UID : uid,
                     Constants.Facebook.Key.ImageURLString : imageURLString
                 ]
             }
@@ -105,7 +106,7 @@ func extractProviderData(user: FIRUser, credential: FIRAuthCredential) -> Fireba
     return userData
 }
 
-func completeSignIn(user: FIRUser?, credential: FIRAuthCredential?, vc: UIViewController)
+func completeSignIn(isCoach: Bool, user: FIRUser?, credential: FIRAuthCredential?, vc: UIViewController)
 {
     var id: String?
     var userData: FirebaseData?
@@ -114,7 +115,14 @@ func completeSignIn(user: FIRUser?, credential: FIRAuthCredential?, vc: UIViewCo
     if let id = id, let userData = userData
     {
         KeychainWrapper.standard.set(id, forKey: Constants.Firebase.KeychainWrapper.KeyUID)
-        DataService.ds.createFirebaseDBUser(uid: id, userData: userData)
+        if isCoach
+        {
+            DataService.ds.createFirebaseObject(object: .Coaches, instanceID: id, data: userData)
+        }
+        else
+        {
+            DataService.ds.createFirebaseObject(object: .Users, instanceID: id, data: userData)
+        }
         vc.performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToSetGymMap, sender: nil)
     }
     print("KRIS: Authentication Failed.")

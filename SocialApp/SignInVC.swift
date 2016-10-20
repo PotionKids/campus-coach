@@ -15,6 +15,8 @@ import FBSDKLoginKit
 
 class SignInVC: UIViewController {
 
+    var isCoach = false
+    
     @IBOutlet weak var facebookLoginButton: UIButton!
     
     @IBAction func facebookLogin(_ sender: AnyObject)
@@ -34,7 +36,7 @@ class SignInVC: UIViewController {
             {
                 print("KRIS: Successfully authenticated with Facebook.")
                 let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
-                firebaseAuth(credential, vc: self)
+                firebaseAuth(self.isCoach, credential: credential, vc: self)
             }
         }
     }

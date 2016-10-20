@@ -52,7 +52,7 @@ class SignUpVC: UIViewController {
             {
                 print("KRIS: Successfully authenticated with Facebook.")
                 let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
-                firebaseAuth(credential, vc: self)
+                firebaseAuth(self.isCoach, credential: credential, vc: self)
             }
         }
     }
@@ -91,17 +91,14 @@ class SignUpVC: UIViewController {
             if email.isEmpty() && !password.isEmpty()
             {
                 displayAlert(self, title: Constants.Alert.Title.EmptyUserName, message: Constants.Alert.Message.EmptyUserName)
-                //displayAlert(title: Constants.Alert.Title.EmptyUserName, message: Constants.Alert.Message.EmptyUserName)
             }
             else if !email.isEmpty() && password.isEmpty()
             {
                 displayAlert(self, title: Constants.Alert.Title.EmptyPassword, message: Constants.Alert.Message.EmptyPassword)
-                //displayAlert(title: Constants.Alert.Title.EmptyPassword, message: Constants.Alert.Message.EmptyPassword)
             }
             else if email.isEmpty() && password.isEmpty()
             {
                 displayAlert(self, title: Constants.Alert.Title.EmptyUserNameAndPassword, message: Constants.Alert.Message.EmptyUserNameAndPassword)
-                //displayAlert(title: Constants.Alert.Title.EmptyUserNameAndPassword, message: Constants.Alert.Message.EmptyUserNameAndPassword)
             }
             else
             {
@@ -116,13 +113,13 @@ class SignUpVC: UIViewController {
                             else
                             {
                                 print("KRIS: Successfully created a new user with email in Firebase.")
-                                completeSignIn(user: user, credential: nil, vc: self)
+                                completeSignIn(isCoach: self.isCoach, user: user, credential: nil, vc: self)
                             }
                         })
                     }
                     else
                     {
-                        completeSignIn(user: user, credential: nil, vc: self)
+                        completeSignIn(isCoach: self.isCoach, user: user, credential: nil, vc: self)
                     }
                 })
             }

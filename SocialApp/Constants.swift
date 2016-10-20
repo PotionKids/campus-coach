@@ -47,6 +47,7 @@ struct Constants {
             static let Location = Constants.DataService.Firebase.Locations.removeLast()
             static let Name = "name"
             static let Provider = "provider"
+            static let Email = Constants.Facebook.Key.Email
             static let Requests = Constants.DataService.Firebase.Requests
         }
     }

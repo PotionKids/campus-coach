@@ -12,43 +12,65 @@ import Firebase
 typealias FirebaseData = [String : String]
 
 let FirebaseBaseURL = FIRDatabase.database().reference()
+
+struct Firebase
+{
+    enum Object: String
+    {
+        case Users
+        case Coaches
+        case Locations
+        case Requests
+        
+        var ObjectKey: String
+        {
+            switch self
+            {
+            case .Users:
+                return Constants.DataService.Firebase.Users
+            case .Coaches:
+                return Constants.DataService.Firebase.Coaches
+            case .Locations:
+                return Constants.DataService.Firebase.Locations
+            case .Requests:
+                return Constants.DataService.Firebase.Requests
+            }
+        }
+        
+        var DatabaseReference: FIRDatabaseReference
+        {
+            switch self
+            {
+            case .Users:
+                return FirebaseBaseURL.child(Firebase.Users.ObjectKey)
+            case .Coaches:
+                return FirebaseBaseURL.child(Firebase.Coaches.ObjectKey)
+            case .Locations:
+                return FirebaseBaseURL.child(Firebase.Locations.ObjectKey)
+            case .Requests:
+                return FirebaseBaseURL.child(Firebase.Requests.ObjectKey)
+            }
+        }
+    }
+    static let Users: Object = .Users
+    static let Coaches: Object = .Coaches
+    static let Locations: Object = .Locations
+    static let Requests: Object = .Requests
+}
+
 class DataService
 {
     static let ds = DataService()
     
     private var RefBasePrivate = FirebaseBaseURL
-    private var RefLocationsPrivate = FirebaseBaseURL.child(Constants.DataService.Firebase.Locations)
-    private var RefRequestsPrivate = FirebaseBaseURL.child(Constants.DataService.Firebase.Requests)
-    private var RefUsersPrivate = FirebaseBaseURL.child(Constants.DataService.Firebase.Users)
-    private var RefCoachesPrivate = FirebaseBaseURL.child(Constants.DataService.Firebase.Coaches)
     
     var refBase: FIRDatabaseReference
     {
         return RefBasePrivate
     }
     
-    var refLocations: FIRDatabaseReference
+    func createFirebaseObject(object: Firebase.Object, instanceID: String, data: FirebaseData)
     {
-        return RefLocationsPrivate
-    }
-    
-    var refRequests: FIRDatabaseReference
-    {
-        return RefRequestsPrivate
-    }
-    
-    var refUsers: FIRDatabaseReference
-    {
-        return RefUsersPrivate
-    }
-    
-    var refCoaches: FIRDatabaseReference
-    {
-        return RefCoachesPrivate
-    }
-    
-    func createFirebaseDBUser(uid: String, userData: FirebaseData)
-    {
-        refUsers.child(uid).updateChildValues(userData)
+        object.DatabaseReference.child(instanceID).updateChildValues(data)
     }
 }
