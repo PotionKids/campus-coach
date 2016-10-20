@@ -50,11 +50,35 @@ struct Constants {
             static let Requests = Constants.DataService.Firebase.Requests
         }
     }
+    
+    struct Facebook
+    {
+        struct Profile
+        {
+            static let ImageURLPrefix = "https://graph.facebook.com/"
+            static let ImageURLSuffix = "/picture?type=large&w‌ idth=1000&height=1000"
+        }
+        
+        struct Key
+        {
+            static let Provider = "provider"
+            static let Profile = "profile"
+            static let Name = "name"
+            static let Email = "email"
+            static let UID = "facebookUID"
+            static let ImageURLString = "imageURL"
+        }
+    }
+    
     struct Firebase
     {
         struct KeychainWrapper
         {
             static let KeyUID = "uid"
+        }
+        struct Key
+        {
+            static let UID = "firebaseUID"
         }
     }
     
