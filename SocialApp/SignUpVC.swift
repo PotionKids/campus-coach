@@ -156,7 +156,14 @@ class SignUpVC: UIViewController {
         if let _ = KeychainWrapper.standard.string(forKey: Constants.Firebase.KeychainWrapper.KeyUID)
         {
             print("KRIS: ID found in Keychain.")
-            performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToSetGymMap, sender: nil)
+            if isCoach
+            {
+                performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToCoachRequests, sender: nil)
+            }
+            else
+            {
+                performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToSetGymMap, sender: nil)
+            }
         }
     }
 

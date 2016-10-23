@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D1F149B1DBC74D0008C1C7B /* CoachRequestsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F149A1DBC74D0008C1C7B /* CoachRequestsVC.swift */; };
+		0D1F14A41DBC74EC008C1C7B /* RequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F14A31DBC74EC008C1C7B /* RequestCell.swift */; };
 		0D3745C91DB04DFF009F061C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3745C81DB04DFF009F061C /* AppDelegate.swift */; };
 		0D3745CE1DB04DFF009F061C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D3745CC1DB04DFF009F061C /* Main.storyboard */; };
 		0D3745D01DB04DFF009F061C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D3745CF1DB04DFF009F061C /* Assets.xcassets */; };
@@ -101,6 +103,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0D1F149A1DBC74D0008C1C7B /* CoachRequestsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoachRequestsVC.swift; sourceTree = "<group>"; };
+		0D1F14A31DBC74EC008C1C7B /* RequestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestCell.swift; sourceTree = "<group>"; };
 		0D3745C51DB04DFF009F061C /* SocialApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D3745C81DB04DFF009F061C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0D3745CD1DB04DFF009F061C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -186,10 +190,11 @@
 		0D3745DD1DB0506B009F061C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				0DB001F31DB3179100EF1921 /* Constants.swift */,
 				0DB001EF1DB309CB00EF1921 /* SignUpVC.swift */,
 				0D9D79081DB4307E006F7081 /* SetGymVC.swift */,
 				0DB001F11DB316A400EF1921 /* HelperFunctions.swift */,
+				0D1F149A1DBC74D0008C1C7B /* CoachRequestsVC.swift */,
+				0D1F14A31DBC74EC008C1C7B /* RequestCell.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -204,6 +209,7 @@
 		0D3745E01DB0508E009F061C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0DB001F31DB3179100EF1921 /* Constants.swift */,
 				0DB001F61DB32F2700EF1921 /* Gym.swift */,
 				0DB001F81DB32F5200EF1921 /* Parsing.swift */,
 				0D473E0C1DBBED45008FF539 /* User.swift */,
@@ -454,6 +460,8 @@
 				0D3745C91DB04DFF009F061C /* AppDelegate.swift in Sources */,
 				0D6BB8FE1DB579380015AE04 /* DataService.swift in Sources */,
 				0D473E0D1DBBED45008FF539 /* User.swift in Sources */,
+				0D1F149B1DBC74D0008C1C7B /* CoachRequestsVC.swift in Sources */,
+				0D1F14A41DBC74EC008C1C7B /* RequestCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

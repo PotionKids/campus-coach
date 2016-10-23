@@ -135,12 +135,14 @@ func completeSignIn(isCoach: Bool, cell: String, user: FIRUser?, credential: FIR
         if isCoach
         {
             DataService.ds.createFirebaseObject(object: .Coaches, instanceID: id, data: userData)
+            vc.performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToCoachRequests, sender: nil)
         }
         else
         {
             DataService.ds.createFirebaseObject(object: .Users, instanceID: id, data: userData)
+            vc.performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToSetGymMap, sender: nil)
         }
-        vc.performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToSetGymMap, sender: nil)
+        
     }
     print("KRIS: Authentication Failed.")
 }

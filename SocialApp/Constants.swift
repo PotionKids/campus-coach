@@ -17,6 +17,7 @@ extension String
     {
         var trimmed = self
         trimmed.remove(at: trimmed.index(before: trimmed.endIndex))
+        
         return trimmed
     }
 }
@@ -91,6 +92,15 @@ struct Constants {
             static let SignUpToSetGym = "SignUpToSetGym"
             static let SignUpToSetGymMap = "SignUpToSetGymMap"
             static let SignUpToSaveCellNumber = "SignUpToSaveCellNumber"
+            static let SignUpToCoachRequests = "SignUpToCoachRequests"
+        }
+    }
+    
+    struct CoachRequestsVC
+    {
+        struct Segue
+        {
+            static let CoachRequestsToSignUp = "CoachRequestsToSignUp"
         }
     }
     
