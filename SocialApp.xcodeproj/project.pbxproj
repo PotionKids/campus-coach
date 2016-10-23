@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D0291861DBD7FA100C75BE5 /* CoachRequestsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0291851DBD7FA100C75BE5 /* CoachRequestsVC.swift */; };
+		0D02918F1DBD7FA900C75BE5 /* RequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D02918E1DBD7FA900C75BE5 /* RequestCell.swift */; };
+		0D0291911DBD7FAF00C75BE5 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0291901DBD7FAF00C75BE5 /* Request.swift */; };
 		0D3745C91DB04DFF009F061C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3745C81DB04DFF009F061C /* AppDelegate.swift */; };
 		0D3745CE1DB04DFF009F061C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D3745CC1DB04DFF009F061C /* Main.storyboard */; };
 		0D3745D01DB04DFF009F061C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D3745CF1DB04DFF009F061C /* Assets.xcassets */; };
@@ -101,6 +104,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0D0291851DBD7FA100C75BE5 /* CoachRequestsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoachRequestsVC.swift; sourceTree = "<group>"; };
+		0D02918E1DBD7FA900C75BE5 /* RequestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestCell.swift; sourceTree = "<group>"; };
+		0D0291901DBD7FAF00C75BE5 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		0D3745C51DB04DFF009F061C /* SocialApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D3745C81DB04DFF009F061C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0D3745CD1DB04DFF009F061C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -189,6 +195,9 @@
 				0DB001F31DB3179100EF1921 /* Constants.swift */,
 				0DB001EF1DB309CB00EF1921 /* SignUpVC.swift */,
 				0D9D79081DB4307E006F7081 /* SetGymVC.swift */,
+				0D0291851DBD7FA100C75BE5 /* CoachRequestsVC.swift */,
+				0D02918E1DBD7FA900C75BE5 /* RequestCell.swift */,
+				0D0291901DBD7FAF00C75BE5 /* Request.swift */,
 				0DB001F11DB316A400EF1921 /* HelperFunctions.swift */,
 			);
 			name = Controller;
@@ -454,6 +463,9 @@
 				0D3745C91DB04DFF009F061C /* AppDelegate.swift in Sources */,
 				0D6BB8FE1DB579380015AE04 /* DataService.swift in Sources */,
 				0D473E0D1DBBED45008FF539 /* User.swift in Sources */,
+				0D0291911DBD7FAF00C75BE5 /* Request.swift in Sources */,
+				0D0291861DBD7FA100C75BE5 /* CoachRequestsVC.swift in Sources */,
+				0D02918F1DBD7FA900C75BE5 /* RequestCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
