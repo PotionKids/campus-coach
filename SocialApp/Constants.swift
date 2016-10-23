@@ -47,6 +47,7 @@ struct Constants {
             static let Location = Constants.DataService.Firebase.Locations.removeLast()
             static let Name = "name"
             static let Provider = "provider"
+            static let Cell = "cellNumber"
             static let Email = Constants.Facebook.Key.Email
             static let Requests = Constants.DataService.Firebase.Requests
         }
@@ -89,8 +90,18 @@ struct Constants {
         {
             static let SignUpToSetGym = "SignUpToSetGym"
             static let SignUpToSetGymMap = "SignUpToSetGymMap"
+            static let SignUpToSaveCellNumber = "SignUpToSaveCellNumber"
         }
     }
+    
+    struct SaveCellNumber
+    {
+        struct Segue
+        {
+            static let SaveCellNumberToSetGym = "SaveCellNumberToSetGym"
+        }
+    }
+    
     struct ViewController
     {
         struct Segue
@@ -165,9 +176,11 @@ struct Constants {
             static let EmptyUserName = "User Name Not Captured"
             static let EmptyPassword = "Password Not Captured"
             static let EmptyUserNameAndPassword = "User Name and Password Not Captured"
+            static let EmptyCellNumber = "Cell Number Not Captured"
             static let SuccessfullyCalledCoach = "Coach Assigned"
             static let FailedToCallCoach = "Coach Unreachable."
             static let CurrentLocationNotFound = "Current Location Undetected"
+            
         }
         struct Message
         {
@@ -176,6 +189,7 @@ struct Constants {
             static let EmptyUserName = "How would you like to be called? Please enter a username of your choice."
             static let EmptyPassword = "Your account security is our priority. Please enter a secure password."
             static let EmptyUserNameAndPassword = "Your account security is our priority. Please enter a user name and password."
+            static let EmptyCellNumber = "We require your cell phone for your coach to be able to reach you. Please enter a valid Cell Number."
             static let SuccessfullyCalledCoach = Constants.Display.Message.SuccessfullyCalledCoach
             static let FailedToCallCoach = Constants.Display.Message.FailedToCallCoach
             static let CurrentLocationNotFound = "Your current location could not be detected. Please try again in a few moments."

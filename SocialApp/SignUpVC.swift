@@ -34,25 +34,39 @@ extension Optional
 class SignUpVC: UIViewController {
     
     var isCoach = false
-
+    var userID: String!
+    
+    @IBOutlet weak var cellNumberTextField: UITextField!
+    
     
     @IBAction func facebookClockIn(_ sender: AnyObject)
     {
-        let facebookLogin = FBSDKLoginManager()
-        facebookLogin.logIn(withReadPermissions: ["email"], from: self) { (result, error) in
-            if let error = error
+        if let cell = cellNumberTextField.text
+        {
+            if cell.isEmpty
             {
-                print("KRIS ERROR: Unable to authenticate with Facebook = \(error)")
-            }
-            else if result?.isCancelled == true
-            {
-                print("KRIS ERROR: Sorry, the user cancelled Facebook authentication.")
+                displayAlert(self, title: Constants.Alert.Title.EmptyCellNumber, message: Constants.Alert.Message.EmptyCellNumber)
             }
             else
             {
-                print("KRIS: Successfully authenticated with Facebook.")
-                let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
-                firebaseAuth(self.isCoach, credential: credential, vc: self)
+                let facebookLogin = FBSDKLoginManager()
+                facebookLogin.logIn(withReadPermissions: ["email"], from: self)
+                { (result, error) in
+                    if let error = error
+                    {
+                        print("KRIS ERROR: Unable to authenticate with Facebook = \(error)")
+                    }
+                    else if result?.isCancelled == true
+                    {
+                        print("KRIS ERROR: Sorry, the user cancelled Facebook authentication.")
+                    }
+                    else
+                    {
+                        print("KRIS: Successfully authenticated with Facebook.")
+                        let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+                        firebaseAuth(self.isCoach, cell: cell, credential: credential, vc: self)
+                    }
+                }
             }
         }
     }
@@ -73,11 +87,6 @@ class SignUpVC: UIViewController {
         }
     }
     
-    @IBAction func goToSignInScreen(_ sender: AnyObject)
-    {
-        performSegue(withIdentifier: "SignUpToSignIn", sender: nil)
-    }
-    
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -85,43 +94,53 @@ class SignUpVC: UIViewController {
     @IBOutlet weak var signInButton: UIButton!
     @IBAction func signIn(_ sender: AnyObject)
     {
-        if let email = emailTextField.text,
-            let password = passwordTextField.text
+        if let cell = cellNumberTextField.text
         {
-            if email.isEmpty() && !password.isEmpty()
+            if cell.isEmpty
             {
-                displayAlert(self, title: Constants.Alert.Title.EmptyUserName, message: Constants.Alert.Message.EmptyUserName)
-            }
-            else if !email.isEmpty() && password.isEmpty()
-            {
-                displayAlert(self, title: Constants.Alert.Title.EmptyPassword, message: Constants.Alert.Message.EmptyPassword)
-            }
-            else if email.isEmpty() && password.isEmpty()
-            {
-                displayAlert(self, title: Constants.Alert.Title.EmptyUserNameAndPassword, message: Constants.Alert.Message.EmptyUserNameAndPassword)
+                displayAlert(self, title: Constants.Alert.Title.EmptyCellNumber, message: Constants.Alert.Message.EmptyCellNumber)
             }
             else
             {
-                FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
-                    if let error = error
+                if let email = emailTextField.text,
+                    let password = passwordTextField.text
+                {
+                    if email.isEmpty() && !password.isEmpty()
                     {
-                        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
-                            if let error = error
-                            {
-                                print("KRIS: Unable to create user using email in Firebase. Erro \(error)")
-                            }
-                            else
-                            {
-                                print("KRIS: Successfully created a new user with email in Firebase.")
-                                completeSignIn(isCoach: self.isCoach, user: user, credential: nil, vc: self)
-                            }
-                        })
+                        displayAlert(self, title: Constants.Alert.Title.EmptyUserName, message: Constants.Alert.Message.EmptyUserName)
+                    }
+                    else if !email.isEmpty() && password.isEmpty()
+                    {
+                        displayAlert(self, title: Constants.Alert.Title.EmptyPassword, message: Constants.Alert.Message.EmptyPassword)
+                    }
+                    else if email.isEmpty() && password.isEmpty()
+                    {
+                        displayAlert(self, title: Constants.Alert.Title.EmptyUserNameAndPassword, message: Constants.Alert.Message.EmptyUserNameAndPassword)
                     }
                     else
                     {
-                        completeSignIn(isCoach: self.isCoach, user: user, credential: nil, vc: self)
+                        FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
+                            if error != nil
+                            {
+                                FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
+                                    if let error = error
+                                    {
+                                        print("KRIS: Unable to create user using email in Firebase. Erro \(error)")
+                                    }
+                                    else
+                                    {
+                                        print("KRIS: Successfully created a new user with email in Firebase.")
+                                        completeSignIn(isCoach: self.isCoach, cell: cell, user: user, credential: nil, vc: self)
+                                    }
+                                })
+                            }
+                            else
+                            {
+                                completeSignIn(isCoach: self.isCoach, cell: cell, user: user, credential: nil, vc: self)
+                            }
+                        })
                     }
-                })
+                }
             }
         }
     }
@@ -145,7 +164,6 @@ class SignUpVC: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
     /*
     // MARK: - Navigation

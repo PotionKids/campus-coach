@@ -66,7 +66,6 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     private func CURLscrapeWebPage(link: String) {
         let CURLscraping = ConstantsDictionary[Constants.Mirror.Key.CURLscraping]!
         let headers = CURLscraping[Constants.Mirror.CURLscraping.Key.HeadersPSUFitness]!
-        var result: GymStat?
         
         Alamofire.request(link, headers: headers).responseJSON { [weak weakSelf = self] (response) in
             DispatchQueue.main.async {

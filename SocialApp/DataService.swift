@@ -73,4 +73,9 @@ class DataService
     {
         object.DatabaseReference.child(instanceID).updateChildValues(data)
     }
+    
+    func updateDatabase(object: Firebase.Object, instanceID: String, data: FirebaseData)
+    {
+        object.DatabaseReference.child(instanceID).updateChildValues(data)
+    }
 }

@@ -22,7 +22,7 @@ func displayAlert(_ target: UIViewController, title: String, message: String, ac
     target.present(alertController, animated: true, completion: nil)
 }
 
-func firebaseAuth(_ isCoach: Bool, credential: FIRAuthCredential, vc: UIViewController)
+func firebaseAuth(_ isCoach: Bool, cell: String, credential: FIRAuthCredential, vc: UIViewController)
 {
     FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
         if let error = error
@@ -31,7 +31,23 @@ func firebaseAuth(_ isCoach: Bool, credential: FIRAuthCredential, vc: UIViewCont
         }
         else
         {
-            completeSignIn(isCoach: isCoach, user: user, credential: credential, vc: vc)
+            if let user = user
+            {
+                if let vc = vc as? SignUpVC
+                {
+                    vc.userID = user.uid
+                    print("KRIS: User ID = \(vc.userID)")
+                }
+                else
+                {
+                    print("KRIS: User ID = \(user.uid). Unable to map SignUpVC")
+                }
+            }
+            else
+            {
+                print("KRIS: Something's pretty fucked up.")
+            }
+            completeSignIn(isCoach: isCoach, cell: cell, user: user, credential: credential, vc: vc)
         }
     })
 }
@@ -106,11 +122,12 @@ func extractProviderData(user: FIRUser, credential: FIRAuthCredential) -> Fireba
     return userData
 }
 
-func completeSignIn(isCoach: Bool, user: FIRUser?, credential: FIRAuthCredential?, vc: UIViewController)
+func completeSignIn(isCoach: Bool, cell: String, user: FIRUser?, credential: FIRAuthCredential?, vc: UIViewController)
 {
     var id: String?
     var userData: FirebaseData?
     (id, userData) = extractUserData(user: user, credential: credential)
+    userData?.updateValue(cell, forKey: Constants.DataService.User.Cell)
     
     if let id = id, let userData = userData
     {
