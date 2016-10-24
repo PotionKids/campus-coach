@@ -192,7 +192,6 @@
 		0D3745DD1DB0506B009F061C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				0DB001F31DB3179100EF1921 /* Constants.swift */,
 				0DB001EF1DB309CB00EF1921 /* SignUpVC.swift */,
 				0D9D79081DB4307E006F7081 /* SetGymVC.swift */,
 				0D0291851DBD7FA100C75BE5 /* CoachRequestsVC.swift */,
@@ -213,6 +212,7 @@
 		0D3745E01DB0508E009F061C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0DB001F31DB3179100EF1921 /* Constants.swift */,
 				0DB001F61DB32F2700EF1921 /* Gym.swift */,
 				0DB001F81DB32F5200EF1921 /* Parsing.swift */,
 				0D473E0C1DBBED45008FF539 /* User.swift */,

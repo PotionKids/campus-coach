@@ -6,7 +6,7 @@
 //  Copyright © 2016 Campus Coach. All rights reserved.
 //
 
-import UIKit
+//import UIKit
 import MapKit
 
 import Firebase
@@ -22,6 +22,7 @@ extension String
 }
 
 struct Constants {
+    
     struct DataService
     {
         struct Firebase
@@ -100,6 +101,11 @@ struct Constants {
         struct Segue
         {
             static let CoachRequestsToSignUp = "CoachRequestsToSignUp"
+        }
+        
+        struct Cell
+        {
+            static let Request = "Request"
         }
     }
     
