@@ -196,7 +196,6 @@
 				0D9D79081DB4307E006F7081 /* SetGymVC.swift */,
 				0D0291851DBD7FA100C75BE5 /* CoachRequestsVC.swift */,
 				0D02918E1DBD7FA900C75BE5 /* RequestCell.swift */,
-				0D0291901DBD7FAF00C75BE5 /* Request.swift */,
 				0DB001F11DB316A400EF1921 /* HelperFunctions.swift */,
 			);
 			name = Controller;
@@ -218,6 +217,7 @@
 				0D473E0C1DBBED45008FF539 /* User.swift */,
 				0D473E151DBBED5E008FF539 /* Student.swift */,
 				0D473E171DBBED6B008FF539 /* Coach.swift */,
+				0D0291901DBD7FAF00C75BE5 /* Request.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
