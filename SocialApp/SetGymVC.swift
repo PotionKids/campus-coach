@@ -26,7 +26,14 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     //MARK: Outlets
     
-    @IBOutlet weak var userLocationMap: MKMapView!
+    @IBOutlet weak var mapView: MKMapView!
+    {
+        didSet
+        {
+            mapView.mapType = .standard
+            mapView.delegate = self
+        }
+    }
     
     @IBOutlet weak var gymFirstChoiceLabel: UILabel!
     @IBOutlet weak var gymSecondChoiceLabel: UILabel!
@@ -39,6 +46,18 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var gymFirstChoiceHoursLabel: UILabel!
     @IBOutlet weak var gymSecondChoiceHoursLabel: UILabel!
     @IBOutlet weak var gymThirdChoiceHoursLabel: UILabel!
+    
+    @IBAction func mapLocation(_ sender: UILongPressGestureRecognizer)
+    {
+        if sender.state == .began
+        {
+            let coordinate = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
+            let waypoint = EditableWaypoint(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            waypoint.name = "White Bldg"
+            mapView.addAnnotation(waypoint)
+            print("KRIS: The Long Pressed Location Latitude = \(coordinate.latitude), Longitude = \(coordinate.longitude)")
+        }
+    }
     
     @IBAction func signOut(_ sender: AnyObject)
     {
@@ -122,9 +141,9 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             {
                 let region = MKCoordinateRegionMakeWithDistance(userLocation, Constants.Map.Distance.SpanHeight, Constants.Map.Distance.SpanWidth)
                 
-                self.userLocationMap.setRegion(region, animated: true)
+                self.mapView.setRegion(region, animated: true)
                 
-                self.userLocationMap.removeAnnotations(self.userLocationMap.annotations)
+                self.mapView.removeAnnotations(self.mapView.annotations)
                 
                 let annotation = MKPointAnnotation()
                 
@@ -132,7 +151,7 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                 
                 annotation.title = Constants.Map.Annotation.TitleForCurrentLocation
                 
-                self.userLocationMap.addAnnotation(annotation)
+                self.mapView.addAnnotation(annotation)
             }
         }
     }
@@ -154,7 +173,7 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     func locationAuthStatus() {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            userLocationMap.showsUserLocation = true
+            mapView.showsUserLocation = true
         } else {
             locationManager.requestWhenInUseAuthorization()
         }
@@ -163,14 +182,14 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         
         if status == .authorizedWhenInUse {
-            userLocationMap.showsUserLocation = true
+            mapView.showsUserLocation = true
         }
     }
     
     func translateMapCenter(toLocation location: CLLocation, latitudeRange: CLLocationDistance = 2000, longitudeRange: CLLocationDistance = 2000) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, latitudeRange, longitudeRange)
         
-        userLocationMap.setRegion(coordinateRegion, animated: true)
+        mapView.setRegion(coordinateRegion, animated: true)
     }
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation)
@@ -184,6 +203,8 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             }
         }
     }
+    
+    
     
     /*
     // MARK: - Navigation

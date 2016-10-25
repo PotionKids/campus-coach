@@ -168,6 +168,9 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="sAN-RP-py7">
                                 <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="BDq-wo-1gl" appends="YES" id="Kax-UJ-bWL"/>
+                                </connections>
                             </mapView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TrL-dJ-Pa8">
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="lkK-Ox-bAN">
@@ -366,9 +369,6 @@
                             <constraint firstItem="W6n-S3-Agg" firstAttribute="leading" secondItem="KAS-qJ-4zV" secondAttribute="leading" id="xA7-4Y-QNo"/>
                             <constraint firstItem="TrL-dJ-Pa8" firstAttribute="top" secondItem="KAS-qJ-4zV" secondAttribute="top" id="xOR-0M-s6n"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="BDq-wo-1gl" appends="YES" id="MwH-0E-0jj"/>
-                        </connections>
                     </view>
                     <connections>
                         <outlet property="gymFirstChoiceHoursLabel" destination="W6n-S3-Agg" id="vey-mk-zyo"/>
@@ -380,12 +380,16 @@
                         <outlet property="gymThirdChoiceHoursLabel" destination="FMt-yR-CLO" id="RT3-X3-Yqg"/>
                         <outlet property="gymThirdChoiceLabel" destination="qRk-iL-sel" id="ujh-mk-B3O"/>
                         <outlet property="gymThirdChoiceOccupancyLabel" destination="izb-CV-qXG" id="uVA-c7-JS1"/>
-                        <outlet property="userLocationMap" destination="sAN-RP-py7" id="8pF-Fe-s0g"/>
+                        <outlet property="mapView" destination="sAN-RP-py7" id="APP-PO-u1Q"/>
                         <segue destination="WWQ-Oc-wcr" kind="show" identifier="SetGymMapToSignIn" id="ehu-ZY-uP1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oz2-XB-rcJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="1" id="BDq-wo-1gl"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="1" id="BDq-wo-1gl">
+                    <connections>
+                        <action selector="mapLocation:" destination="rfn-7V-i1c" id="nuQ-yf-3O2"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="446" y="-1426"/>
         </scene>
@@ -599,7 +603,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lfg-vf-EoK">
-                                                <frame key="frameInset"/>
+                                                <frame key="frameInset" minX="-0.5" minY="-0.5" maxX="0.5" maxY="0.5"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="DOG-hy-0ua">
                                                     <frame key="frameInset"/>
@@ -811,6 +815,6 @@
         <image name=" User Wide" width="62" height="37"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="i9u-lN-gI5"/>
+        <segue reference="ehu-ZY-uP1"/>
     </inferredMetricsTieBreakers>
 </document>
