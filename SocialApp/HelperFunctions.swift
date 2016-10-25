@@ -127,7 +127,7 @@ func completeSignIn(isCoach: Bool, cell: String, user: FIRUser?, credential: FIR
     var id: String?
     var userData: FirebaseData?
     (id, userData) = extractUserData(user: user, credential: credential)
-    userData?.updateValue(cell, forKey: Constants.DataService.User.Cell)
+    let _ = userData?.updateValue(cell, forKey: Constants.DataService.User.Cell)
     
     if let id = id, let userData = userData
     {

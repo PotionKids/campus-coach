@@ -15,6 +15,7 @@
 		0D3745D01DB04DFF009F061C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D3745CF1DB04DFF009F061C /* Assets.xcassets */; };
 		0D3745D31DB04DFF009F061C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D3745D11DB04DFF009F061C /* LaunchScreen.storyboard */; };
 		0D3745DB1DB04E8D009F061C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D3745DA1DB04E8D009F061C /* GoogleService-Info.plist */; };
+		0D43EBB51DBFA2460033CA95 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D43EBB41DBFA2460033CA95 /* Location.swift */; };
 		0D473E0D1DBBED45008FF539 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D473E0C1DBBED45008FF539 /* User.swift */; };
 		0D473E161DBBED5E008FF539 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D473E151DBBED5E008FF539 /* Student.swift */; };
 		0D473E181DBBED6B008FF539 /* Coach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D473E171DBBED6B008FF539 /* Coach.swift */; };
@@ -27,6 +28,7 @@
 		0DB001F41DB3179100EF1921 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB001F31DB3179100EF1921 /* Constants.swift */; };
 		0DB001F71DB32F2700EF1921 /* Gym.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB001F61DB32F2700EF1921 /* Gym.swift */; };
 		0DB001F91DB32F5200EF1921 /* Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB001F81DB32F5200EF1921 /* Parsing.swift */; };
+		0DD8C4B01DBFD432002EACB3 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD8C4AF1DBFD432002EACB3 /* Errors.swift */; };
 		982CDC6EA7FE0E496070F067 /* Pods_SocialApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B0BA4C830293FEDC9E91481 /* Pods_SocialApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -114,6 +116,7 @@
 		0D3745D21DB04DFF009F061C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0D3745D41DB04DFF009F061C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D3745DA1DB04E8D009F061C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0D43EBB41DBFA2460033CA95 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		0D473E0C1DBBED45008FF539 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0D473E151DBBED5E008FF539 /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		0D473E171DBBED6B008FF539 /* Coach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coach.swift; sourceTree = "<group>"; };
@@ -126,6 +129,7 @@
 		0DB001F61DB32F2700EF1921 /* Gym.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gym.swift; sourceTree = "<group>"; };
 		0DB001F81DB32F5200EF1921 /* Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parsing.swift; sourceTree = "<group>"; };
 		0DB910701DB1B565002EFAC9 /* SocialApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SocialApp.entitlements; sourceTree = "<group>"; };
+		0DD8C4AF1DBFD432002EACB3 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		8B0BA4C830293FEDC9E91481 /* Pods_SocialApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SocialApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D59A66993E69C268A3308B02 /* Pods-SocialApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SocialApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-SocialApp/Pods-SocialApp.release.xcconfig"; sourceTree = "<group>"; };
 		F1CFDF931D9794B93FEFE25A /* Pods-SocialApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SocialApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SocialApp/Pods-SocialApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -166,6 +170,7 @@
 		0D3745C71DB04DFF009F061C /* SocialApp */ = {
 			isa = PBXGroup;
 			children = (
+				0DD8C4A51DBFD3DA002EACB3 /* Error Handling */,
 				0D6BB8F51DB579240015AE04 /* Services */,
 				0D3745DA1DB04E8D009F061C /* GoogleService-Info.plist */,
 				0DB910701DB1B565002EFAC9 /* SocialApp.entitlements */,
@@ -218,6 +223,7 @@
 				0D473E151DBBED5E008FF539 /* Student.swift */,
 				0D473E171DBBED6B008FF539 /* Coach.swift */,
 				0D0291901DBD7FAF00C75BE5 /* Request.swift */,
+				0D43EBB41DBFA2460033CA95 /* Location.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -242,6 +248,14 @@
 				0D9D78DE1DB40373006F7081 /* Alamofire.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		0DD8C4A51DBFD3DA002EACB3 /* Error Handling */ = {
+			isa = PBXGroup;
+			children = (
+				0DD8C4AF1DBFD432002EACB3 /* Errors.swift */,
+			);
+			name = "Error Handling";
 			sourceTree = "<group>";
 		};
 		A0AC66F6600C8E80654E3506 /* Pods */ = {
@@ -456,9 +470,11 @@
 				0DB001F41DB3179100EF1921 /* Constants.swift in Sources */,
 				0DB001F71DB32F2700EF1921 /* Gym.swift in Sources */,
 				0D473E181DBBED6B008FF539 /* Coach.swift in Sources */,
+				0DD8C4B01DBFD432002EACB3 /* Errors.swift in Sources */,
 				0D9D79091DB4307E006F7081 /* SetGymVC.swift in Sources */,
 				0DB001F21DB316A400EF1921 /* HelperFunctions.swift in Sources */,
 				0DB001F01DB309CB00EF1921 /* SignUpVC.swift in Sources */,
+				0D43EBB51DBFA2460033CA95 /* Location.swift in Sources */,
 				0D473E161DBBED5E008FF539 /* Student.swift in Sources */,
 				0D3745C91DB04DFF009F061C /* AppDelegate.swift in Sources */,
 				0D6BB8FE1DB579380015AE04 /* DataService.swift in Sources */,

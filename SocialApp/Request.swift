@@ -15,6 +15,9 @@ class Request
     private var privateUser: String!
     private var privateImageURL: String!
     
+    var accepted = false
+    var coachID: String? = nil
+    
     var gymName: String
     {
         return privateGymName
@@ -40,4 +43,9 @@ class Request
         self.privateImageURL = imageURL
     }
     
+    func accept(coachID: String)
+    {
+        self.accepted = true
+        self.coachID = coachID
+    }
 }

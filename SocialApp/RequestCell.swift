@@ -36,6 +36,26 @@ class RequestCell: UITableViewCell {
         gymBldg.text = request.gymName
         acceptRequestButtonDescription.text = request.action
         userName.text = request.user
+        
+        let urlstr = request.imageURL
+        
+        if let urlstring = urlstr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        {
+            if let url = URL(string: urlstring)
+            {
+                do
+                {
+                    let data = try Data(contentsOf: url)
+                    let image = UIImage(data: data)
+                    userImage.contentMode = .scaleAspectFit
+                    userImage.image = image
+                }
+                catch Errors.DataRetrival
+                {
+                    print(Errors.DataRetrival.message)
+                }
+            }
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

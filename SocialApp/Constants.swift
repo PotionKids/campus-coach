@@ -223,6 +223,7 @@ struct Constants {
         struct Message
         {
             static let TryAgain = "Please, try again later."
+            static let DataRetrieval = "Sorry, the data could not be retrieved from the specified URL."
         }
     }
     struct Display
