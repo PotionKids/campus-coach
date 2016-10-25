@@ -48,11 +48,16 @@ class RequestCell: UITableViewCell {
                     let data = try Data(contentsOf: url)
                     let image = UIImage(data: data)
                     userImage.contentMode = .scaleAspectFit
+                    userImage.clipsToBounds = true
                     userImage.image = image
                 }
                 catch Errors.DataRetrival
                 {
                     print(Errors.DataRetrival.message)
+                }
+                catch let error
+                {
+                    fatalError("\(error)")
                 }
             }
         }
