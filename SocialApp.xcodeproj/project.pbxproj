@@ -22,6 +22,7 @@
 		0D6BB8FE1DB579380015AE04 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6BB8FD1DB579380015AE04 /* DataService.swift */; };
 		0D9550AF1DBFE76000B2DB9D /* ViewStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9550AE1DBFE76000B2DB9D /* ViewStyling.swift */; };
 		0D9550BA1DBFEB3000B2DB9D /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9550B91DBFEB3000B2DB9D /* CustomImageView.swift */; };
+		0D9550BC1DBFF36000B2DB9D /* CustomTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9550BB1DBFF36000B2DB9D /* CustomTableView.swift */; };
 		0D9D78DF1DB4041E006F7081 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D9D78D21DB40373006F7081 /* Alamofire.framework */; };
 		0D9D78E01DB4041E006F7081 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0D9D78D21DB40373006F7081 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0D9D79091DB4307E006F7081 /* SetGymVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9D79081DB4307E006F7081 /* SetGymVC.swift */; };
@@ -125,6 +126,7 @@
 		0D6BB8FD1DB579380015AE04 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		0D9550AE1DBFE76000B2DB9D /* ViewStyling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewStyling.swift; sourceTree = "<group>"; };
 		0D9550B91DBFEB3000B2DB9D /* CustomImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
+		0D9550BB1DBFF36000B2DB9D /* CustomTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableView.swift; sourceTree = "<group>"; };
 		0D9D78C61DB40373006F7081 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		0D9D79081DB4307E006F7081 /* SetGymVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetGymVC.swift; sourceTree = "<group>"; };
 		0DB001EF1DB309CB00EF1921 /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 			children = (
 				0D9550AE1DBFE76000B2DB9D /* ViewStyling.swift */,
 				0D9550B91DBFEB3000B2DB9D /* CustomImageView.swift */,
+				0D9550BB1DBFF36000B2DB9D /* CustomTableView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -473,6 +476,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0DB001F91DB32F5200EF1921 /* Parsing.swift in Sources */,
+				0D9550BC1DBFF36000B2DB9D /* CustomTableView.swift in Sources */,
 				0D9550BA1DBFEB3000B2DB9D /* CustomImageView.swift in Sources */,
 				0DB001F41DB3179100EF1921 /* Constants.swift in Sources */,
 				0DB001F71DB32F2700EF1921 /* Gym.swift in Sources */,

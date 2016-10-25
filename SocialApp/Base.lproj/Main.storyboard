@@ -109,7 +109,7 @@
                                     <action selector="signIn:" destination="WWQ-Oc-wcr" eventType="touchUpInside" id="Fd2-ug-gcQ"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kh9-VB-eZa">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="123" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kh9-VB-eZa">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="203" id="Ujr-aV-kPg"/>
                                     <constraint firstAttribute="height" constant="30" id="vJd-9U-Dkc"/>
@@ -588,16 +588,59 @@
                                 </constraints>
                                 <blurEffect style="light"/>
                             </visualEffectView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="116" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3Kn-H0-GPY">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="116" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3Kn-H0-GPY" customClass="CustomTableView" customModule="SocialApp" customModuleProvider="target">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" red="0.72202225129999997" green="0.049115990989999997" blue="0.036662425339999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <visualEffectView key="tableFooterView" opaque="NO" contentMode="scaleToFill" id="6BH-oh-p35">
+                                    <rect key="frame" x="0.0" y="144" width="375" height="367"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="VRI-B4-0XS">
+                                        <frame key="frameInset"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <subviews>
+                                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lfg-vf-EoK">
+                                                <frame key="frameInset"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="DOG-hy-0ua">
+                                                    <frame key="frameInset"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </view>
+                                                <vibrancyEffect>
+                                                    <blurEffect style="light"/>
+                                                </vibrancyEffect>
+                                            </visualEffectView>
+                                        </subviews>
+                                    </view>
+                                    <blurEffect style="light"/>
+                                </visualEffectView>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Request" rowHeight="116" id="D1L-0e-WL5" customClass="RequestCell" customModule="SocialApp" customModuleProvider="target">
+                                    <tableViewCell opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Request" rowHeight="116" id="D1L-0e-WL5" customClass="RequestCell" customModule="SocialApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="116"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="D1L-0e-WL5" id="sMP-pU-91u">
-                                            <frame key="frameInset" width="375" height="115.5"/>
+                                            <frame key="frameInset" width="375" height="115"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8SD-z8-HYQ">
+                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="05K-el-iH6">
+                                                        <frame key="frameInset"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <subviews>
+                                                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Akk-NH-uat">
+                                                                <frame key="frameInset"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="61z-t2-vAH">
+                                                                    <frame key="frameInset"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                </view>
+                                                                <vibrancyEffect>
+                                                                    <blurEffect style="light"/>
+                                                                </vibrancyEffect>
+                                                            </visualEffectView>
+                                                        </subviews>
+                                                    </view>
+                                                    <blurEffect style="light"/>
+                                                </visualEffectView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="4jr-JT-pQ8">
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image=" Gym Wide" translatesAutoresizingMaskIntoConstraints="NO" id="w0x-SC-79R">
@@ -680,17 +723,24 @@
                                                     </constraints>
                                                 </stackView>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="4jr-JT-pQ8" secondAttribute="bottom" constant="3" id="Lyo-eH-rlN"/>
+                                                <constraint firstAttribute="bottom" secondItem="8SD-z8-HYQ" secondAttribute="bottom" id="RYi-Rh-1lq"/>
                                                 <constraint firstAttribute="bottom" secondItem="phW-Ys-BhE" secondAttribute="bottom" constant="3" id="TC1-u7-gCw"/>
                                                 <constraint firstAttribute="trailing" secondItem="df6-IL-J5g" secondAttribute="trailing" id="ToF-60-nzg"/>
+                                                <constraint firstItem="8SD-z8-HYQ" firstAttribute="centerX" secondItem="sMP-pU-91u" secondAttribute="centerX" id="Tzl-Xk-CXc"/>
                                                 <constraint firstItem="df6-IL-J5g" firstAttribute="top" secondItem="sMP-pU-91u" secondAttribute="top" constant="6" id="U8s-IG-PSg"/>
                                                 <constraint firstItem="phW-Ys-BhE" firstAttribute="centerX" secondItem="sMP-pU-91u" secondAttribute="centerX" id="VDd-bT-Rkd"/>
+                                                <constraint firstAttribute="trailing" secondItem="8SD-z8-HYQ" secondAttribute="trailing" id="Vfz-XY-W1H"/>
                                                 <constraint firstItem="phW-Ys-BhE" firstAttribute="top" secondItem="sMP-pU-91u" secondAttribute="top" constant="8" id="eub-xe-ESX"/>
                                                 <constraint firstItem="4jr-JT-pQ8" firstAttribute="top" secondItem="sMP-pU-91u" secondAttribute="top" constant="6" id="geW-TY-dK5"/>
+                                                <constraint firstItem="8SD-z8-HYQ" firstAttribute="leading" secondItem="sMP-pU-91u" secondAttribute="leading" id="hKI-Dp-o8l"/>
+                                                <constraint firstItem="8SD-z8-HYQ" firstAttribute="top" secondItem="sMP-pU-91u" secondAttribute="top" id="vW0-83-Rhp"/>
                                                 <constraint firstItem="4jr-JT-pQ8" firstAttribute="leading" secondItem="sMP-pU-91u" secondAttribute="leading" id="vy3-uY-gT9"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="acceptRequestButton" destination="gBt-iT-0cg" id="Qsv-Hl-qX1"/>
                                             <outlet property="acceptRequestButtonDescription" destination="p5v-nl-btV" id="vHM-wM-4t1"/>
@@ -701,6 +751,9 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="backgroundImage" value=" Maps"/>
+                                </userDefinedRuntimeAttributes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -741,7 +794,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DZY-qx-2sE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="444.92753623188412" y="-369.29347826086962"/>
+            <point key="canvasLocation" x="444" y="-370.16491754122939"/>
         </scene>
     </scenes>
     <resources>
