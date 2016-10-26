@@ -229,7 +229,7 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     func locationAuthStatus() {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse
         {
-            mapView.showsUserLocation = true
+            //mapView.showsUserLocation = true
         }
         else
         {
