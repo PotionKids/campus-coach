@@ -33,6 +33,11 @@
 		0DB001F41DB3179100EF1921 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB001F31DB3179100EF1921 /* Constants.swift */; };
 		0DB001F71DB32F2700EF1921 /* Gym.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB001F61DB32F2700EF1921 /* Gym.swift */; };
 		0DB001F91DB32F5200EF1921 /* Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB001F81DB32F5200EF1921 /* Parsing.swift */; };
+		0DB69BF81DC16566001EB780 /* GeoFire.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB69BEF1DC16566001EB780 /* GeoFire.m */; };
+		0DB69BF91DC16566001EB780 /* GFBase32Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB69BF11DC16566001EB780 /* GFBase32Utils.m */; };
+		0DB69BFA1DC16566001EB780 /* GFGeoHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB69BF31DC16566001EB780 /* GFGeoHash.m */; };
+		0DB69BFB1DC16566001EB780 /* GFGeoHashQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB69BF51DC16566001EB780 /* GFGeoHashQuery.m */; };
+		0DB69BFC1DC16566001EB780 /* GFQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB69BF71DC16566001EB780 /* GFQuery.m */; };
 		0DD8C4B01DBFD432002EACB3 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD8C4AF1DBFD432002EACB3 /* Errors.swift */; };
 		982CDC6EA7FE0E496070F067 /* Pods_SocialApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B0BA4C830293FEDC9E91481 /* Pods_SocialApp.framework */; };
 /* End PBXBuildFile section */
@@ -138,6 +143,22 @@
 		0DB001F31DB3179100EF1921 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0DB001F61DB32F2700EF1921 /* Gym.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gym.swift; sourceTree = "<group>"; };
 		0DB001F81DB32F5200EF1921 /* Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parsing.swift; sourceTree = "<group>"; };
+		0DB69BE81DC16566001EB780 /* GeoFire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoFire.h; sourceTree = "<group>"; };
+		0DB69BE91DC16566001EB780 /* GFCircleQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFCircleQuery.h; sourceTree = "<group>"; };
+		0DB69BEA1DC16566001EB780 /* GFQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFQuery.h; sourceTree = "<group>"; };
+		0DB69BEB1DC16566001EB780 /* GFRegionQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFRegionQuery.h; sourceTree = "<group>"; };
+		0DB69BEC1DC16566001EB780 /* GeoFire-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GeoFire-Prefix.pch"; sourceTree = "<group>"; };
+		0DB69BEE1DC16566001EB780 /* GeoFire+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GeoFire+Private.h"; sourceTree = "<group>"; };
+		0DB69BEF1DC16566001EB780 /* GeoFire.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeoFire.m; sourceTree = "<group>"; };
+		0DB69BF01DC16566001EB780 /* GFBase32Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFBase32Utils.h; sourceTree = "<group>"; };
+		0DB69BF11DC16566001EB780 /* GFBase32Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFBase32Utils.m; sourceTree = "<group>"; };
+		0DB69BF21DC16566001EB780 /* GFGeoHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFGeoHash.h; sourceTree = "<group>"; };
+		0DB69BF31DC16566001EB780 /* GFGeoHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFGeoHash.m; sourceTree = "<group>"; };
+		0DB69BF41DC16566001EB780 /* GFGeoHashQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFGeoHashQuery.h; sourceTree = "<group>"; };
+		0DB69BF51DC16566001EB780 /* GFGeoHashQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFGeoHashQuery.m; sourceTree = "<group>"; };
+		0DB69BF61DC16566001EB780 /* GFQuery+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GFQuery+Private.h"; sourceTree = "<group>"; };
+		0DB69BF71DC16566001EB780 /* GFQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFQuery.m; sourceTree = "<group>"; };
+		0DB69BFD1DC16682001EB780 /* SocialApp-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SocialApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		0DB910701DB1B565002EFAC9 /* SocialApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SocialApp.entitlements; sourceTree = "<group>"; };
 		0DD8C4AF1DBFD432002EACB3 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		8B0BA4C830293FEDC9E91481 /* Pods_SocialApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SocialApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -180,15 +201,15 @@
 		0D3745C71DB04DFF009F061C /* SocialApp */ = {
 			isa = PBXGroup;
 			children = (
+				0DB69BE61DC16566001EB780 /* GeoFire */,
 				0DD8C4A51DBFD3DA002EACB3 /* Error Handling */,
 				0D6BB8F51DB579240015AE04 /* Services */,
-				0D3745DA1DB04E8D009F061C /* GoogleService-Info.plist */,
-				0DB910701DB1B565002EFAC9 /* SocialApp.entitlements */,
 				0D3745E01DB0508E009F061C /* Model */,
 				0D3745DE1DB05072009F061C /* View */,
 				0D3745DD1DB0506B009F061C /* Controller */,
 				0D3745DC1DB0504E009F061C /* Supporting Files */,
 				0D3745CC1DB04DFF009F061C /* Main.storyboard */,
+				0DB69BFD1DC16682001EB780 /* SocialApp-Bridging-Header.h */,
 			);
 			path = SocialApp;
 			sourceTree = "<group>";
@@ -196,6 +217,8 @@
 		0D3745DC1DB0504E009F061C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0D3745DA1DB04E8D009F061C /* GoogleService-Info.plist */,
+				0DB910701DB1B565002EFAC9 /* SocialApp.entitlements */,
 				0D3745C81DB04DFF009F061C /* AppDelegate.swift */,
 				0D3745CF1DB04DFF009F061C /* Assets.xcassets */,
 				0D3745D11DB04DFF009F061C /* LaunchScreen.storyboard */,
@@ -263,6 +286,44 @@
 				0D9D78DE1DB40373006F7081 /* Alamofire.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		0DB69BE61DC16566001EB780 /* GeoFire */ = {
+			isa = PBXGroup;
+			children = (
+				0DB69BE71DC16566001EB780 /* API */,
+				0DB69BEC1DC16566001EB780 /* GeoFire-Prefix.pch */,
+				0DB69BED1DC16566001EB780 /* Implementation */,
+			);
+			path = GeoFire;
+			sourceTree = "<group>";
+		};
+		0DB69BE71DC16566001EB780 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				0DB69BE81DC16566001EB780 /* GeoFire.h */,
+				0DB69BE91DC16566001EB780 /* GFCircleQuery.h */,
+				0DB69BEA1DC16566001EB780 /* GFQuery.h */,
+				0DB69BEB1DC16566001EB780 /* GFRegionQuery.h */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		0DB69BED1DC16566001EB780 /* Implementation */ = {
+			isa = PBXGroup;
+			children = (
+				0DB69BEE1DC16566001EB780 /* GeoFire+Private.h */,
+				0DB69BEF1DC16566001EB780 /* GeoFire.m */,
+				0DB69BF01DC16566001EB780 /* GFBase32Utils.h */,
+				0DB69BF11DC16566001EB780 /* GFBase32Utils.m */,
+				0DB69BF21DC16566001EB780 /* GFGeoHash.h */,
+				0DB69BF31DC16566001EB780 /* GFGeoHash.m */,
+				0DB69BF41DC16566001EB780 /* GFGeoHashQuery.h */,
+				0DB69BF51DC16566001EB780 /* GFGeoHashQuery.m */,
+				0DB69BF61DC16566001EB780 /* GFQuery+Private.h */,
+				0DB69BF71DC16566001EB780 /* GFQuery.m */,
+			);
+			path = Implementation;
 			sourceTree = "<group>";
 		};
 		0DD8C4A51DBFD3DA002EACB3 /* Error Handling */ = {
@@ -482,14 +543,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				0DB001F91DB32F5200EF1921 /* Parsing.swift in Sources */,
+				0DB69BF81DC16566001EB780 /* GeoFire.m in Sources */,
 				0D9550BC1DBFF36000B2DB9D /* CustomTableView.swift in Sources */,
 				0D9550BA1DBFEB3000B2DB9D /* CustomImageView.swift in Sources */,
 				0DB001F41DB3179100EF1921 /* Constants.swift in Sources */,
 				0DB001F71DB32F2700EF1921 /* Gym.swift in Sources */,
 				0D473E181DBBED6B008FF539 /* Coach.swift in Sources */,
 				0D6DA2FC1DC01BD70068CDBF /* gpx.swift in Sources */,
+				0DB69BFB1DC16566001EB780 /* GFGeoHashQuery.m in Sources */,
 				0DD8C4B01DBFD432002EACB3 /* Errors.swift in Sources */,
 				0D9D79091DB4307E006F7081 /* SetGymVC.swift in Sources */,
+				0DB69BFA1DC16566001EB780 /* GFGeoHash.m in Sources */,
 				0DB001F21DB316A400EF1921 /* HelperFunctions.swift in Sources */,
 				0D6DA2F31DC01BC90068CDBF /* MKGPX.swift in Sources */,
 				0DB001F01DB309CB00EF1921 /* SignUpVC.swift in Sources */,
@@ -497,11 +561,13 @@
 				0D473E161DBBED5E008FF539 /* Student.swift in Sources */,
 				0D3745C91DB04DFF009F061C /* AppDelegate.swift in Sources */,
 				0D9550AF1DBFE76000B2DB9D /* ViewStyling.swift in Sources */,
+				0DB69BF91DC16566001EB780 /* GFBase32Utils.m in Sources */,
 				0D6BB8FE1DB579380015AE04 /* DataService.swift in Sources */,
 				0D473E0D1DBBED45008FF539 /* User.swift in Sources */,
 				0D0291911DBD7FAF00C75BE5 /* Request.swift in Sources */,
 				0D0291861DBD7FA100C75BE5 /* CoachRequestsVC.swift in Sources */,
 				0D02918F1DBD7FA900C75BE5 /* RequestCell.swift in Sources */,
+				0DB69BFC1DC16566001EB780 /* GFQuery.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -580,6 +646,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "SocialApp/SocialApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -621,6 +688,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "SocialApp/SocialApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
