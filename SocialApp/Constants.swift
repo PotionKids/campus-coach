@@ -362,6 +362,15 @@ struct Constants {
             static let DefaultLatitudeOffsetMeters = 500.00
             static let DefaultLongitudeOffsetMeters = 500.00
         }
+        
+        struct Trax
+        {
+            static let LeftCalloutFrame = CGRect(x: 0, y: 0, width: 59, height: 59)
+            static let AnnotationViewReuseIdentifier = "waypoint"
+            static let ShowImageSegue = "Show Image"
+            static let EditUserWaypoint = "Edit Waypoint"
+            static let Dropped = "Dropped"
+        }
     }
     
     struct Conversions

@@ -30,7 +30,7 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     {
         didSet
         {
-            mapView.mapType = .standard
+            mapView.mapType = .hybridFlyover
             mapView.delegate = self
         }
     }
@@ -130,6 +130,61 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             }
         }
     }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        var view: MKAnnotationView! = mapView.dequeueReusableAnnotationView(withIdentifier: Constants.Map.Trax.AnnotationViewReuseIdentifier)
+        if let view = view
+        {
+            view.annotation = annotation
+        }
+        else
+        {
+            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Constants.Map.Trax.AnnotationViewReuseIdentifier)
+            view.canShowCallout = true
+        }
+        
+        view.isDraggable = annotation is EditableWaypoint
+        
+        view.leftCalloutAccessoryView = nil
+        view.rightCalloutAccessoryView = nil
+        
+        if let waypoint = annotation as? GPX.Waypoint
+        {
+            if waypoint.thumbnailURL != nil
+            {
+                view.leftCalloutAccessoryView = UIButton(frame: Constants.Map.Trax.LeftCalloutFrame)
+            }
+            if waypoint is EditableWaypoint
+            {
+                view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            }
+        }
+        return view
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView)
+    {
+        if let thumbnailImageButton = view.leftCalloutAccessoryView as? UIButton,
+        let url = (view.annotation as? GPX.Waypoint)?.thumbnailURL,
+        let imageData = NSData(contentsOf: url as URL),
+        let image = UIImage(data: imageData as Data)
+        {
+            thumbnailImageButton.setImage(image, for: .normal)
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl)
+    {
+        if control == view.leftCalloutAccessoryView
+        {
+            performSegue(withIdentifier: Constants.Map.Trax.ShowImageSegue, sender: view)
+        }
+        else if control == view.rightCalloutAccessoryView
+        {
+            mapView.deselectAnnotation(view.annotation, animated: true)
+            performSegue(withIdentifier: Constants.Map.Trax.EditUserWaypoint, sender: view)
+        }
+    }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
@@ -145,13 +200,13 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                 
                 self.mapView.removeAnnotations(self.mapView.annotations)
                 
-                let annotation = MKPointAnnotation()
-                
-                annotation.coordinate = userLocation
-                
-                annotation.title = Constants.Map.Annotation.TitleForCurrentLocation
-                
-                self.mapView.addAnnotation(annotation)
+//                let annotation = MKPointAnnotation()
+//                
+//                annotation.coordinate = userLocation
+//                
+//                annotation.title = Constants.Map.Annotation.TitleForCurrentLocation
+//                
+//                self.mapView.addAnnotation(annotation)
             }
         }
     }
@@ -172,37 +227,45 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     func locationAuthStatus() {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse
+        {
             mapView.showsUserLocation = true
-        } else {
+        }
+        else
+        {
             locationManager.requestWhenInUseAuthorization()
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        
-        if status == .authorizedWhenInUse {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus)
+    {
+        if status == .authorizedWhenInUse
+        {
             mapView.showsUserLocation = true
         }
     }
     
-    func translateMapCenter(toLocation location: CLLocation, latitudeRange: CLLocationDistance = 2000, longitudeRange: CLLocationDistance = 2000) {
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, latitudeRange, longitudeRange)
-        
-        mapView.setRegion(coordinateRegion, animated: true)
-    }
-    
-    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation)
-    {
-        if let location = userLocation.location
-        {
-            if !mapHasCenteredOnce
-            {
-                translateMapCenter(toLocation: location)
-                //mapHasCenteredOnce = true
-            }
-        }
-    }
+//    func translateMapCenter(toLocation location: CLLocation, latitudeRange: CLLocationDistance = 2000, longitudeRange: CLLocationDistance = 2000) {
+//        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, latitudeRange, longitudeRange)
+//        
+//        mapView.setRegion(coordinateRegion, animated: true)
+//    }
+//    
+//    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation)
+//    {
+//        if let location = userLocation.location
+//        {
+//            if !mapHasCenteredOnce
+//            {
+//                translateMapCenter(toLocation: location)
+//                //mapHasCenteredOnce = true
+//            }
+//            else
+//            {
+//                mapHasCenteredOnce = false
+//            }
+//        }
+//    }
     
     
     
