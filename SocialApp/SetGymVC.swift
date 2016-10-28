@@ -20,8 +20,13 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     var coachOnTheWay = false
     var locationManager = CLLocationManager()
     var mapHasCenteredOnce = false
-    var gymButtonClicked: String?
     var userLocation: CLLocationCoordinate2D = Constants.Map.Location.BaseInitializer
+    
+    var geoFire: GeoFire!
+    var geoFireRef: FIRDatabaseReference!
+    
+    //MARK: Spotting and Tagging Gyms
+    
     
     
     //MARK: Outlets
@@ -30,7 +35,7 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     {
         didSet
         {
-            mapView.mapType = .hybridFlyover
+            mapView.mapType = .standard
             mapView.delegate = self
         }
     }
@@ -58,6 +63,9 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             print("KRIS: The Long Pressed Location Latitude = \(coordinate.latitude), Longitude = \(coordinate.longitude)")
         }
     }
+    
+    
+    
     
     @IBAction func signOut(_ sender: AnyObject)
     {
