@@ -14,10 +14,11 @@ class GymAnnotation: NSObject, MKAnnotation {
     var gymName: String
     var title: String?
     
-    init(coordinate: CLLocationCoordinate2D, gymName: String) {
+    init(coordinate: CLLocationCoordinate2D, gymName: String, message: String) {
         self.coordinate = coordinate
         self.gymName = gymName
-        self.title = self.gymName
+        let display = "\(gymName) is \(message)"
+        self.title = display
     }
 }
 

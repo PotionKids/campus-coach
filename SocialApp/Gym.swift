@@ -8,7 +8,10 @@
 
 import Foundation
 
+typealias GymStatClean = [String : String]
+
 class Gym
 {
     static var statistics: GymStat = [:]
+    static var occupancyPercentage: GymStatClean = [:]
 }

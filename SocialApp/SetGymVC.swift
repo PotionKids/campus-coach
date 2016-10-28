@@ -71,7 +71,6 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         performSegue(withIdentifier: Constants.SetGymVC.Segue.SetGymToSignIn, sender: nil)
     }
     
-    
     @IBAction func gymFirstChoiceSelected(_ sender: AnyObject)
     {
         if gymChoiceSelected != 1
@@ -120,6 +119,11 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                 let imBldgCapacity = Int(imBldgStats[Constants.Gym.Parsing.MaxVal]!)
                 let imBldgOccupancyPercentage = Int(imBldgOccupancy! * 100 / imBldgCapacity!)
                 
+                Gym.occupancyPercentage =   [
+                    Constants.Gym.Name.WhiteBldg : "\(whiteBldgOccupancyPercentage)",
+                    Constants.Gym.Name.RecHall : "\(recHallOccupancyPercentage)",
+                    Constants.Gym.Name.IMBldg : "\(imBldgOccupancyPercentage)"
+                                            ]
                 var gymStatisticsDisplay: [(name: String, occupancy: Int)] = [
                     (Constants.Gym.Name.WhiteBldg, whiteBldgOccupancyPercentage),
                     (Constants.Gym.Name.RecHall, recHallOccupancyPercentage),
@@ -251,7 +255,8 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             if let key = key, let location = location
             {
                 //self.geoFire.removeKey(key)
-                let anno = GymAnnotation(coordinate: location.coordinate, gymName: key)
+                let message = "\(Gym.occupancyPercentage[key]!) % Full."
+                let anno = GymAnnotation(coordinate: location.coordinate, gymName: key, message: message)
                 self.mapView.addAnnotation(anno)
             }
         })
