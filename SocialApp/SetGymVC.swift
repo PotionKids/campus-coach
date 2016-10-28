@@ -25,9 +25,7 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     var geoFire: GeoFire!
     var geoFireRef: FIRDatabaseReference!
     
-    //MARK: Spotting and Tagging Gyms
-    
-    
+    var gymChoiceSelected: Int = 0
     
     //MARK: Outlets
     
@@ -37,6 +35,7 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         {
             mapView.mapType = .standard
             mapView.delegate = self
+            mapView.userTrackingMode = .followWithHeading
         }
     }
     
@@ -52,20 +51,18 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var gymSecondChoiceHoursLabel: UILabel!
     @IBOutlet weak var gymThirdChoiceHoursLabel: UILabel!
     
+    
     @IBAction func mapLocation(_ sender: UILongPressGestureRecognizer)
     {
         if sender.state == .began
         {
             let coordinate = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
-            let waypoint = EditableWaypoint(latitude: coordinate.latitude, longitude: coordinate.longitude)
-            waypoint.name = "White Bldg"
-            mapView.addAnnotation(waypoint)
-            print("KRIS: The Long Pressed Location Latitude = \(coordinate.latitude), Longitude = \(coordinate.longitude)")
+            
+            let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            
+            createSighting(for: location)
         }
     }
-    
-    
-    
     
     @IBAction func signOut(_ sender: AnyObject)
     {
@@ -77,17 +74,26 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     @IBAction func gymFirstChoiceSelected(_ sender: AnyObject)
     {
-        
+        if gymChoiceSelected != 1
+        {
+            gymChoiceSelected = 1
+        }
     }
     
     @IBAction func gymSecondChoiceSelected(_ sender: AnyObject)
     {
-        
+        if gymChoiceSelected != 2
+        {
+            gymChoiceSelected = 2
+        }
     }
     
     @IBAction func gymThirdChoiceSelected(_ sender: AnyObject)
     {
-        
+        if gymChoiceSelected != 3
+        {
+            gymChoiceSelected = 3
+        }
     }
     
     private func CURLscrapeWebPage(link: String) {
@@ -139,93 +145,13 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        var view: MKAnnotationView! = mapView.dequeueReusableAnnotationView(withIdentifier: Constants.Map.Trax.AnnotationViewReuseIdentifier)
-        if let view = view
-        {
-            view.annotation = annotation
-        }
-        else
-        {
-            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Constants.Map.Trax.AnnotationViewReuseIdentifier)
-            view.canShowCallout = true
-        }
-        
-        view.isDraggable = annotation is EditableWaypoint
-        
-        view.leftCalloutAccessoryView = nil
-        view.rightCalloutAccessoryView = nil
-        
-        if let waypoint = annotation as? GPX.Waypoint
-        {
-            if waypoint.thumbnailURL != nil
-            {
-                view.leftCalloutAccessoryView = UIButton(frame: Constants.Map.Trax.LeftCalloutFrame)
-            }
-            if waypoint is EditableWaypoint
-            {
-                view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-            }
-        }
-        return view
-    }
-    
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView)
-    {
-        if let thumbnailImageButton = view.leftCalloutAccessoryView as? UIButton,
-        let url = (view.annotation as? GPX.Waypoint)?.thumbnailURL,
-        let imageData = NSData(contentsOf: url as URL),
-        let image = UIImage(data: imageData as Data)
-        {
-            thumbnailImageButton.setImage(image, for: .normal)
-        }
-    }
-    
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl)
-    {
-        if control == view.leftCalloutAccessoryView
-        {
-            performSegue(withIdentifier: Constants.Map.Trax.ShowImageSegue, sender: view)
-        }
-        else if control == view.rightCalloutAccessoryView
-        {
-            mapView.deselectAnnotation(view.annotation, animated: true)
-            performSegue(withIdentifier: Constants.Map.Trax.EditUserWaypoint, sender: view)
-        }
-    }
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        if let location = manager.location?.coordinate
-        {
-            userLocation = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-            
-            if coachOnTheWay == false
-            {
-                let region = MKCoordinateRegionMakeWithDistance(userLocation, Constants.Map.Distance.SpanHeight, Constants.Map.Distance.SpanWidth)
-                
-                self.mapView.setRegion(region, animated: true)
-                
-                self.mapView.removeAnnotations(self.mapView.annotations)
-                
-//                let annotation = MKPointAnnotation()
-//                
-//                annotation.coordinate = userLocation
-//                
-//                annotation.title = Constants.Map.Annotation.TitleForCurrentLocation
-//                
-//                self.mapView.addAnnotation(annotation)
-            }
-        }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+        geoFireRef = FIRDatabase.database().reference()
+        geoFire = GeoFire(firebaseRef: geoFireRef)
+        print("KRIS: The GeoFire Database Reference for Pokefinder is = \(geoFireRef)")
         
         CURLscrapeWebPage(link: Constants.Web.Link.PSUfitnessCURLscraping)
     }
@@ -235,12 +161,9 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     func locationAuthStatus() {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse
-        {
-            //mapView.showsUserLocation = true
-        }
-        else
-        {
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            mapView.showsUserLocation = true
+        } else {
             locationManager.requestWhenInUseAuthorization()
         }
     }
@@ -253,29 +176,119 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-//    func translateMapCenter(toLocation location: CLLocation, latitudeRange: CLLocationDistance = 2000, longitudeRange: CLLocationDistance = 2000) {
-//        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, latitudeRange, longitudeRange)
-//        
-//        mapView.setRegion(coordinateRegion, animated: true)
-//    }
-//    
-//    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation)
-//    {
-//        if let location = userLocation.location
-//        {
-//            if !mapHasCenteredOnce
-//            {
-//                translateMapCenter(toLocation: location)
-//                //mapHasCenteredOnce = true
-//            }
-//            else
-//            {
-//                mapHasCenteredOnce = false
-//            }
-//        }
-//    }
+    func centerMapOnLocation(location: CLLocation) {
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, Constants.Map.Distance.SpanHeight, Constants.Map.Distance.SpanWidth)
+        
+        mapView.setRegion(coordinateRegion, animated: true)
+        
+        _ = geoFire.query(with: coordinateRegion)
+        
+        mapView.removeAnnotations(mapView.annotations)
+    }
     
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        if let location = userLocation.location
+        {
+            if !mapHasCenteredOnce
+            {
+                centerMapOnLocation(location: location)
+                mapHasCenteredOnce = true
+            }
+        }
+    }
     
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let annoIdentifier = Constants.Map.Annotation.IdentifierGym
+        var annotationView: MKAnnotationView?
+        
+        if annotation.isKind(of: MKUserLocation.self)
+        {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: Constants.Map.Annotation.IdentifierUser)
+            annotationView?.image = UIImage(named: "210")
+        }
+        else if let deqAnno = mapView.dequeueReusableAnnotationView(withIdentifier: annoIdentifier)
+        {
+            annotationView = deqAnno
+            annotationView?.annotation = annotation
+        }
+        else
+        {
+            let av = MKAnnotationView(annotation: annotation, reuseIdentifier: annoIdentifier)
+            av.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            annotationView = av
+        }
+        
+        if let annotationView = annotationView, let anno = annotation as? GymAnnotation
+        {
+            annotationView.canShowCallout = true
+            annotationView.image = UIImage(named: "200")
+            let button = UIButton()
+            button.frame = Constants.Map.Annotation.ButtonFrame
+            button.setImage(UIImage(named: "map"), for: .normal)
+            annotationView.rightCalloutAccessoryView = button
+        }
+        return annotationView
+    }
+    
+    //MARK: Spotting and Tagging Gyms
+    
+    func createSighting(for location: CLLocation)
+    {
+        switch gymChoiceSelected
+        {
+        case 1: geoFire.setLocation(location, forKey: gymFirstChoiceLabel.text)
+        case 2: geoFire.setLocation(location, forKey: gymSecondChoiceLabel.text)
+        case 3: geoFire.setLocation(location, forKey: gymThirdChoiceLabel.text)
+        default: displayAlert(self, title: Constants.Alert.Title.GymNotSelected, message: Constants.Alert.Message.GymNotSelected)
+        }
+        
+    }
+    
+    func showSightingsOnMap(location: CLLocation)
+    {
+        let circleQuery = geoFire!.query(at: location, withRadius: Constants.Map.GeoFire.QueryRadius)
+        _ = circleQuery?.observe(.keyEntered, with: { (key, location) in
+            if let key = key, let location = location
+            {
+                //self.geoFire.removeKey(key)
+                let anno = GymAnnotation(coordinate: location.coordinate, gymName: key)
+                self.mapView.addAnnotation(anno)
+            }
+        })
+    }
+    
+    func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool)
+    {
+        let location = CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
+        
+        showSightingsOnMap(location: location)
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if let anno = view.annotation as? GymAnnotation
+        {
+            var place: MKPlacemark!
+            if #available(iOS 10.0, *)
+            {
+                place = MKPlacemark(coordinate: anno.coordinate)
+            }
+            else
+            {
+                place = MKPlacemark(coordinate: anno.coordinate, addressDictionary: nil)
+            }
+            let destination = MKMapItem(placemark: place)
+            destination.name = Constants.Map.PlaceMark.DestinationNameToGym
+            let regionDistance: CLLocationDistance = Constants.Map.Distance.RegionDistance
+            let regionSpan = MKCoordinateRegionMakeWithDistance(anno.coordinate, regionDistance, regionDistance)
+            let options = [
+                            MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+                            MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span),
+                            MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
+            ] as [String : Any]
+            
+            MKMapItem.openMaps(with: [destination], launchOptions: options)
+        }
+    }
     
     /*
     // MARK: - Navigation

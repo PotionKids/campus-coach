@@ -195,6 +195,7 @@ struct Constants {
             static let SuccessfullyCalledCoach = "Coach Assigned"
             static let FailedToCallCoach = "Coach Unreachable."
             static let CurrentLocationNotFound = "Current Location Undetected"
+            static let GymNotSelected = "No Gym Selection Made"
             
         }
         struct Message
@@ -208,6 +209,7 @@ struct Constants {
             static let SuccessfullyCalledCoach = Constants.Display.Message.SuccessfullyCalledCoach
             static let FailedToCallCoach = Constants.Display.Message.FailedToCallCoach
             static let CurrentLocationNotFound = "Your current location could not be detected. Please try again in a few moments."
+            static let GymNotSelected = "No gym has been selected for sighting. Please select the gym you want to spot on the map."
         }
     }
     struct Key
@@ -342,6 +344,7 @@ struct Constants {
         {
             static let SpanWidth = 1000.00
             static let SpanHeight = 1000.00
+            static let RegionDistance: CLLocationDistance = 1000.00
         }
         struct Location
         {
@@ -352,7 +355,18 @@ struct Constants {
             static let TitleForCurrentLocation = "Current Location"
             static let TitleForUserLocation = "You"
             static let TitleForCoachLocation = "Coach"
+            
+            static let IdentifierGym = "gym"
+            static let IdentifierUser = "user"
+            static let IdentifierCoach = "coach"
+            static let ButtonFrame = CGRect(x: 0, y: 0, width: 30, height: 30)
         }
+        
+        struct PlaceMark
+        {
+            static let DestinationNameToGym = "Gym"
+        }
+        
         struct Display
         {
             static let DefaultLatitudeScaling = 2.00
@@ -370,6 +384,11 @@ struct Constants {
             static let ShowImageSegue = "Show Image"
             static let EditUserWaypoint = "Edit Waypoint"
             static let Dropped = "Dropped"
+        }
+        
+        struct GeoFire
+        {
+            static let QueryRadius = 2.5
         }
     }
     

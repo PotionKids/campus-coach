@@ -21,6 +21,7 @@
 		0D4687131DC2F71C009950F2 /* GFGeoHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D46870C1DC2F71C009950F2 /* GFGeoHash.m */; };
 		0D4687141DC2F71C009950F2 /* GFGeoHashQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D46870E1DC2F71C009950F2 /* GFGeoHashQuery.m */; };
 		0D4687151DC2F71C009950F2 /* GFQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4687101DC2F71C009950F2 /* GFQuery.m */; };
+		0D46871F1DC2FE32009950F2 /* PokeAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D46871E1DC2FE32009950F2 /* PokeAnnotation.swift */; };
 		0D473E0D1DBBED45008FF539 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D473E0C1DBBED45008FF539 /* User.swift */; };
 		0D473E161DBBED5E008FF539 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D473E151DBBED5E008FF539 /* Student.swift */; };
 		0D473E181DBBED6B008FF539 /* Coach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D473E171DBBED6B008FF539 /* Coach.swift */; };
@@ -143,6 +144,7 @@
 		0D46870F1DC2F71C009950F2 /* GFQuery+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GFQuery+Private.h"; sourceTree = "<group>"; };
 		0D4687101DC2F71C009950F2 /* GFQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFQuery.m; sourceTree = "<group>"; };
 		0D46871D1DC2F75F009950F2 /* SocialApp-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SocialApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		0D46871E1DC2FE32009950F2 /* PokeAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokeAnnotation.swift; sourceTree = "<group>"; };
 		0D473E0C1DBBED45008FF539 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0D473E151DBBED5E008FF539 /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		0D473E171DBBED6B008FF539 /* Coach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coach.swift; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 		0D3745DE1DB05072009F061C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0D46871E1DC2FE32009950F2 /* PokeAnnotation.swift */,
 				0D9550AE1DBFE76000B2DB9D /* ViewStyling.swift */,
 				0D9550B91DBFEB3000B2DB9D /* CustomImageView.swift */,
 				0D9550BB1DBFF36000B2DB9D /* CustomTableView.swift */,
@@ -549,6 +552,7 @@
 				0DB001F41DB3179100EF1921 /* Constants.swift in Sources */,
 				0DB001F71DB32F2700EF1921 /* Gym.swift in Sources */,
 				0D473E181DBBED6B008FF539 /* Coach.swift in Sources */,
+				0D46871F1DC2FE32009950F2 /* PokeAnnotation.swift in Sources */,
 				0D6DA2FC1DC01BD70068CDBF /* gpx.swift in Sources */,
 				0D4687141DC2F71C009950F2 /* GFGeoHashQuery.m in Sources */,
 				0DD8C4B01DBFD432002EACB3 /* Errors.swift in Sources */,
