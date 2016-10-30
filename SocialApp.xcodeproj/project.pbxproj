@@ -15,7 +15,6 @@
 		0D3745D01DB04DFF009F061C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D3745CF1DB04DFF009F061C /* Assets.xcassets */; };
 		0D3745D31DB04DFF009F061C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D3745D11DB04DFF009F061C /* LaunchScreen.storyboard */; };
 		0D3745DB1DB04E8D009F061C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D3745DA1DB04E8D009F061C /* GoogleService-Info.plist */; };
-		0D43EBB51DBFA2460033CA95 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D43EBB41DBFA2460033CA95 /* Location.swift */; };
 		0D4687111DC2F71C009950F2 /* GeoFire.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4687081DC2F71C009950F2 /* GeoFire.m */; };
 		0D4687121DC2F71C009950F2 /* GFBase32Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D46870A1DC2F71C009950F2 /* GFBase32Utils.m */; };
 		0D4687131DC2F71C009950F2 /* GFGeoHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D46870C1DC2F71C009950F2 /* GFGeoHash.m */; };
@@ -35,11 +34,16 @@
 		0D9D78E01DB4041E006F7081 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0D9D78D21DB40373006F7081 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0D9D79091DB4307E006F7081 /* SetGymVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9D79081DB4307E006F7081 /* SetGymVC.swift */; };
 		0DB001F01DB309CB00EF1921 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB001EF1DB309CB00EF1921 /* SignUpVC.swift */; };
-		0DB001F21DB316A400EF1921 /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB001F11DB316A400EF1921 /* HelperFunctions.swift */; };
 		0DB001F41DB3179100EF1921 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB001F31DB3179100EF1921 /* Constants.swift */; };
 		0DB001F71DB32F2700EF1921 /* Gym.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB001F61DB32F2700EF1921 /* Gym.swift */; };
 		0DB001F91DB32F5200EF1921 /* Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB001F81DB32F5200EF1921 /* Parsing.swift */; };
 		0DD8C4B01DBFD432002EACB3 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD8C4AF1DBFD432002EACB3 /* Errors.swift */; };
+		0DF65E9D1DC58F770032B486 /* StringDictionarizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF65E9C1DC58F770032B486 /* StringDictionarizable.swift */; };
+		0DF65EA81DC5918A0032B486 /* displayAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF65EA71DC5918A0032B486 /* displayAlert.swift */; };
+		0DF65EAA1DC591F20032B486 /* firebaseAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF65EA91DC591F20032B486 /* firebaseAuth.swift */; };
+		0DF65EAC1DC5926A0032B486 /* extractProviderData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF65EAB1DC5926A0032B486 /* extractProviderData.swift */; };
+		0DF65EAE1DC592800032B486 /* extractUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF65EAD1DC592800032B486 /* extractUserData.swift */; };
+		0DF65EB01DC5932C0032B486 /* completeSignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF65EAF1DC5932C0032B486 /* completeSignIn.swift */; };
 		982CDC6EA7FE0E496070F067 /* Pods_SocialApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B0BA4C830293FEDC9E91481 /* Pods_SocialApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -127,7 +131,6 @@
 		0D3745D21DB04DFF009F061C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0D3745D41DB04DFF009F061C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D3745DA1DB04E8D009F061C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		0D43EBB41DBFA2460033CA95 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		0D4687011DC2F71C009950F2 /* GeoFire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoFire.h; sourceTree = "<group>"; };
 		0D4687021DC2F71C009950F2 /* GFCircleQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFCircleQuery.h; sourceTree = "<group>"; };
 		0D4687031DC2F71C009950F2 /* GFQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFQuery.h; sourceTree = "<group>"; };
@@ -157,12 +160,17 @@
 		0D9D78C61DB40373006F7081 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		0D9D79081DB4307E006F7081 /* SetGymVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetGymVC.swift; sourceTree = "<group>"; };
 		0DB001EF1DB309CB00EF1921 /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
-		0DB001F11DB316A400EF1921 /* HelperFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		0DB001F31DB3179100EF1921 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0DB001F61DB32F2700EF1921 /* Gym.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gym.swift; sourceTree = "<group>"; };
 		0DB001F81DB32F5200EF1921 /* Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parsing.swift; sourceTree = "<group>"; };
 		0DB910701DB1B565002EFAC9 /* SocialApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SocialApp.entitlements; sourceTree = "<group>"; };
 		0DD8C4AF1DBFD432002EACB3 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		0DF65E9C1DC58F770032B486 /* StringDictionarizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringDictionarizable.swift; sourceTree = "<group>"; };
+		0DF65EA71DC5918A0032B486 /* displayAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = displayAlert.swift; sourceTree = "<group>"; };
+		0DF65EA91DC591F20032B486 /* firebaseAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = firebaseAuth.swift; sourceTree = "<group>"; };
+		0DF65EAB1DC5926A0032B486 /* extractProviderData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extractProviderData.swift; sourceTree = "<group>"; };
+		0DF65EAD1DC592800032B486 /* extractUserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extractUserData.swift; sourceTree = "<group>"; };
+		0DF65EAF1DC5932C0032B486 /* completeSignIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = completeSignIn.swift; sourceTree = "<group>"; };
 		8B0BA4C830293FEDC9E91481 /* Pods_SocialApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SocialApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D59A66993E69C268A3308B02 /* Pods-SocialApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SocialApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-SocialApp/Pods-SocialApp.release.xcconfig"; sourceTree = "<group>"; };
 		F1CFDF931D9794B93FEFE25A /* Pods-SocialApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SocialApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SocialApp/Pods-SocialApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -208,6 +216,8 @@
 				0D6BB8F51DB579240015AE04 /* Services */,
 				0D3745DA1DB04E8D009F061C /* GoogleService-Info.plist */,
 				0DB910701DB1B565002EFAC9 /* SocialApp.entitlements */,
+				0DF65EA61DC58FAC0032B486 /* Helper Functions */,
+				0DF65EA51DC58F980032B486 /* Helper Protocols */,
 				0D3745E01DB0508E009F061C /* Model */,
 				0D3745DE1DB05072009F061C /* View */,
 				0D3745DD1DB0506B009F061C /* Controller */,
@@ -236,7 +246,6 @@
 				0D9D79081DB4307E006F7081 /* SetGymVC.swift */,
 				0D0291851DBD7FA100C75BE5 /* CoachRequestsVC.swift */,
 				0D02918E1DBD7FA900C75BE5 /* RequestCell.swift */,
-				0DB001F11DB316A400EF1921 /* HelperFunctions.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -264,7 +273,6 @@
 				0D473E151DBBED5E008FF539 /* Student.swift */,
 				0D473E171DBBED6B008FF539 /* Coach.swift */,
 				0D0291901DBD7FAF00C75BE5 /* Request.swift */,
-				0D43EBB41DBFA2460033CA95 /* Location.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -335,6 +343,42 @@
 				0DD8C4AF1DBFD432002EACB3 /* Errors.swift */,
 			);
 			name = "Error Handling";
+			sourceTree = "<group>";
+		};
+		0DF65EA51DC58F980032B486 /* Helper Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				0DF65E9C1DC58F770032B486 /* StringDictionarizable.swift */,
+			);
+			name = "Helper Protocols";
+			sourceTree = "<group>";
+		};
+		0DF65EA61DC58FAC0032B486 /* Helper Functions */ = {
+			isa = PBXGroup;
+			children = (
+				0DF65EB21DC593920032B486 /* Controller */,
+				0DF65EB11DC593820032B486 /* Firebase */,
+			);
+			name = "Helper Functions";
+			sourceTree = "<group>";
+		};
+		0DF65EB11DC593820032B486 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				0DF65EA91DC591F20032B486 /* firebaseAuth.swift */,
+				0DF65EAB1DC5926A0032B486 /* extractProviderData.swift */,
+				0DF65EAD1DC592800032B486 /* extractUserData.swift */,
+				0DF65EAF1DC5932C0032B486 /* completeSignIn.swift */,
+			);
+			name = Firebase;
+			sourceTree = "<group>";
+		};
+		0DF65EB21DC593920032B486 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0DF65EA71DC5918A0032B486 /* displayAlert.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		A0AC66F6600C8E80654E3506 /* Pods */ = {
@@ -553,21 +597,25 @@
 				0DB001F71DB32F2700EF1921 /* Gym.swift in Sources */,
 				0D473E181DBBED6B008FF539 /* Coach.swift in Sources */,
 				0D46871F1DC2FE32009950F2 /* GymAnnotation.swift in Sources */,
+				0DF65EAC1DC5926A0032B486 /* extractProviderData.swift in Sources */,
+				0DF65E9D1DC58F770032B486 /* StringDictionarizable.swift in Sources */,
 				0D6DA2FC1DC01BD70068CDBF /* gpx.swift in Sources */,
 				0D4687141DC2F71C009950F2 /* GFGeoHashQuery.m in Sources */,
+				0DF65EA81DC5918A0032B486 /* displayAlert.swift in Sources */,
 				0DD8C4B01DBFD432002EACB3 /* Errors.swift in Sources */,
 				0D9D79091DB4307E006F7081 /* SetGymVC.swift in Sources */,
 				0D4687131DC2F71C009950F2 /* GFGeoHash.m in Sources */,
-				0DB001F21DB316A400EF1921 /* HelperFunctions.swift in Sources */,
+				0DF65EB01DC5932C0032B486 /* completeSignIn.swift in Sources */,
 				0D6DA2F31DC01BC90068CDBF /* MKGPX.swift in Sources */,
 				0DB001F01DB309CB00EF1921 /* SignUpVC.swift in Sources */,
-				0D43EBB51DBFA2460033CA95 /* Location.swift in Sources */,
 				0D473E161DBBED5E008FF539 /* Student.swift in Sources */,
 				0D3745C91DB04DFF009F061C /* AppDelegate.swift in Sources */,
 				0D9550AF1DBFE76000B2DB9D /* ViewStyling.swift in Sources */,
+				0DF65EAA1DC591F20032B486 /* firebaseAuth.swift in Sources */,
 				0D4687121DC2F71C009950F2 /* GFBase32Utils.m in Sources */,
 				0D6BB8FE1DB579380015AE04 /* DataService.swift in Sources */,
 				0D473E0D1DBBED45008FF539 /* User.swift in Sources */,
+				0DF65EAE1DC592800032B486 /* extractUserData.swift in Sources */,
 				0D0291911DBD7FAF00C75BE5 /* Request.swift in Sources */,
 				0D0291861DBD7FA100C75BE5 /* CoachRequestsVC.swift in Sources */,
 				0D02918F1DBD7FA900C75BE5 /* RequestCell.swift in Sources */,

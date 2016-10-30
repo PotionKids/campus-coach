@@ -17,6 +17,7 @@ struct Firebase
 {
     enum Object: String
     {
+        case Base
         case Users
         case Coaches
         case Locations
@@ -26,6 +27,8 @@ struct Firebase
         {
             switch self
             {
+            case .Base:
+                return Constants.DataService.Firebase.Base
             case .Users:
                 return Constants.DataService.Firebase.Users
             case .Coaches:
@@ -41,6 +44,8 @@ struct Firebase
         {
             switch self
             {
+            case .Base:
+                return FirebaseBaseURL
             case .Users:
                 return FirebaseBaseURL.child(Firebase.Users.ObjectKey)
             case .Coaches:
@@ -52,6 +57,7 @@ struct Firebase
             }
         }
     }
+    static let Base: Object = .Base
     static let Users: Object = .Users
     static let Coaches: Object = .Coaches
     static let Locations: Object = .Locations
@@ -62,7 +68,7 @@ class DataService
 {
     static let ds = DataService()
     
-    private var RefBasePrivate = FirebaseBaseURL
+    private var RefBasePrivate = Firebase.Base.DatabaseReference
     
     var refBase: FIRDatabaseReference
     {
@@ -70,11 +76,6 @@ class DataService
     }
     
     func createFirebaseObject(object: Firebase.Object, instanceID: String, data: FirebaseData)
-    {
-        object.DatabaseReference.child(instanceID).updateChildValues(data)
-    }
-    
-    func updateDatabase(object: Firebase.Object, instanceID: String, data: FirebaseData)
     {
         object.DatabaseReference.child(instanceID).updateChildValues(data)
     }

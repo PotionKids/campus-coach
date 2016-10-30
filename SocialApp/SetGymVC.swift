@@ -35,7 +35,7 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         {
             mapView.mapType = .standard
             mapView.delegate = self
-            mapView.userTrackingMode = .followWithHeading
+            mapView.userTrackingMode = .follow
         }
     }
     

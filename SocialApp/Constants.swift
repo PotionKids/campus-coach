@@ -29,10 +29,13 @@ struct Constants {
         {
             static let BaseURL = FIRDatabase.database().reference()
             static let Provider = "firebase"
-            static let Locations = "locations"
+            static let Base = "base"
             static let Requests = "requests"
             static let Users = "users"
             static let Coaches = "coaches"
+            static let Locations = "locations"
+            static let Latitude = "latitude"
+            static let Longitude = "longitude"
         }
         struct Mirror
         {
@@ -44,13 +47,27 @@ struct Constants {
         }
         struct User
         {
-            static let UID = Constants.Firebase.KeychainWrapper.KeyUID
-            static let Location = Constants.DataService.Firebase.Locations.removeLast()
-            static let Name = "name"
+            static let UID = "uid"
+            static let FacebookID = Constants.Facebook.Key.UID
             static let Provider = "provider"
+            static let Profile = "profile"
+            static let Name = "name"
+            static let Email = "email"
             static let Cell = "cellNumber"
-            static let Email = Constants.Facebook.Key.Email
-            static let Requests = Constants.DataService.Firebase.Requests
+            static let ImageURLString = "imageURL"
+            static let RequestID = "requestID"
+            
+            static let Location = Constants.DataService.Firebase.Locations.removeLast()
+            static let Latitude = Constants.DataService.Firebase.Latitude
+            static let Longitude = Constants.DataService.Firebase.Longitude
+            
+            static let DefaultUserName = "Kris Rajendren"
+            static let DefaultFacebookID = "10210569767665956"
+        }
+        struct Request
+        {
+            static let Accept = "Accept"
+            static let Accepted = "Accepted"
         }
     }
     
@@ -59,17 +76,17 @@ struct Constants {
         struct Profile
         {
             static let ImageURLPrefix = "https://graph.facebook.com/"
-            static let ImageURLSuffix = "/picture?type=large&w‌ idth=1000&height=1000"
+            static let ImageURLSuffix = "/picture?type=large&w‌ idth=960&height=960"
         }
         
         struct Key
         {
-            static let Provider = "provider"
-            static let Profile = "profile"
-            static let Name = "name"
-            static let Email = "email"
+            static let Provider = Constants.DataService.User.Provider
+            static let Profile = Constants.DataService.User.Profile
+            static let Name = Constants.DataService.User.Name
+            static let Email = Constants.DataService.User.UID
+            static let ImageURLString = Constants.DataService.User.ImageURLString
             static let UID = "facebookUID"
-            static let ImageURLString = "imageURL"
         }
     }
     
@@ -77,7 +94,7 @@ struct Constants {
     {
         struct KeychainWrapper
         {
-            static let KeyUID = "uid"
+            static let KeyUID = Constants.DataService.User.UID
         }
         struct Key
         {
