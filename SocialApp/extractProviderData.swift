@@ -9,13 +9,13 @@
 import Firebase
 import FirebaseAuth
 
-func extractProviderData(user: FIRUser, credential: FIRAuthCredential) -> FirebaseData
+func extractProviderData(isCoach: Bool, cell: String, user: FIRUser, credential: FIRAuthCredential) -> (FirebaseData?, User?)
 {
     var userData: FirebaseData = [:]
+    var userObject: User?
     var name: String?
     var email: String?
     var uid: String?
-    var imageURLString: String!
     
     let userProfile = user.providerData
     for profile in userProfile
@@ -25,30 +25,45 @@ func extractProviderData(user: FIRUser, credential: FIRAuthCredential) -> Fireba
         uid = profile.uid
         if let uid = uid
         {
-            imageURLString = "\(Constants.Facebook.Profile.ImageURLPrefix)\(uid)\(Constants.Facebook.Profile.ImageURLSuffix)"
-            if let name = name,
+            if  let name = name,
                 let email = email
             {
-                userData = [
-                    Constants.Firebase.Key.UID : user.uid,
-                    Constants.Facebook.Key.Provider : credential.provider,
-                    Constants.Facebook.Key.UID : uid,
-                    Constants.Facebook.Key.Name : name,
-                    Constants.Facebook.Key.Email : email,
-                    Constants.Facebook.Key.ImageURLString : imageURLString
+                let loggedInAtTime = timeStamp().stampNanoseconds
+                
+                userData =
+                [
+                    Constants.DataService.User.FirebaseUID      : user.uid,
+                    Constants.DataService.User.IsCoach          : isCoach.stringYesNo,
+                    Constants.DataService.User.Provider         : credential.provider,
+                    Constants.DataService.User.LoggedInAtTime   : loggedInAtTime,
+                    Constants.DataService.User.FacebookUID      : uid,
+                    Constants.DataService.User.FullName         : name,
+                    Constants.DataService.User.Email            : email,
+                    Constants.DataService.User.Cell             : cell,
+                    Constants.DataService.User.FirebaseRID      : Constants.Literal.Empty,
+                    Constants.DataService.User.Requests         : Constants.Literal.Empty,
+                    Constants.DataService.User.FirebaseUIDs     : user.uid,
+                    Constants.DataService.User.Rating           : Constants.DataService.User.DefaultRating.string,
+                    Constants.DataService.User.Ratings          : Constants.DataService.User.DefaultRating.string,
+                    Constants.DataService.User.Reviews          : Constants.Literal.Empty
                 ]
+                print(userData)
+                userObject = User(fromUserData: userData as AnyDictionary)
+                print(userObject!.stringDictionary)
+
             }
             else
             {
-                print("Facebook Profile Details couldn't be retrieved for the user.")
-                imageURLString = Constants.String.Empty
+                print("Facebook Profile Details couldn't be retrieved for the user. Returning default user.")
+                userObject = User()
             }
         }
         else
         {
             print("The Facebook Profile UID couldn't be retrieved.")
+            return (nil, nil)
         }
     }
-    return userData
+    return (userData, userObject)
 }
 

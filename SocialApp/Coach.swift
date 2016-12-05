@@ -7,8 +7,17 @@
 //
 
 import Foundation
+import Firebase
 
-class Coach: User
+class Coach: User, ReviewerArchivable
 {
-    
+    required init()
+    {
+        super.init()
+        self.privateIsCoach = YesOrNo.Yes.string
+    }
+    var keys: KeysType
+    {
+        return Constants.Protocols.CoachType.keys
+    }
 }

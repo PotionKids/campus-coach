@@ -166,6 +166,11 @@ class SignUpVC: UIViewController {
             }
         }
     }
+    
+    func signedIn()
+    {
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

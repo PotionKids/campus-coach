@@ -2,147 +2,194 @@
 //  User.swift
 //  SocialApp
 //
-//  Created by Kris Rajendren on Oct/22/16.
+//  Created by Kris Rajendren on Nov/18/16.
 //  Copyright © 2016 Campus Coach. All rights reserved.
 //
 
 import Foundation
-typealias FirebaseRawData = [String : Any]
+import Firebase
 
-protocol UserType: StringDictionarizable
+protocol UserType: FirebaseUserIDable, ProviderSpecifiable, LoginTimeStampable, FacebookImageRetrievable, Nameable, Emailable, Textable, FirebaseRequestIDable, RequestArchivable, FirebaseUIDListType, RatingArchivable, ReviewArchivable, Pushable
 {
-    var privateFirebaseID: String! { get set }
-    var privateCell: String! { get set }
-    var privateFacebookID: String? { get set }
-    var privateFullName: String? { get set }
-    
-    var privateImageURL: String? { get set }
-    
-    
-    var firebaseID: String { get }
-    var facebookID: String? { get }
-    var fullName: String? { get }
-    var firstName: String? { get }
-    var cell: String { get }
-    var imageURL: String? { get }
-    
-    var location: CLLocation? { get set }
-    
-    var requestID: String? { get set }
-
     init()
-    
-    func parseFirstName() -> String?
-    
-    func createFirebaseData() -> FirebaseData
+    init(internallyWithFirebaseUID
+        firebaseUID:    String,
+         whoIsACoachOrNot
+        isCoach:        String,
+         withProvider
+        provider:       String,
+         whoLoggedInAt
+        loggedInAtTime: String,
+         withFacebookUID
+        facebookUID:    String,
+         whoseFullNameIs
+        fullName:       String,
+         andEmailIs
+        email:          String,
+         andCellNumberIs
+        cell:           String,
+         withActiveRequestWithFirebaseRID
+        firebaseRID:    String,
+         withPastRequests
+        requests:       String,
+         andHasRatedOrBeenRatedBy
+        firebaseUIDs:   String,
+         withAnAverageRatingOf
+        rating:         String,
+         withAllRatings
+        ratings:        String,
+         andAllReviews
+        reviews:        String
+    )
+    init?(fromServerWithFirebaseUID firebaseUID: String, forUserWhoIsACoachOrNot isCoach: Bool)
 }
-
 extension UserType
 {
-    func parseFirstName() -> String?
+    func push()
     {
-        let names = self.fullName?.components(separatedBy: NSCharacterSet.whitespaces)
-        if let names = names { return names.first }
-        else { return nil }
-    }
-    
-    func createFirebaseData() -> FirebaseData
-    {
-        var firebaseUserData: FirebaseData = [:]
-        firebaseUserData.updateValue(self.firebaseID, forKey: Constants.DataService.User.UID)
-        firebaseUserData.updateValue(self.cell, forKey: Constants.DataService.User.Cell)
-        if let facebookID = self.facebookID
+        if coachOrNot
         {
-            firebaseUserData.updateValue(facebookID, forKey: Constants.DataService.User.FacebookID)
+            pushValuesToFirebase(forKeys: keys.firebase, at: firebaseUID.firebaseCoachRef)
         }
-        if let fullName = self.fullName
+        else
         {
-            firebaseUserData.updateValue(fullName, forKey: Constants.DataService.User.Name)
-        }
-        if let imageURL = self.imageURL
-        {
-            firebaseUserData.updateValue(imageURL, forKey: Constants.DataService.User.ImageURLString)
-        }
-        if let location = self.location
-        {
-            firebaseUserData.updateValue("\(location.coordinate.latitude)", forKey: Constants.DataService.User.Latitude)
-            firebaseUserData.updateValue("\(location.coordinate.longitude)", forKey: Constants.DataService.User.Longitude)
-        }
-        if let requestID = self.requestID
-        {
-            firebaseUserData.updateValue(requestID, forKey: Constants.DataService.User.RequestID)
+            pushValuesToFirebase(forKeys: keys.firebase, at: firebaseUID.firebaseStudentRef)
         }
     }
-    
-    init(firebaseID: String, facebookID: String? = nil, name: String? = nil, cell: String, imageURL: String? = nil, location: CLLocation? = nil, requestID: String? = nil)
+    var keys: KeysType
     {
-        self.init()
-        self.privateFirebaseID = firebaseID
-        self.privateFacebookID = facebookID
-        self.privateFullName = name
-        self.privateCell = cell
-        self.privateImageURL = imageURL
-        self.location = location
-        self.requestID = requestID
-    }
-    
-    init(firebaseID: String, profile: FirebaseRawData)
-    {
-        let facebookID = profile[Constants.Facebook.Key.UID] as? String
-        let fullName = profile[Constants.DataService.User.Name] as? String
-        let cell = profile[Constants.DataService.User.Cell] as? String
-        let imageURL = profile[Constants.DataService.User.ImageURLString] as? String
-        let location = profile[Constants.DataService.User.Location] as? [String : String]
-        var clLocation: CLLocation? = nil
-        if let location = location
-        {
-            let latitude = CLLocationDegrees(location[Constants.DataService.User.Latitude]!)
-            let longitude = CLLocationDegrees(location[Constants.DataService.User.Longitude]!)
-            clLocation = CLLocation(latitude: latitude!, longitude: longitude!)
-        }
-        let requestID = profile[Constants.DataService.User.RequestID] as? String
-        
-        self.init(firebaseID: firebaseID, facebookID: facebookID, name: fullName, cell: cell, imageURL: imageURL, location: clLocation, requestID: requestID)
+        return Constants.Protocols.UserType.keys
     }
 }
 
 class User: UserType
 {
-    internal var privateFirebaseID: String?
-    internal var privateFacebookID: String?
-    internal var privateFullName: String?
-    internal var privateCell: String?
-    internal var privateImageURL: String?
+    var privateFirebaseUID:     String! = Constants.DataService.User.DefaultFirebaseUID
+    var privateIsCoach:         String! = YesOrNo.No.string
+    var privateProvider:        String! = Constants.DataService.User.DefaultProvider
+    var privateLoggedInAtTime:  String!
+    var privateFacebookUID:     String! = Constants.DataService.User.DefaultFacebookUID
+    var privateFullName:        String! = Constants.DataService.User.DefaultUserName
+    var privateEmail:           String! = Constants.DataService.User.DefaultEmail
+    var privateCell:            String! = Constants.DataService.User.DefaultCell
+    var privateFirebaseRID:     String!
+    var privateRequests:        String!
+    var privateFirebaseUIDs:    String! = Constants.DataService.User.DefaultFirebaseUID
+    var privateRating:          String! = Constants.DataService.User.DefaultRating.string
+    var privateRatings:         String! = Constants.DataService.User.DefaultRating.string
+    var privateReviews:         String! = Constants.Literal.Empty
     
-    var firebaseID: String?
+    required init()
     {
-        return privateFirebaseID
-    }
-    var facebookID: String?
-    {
-        return privateFacebookID
-    }
-    
-    var fullName: String?
-    {
-        return privateFullName
-    }
-    var firstName: String?
-    {
-        return parseFirstName()
-    }
-    var cell: String?
-    {
-        return privateCell
-    }
-    var imageURL: String?
-    {
-        return privateImageURL
+        self.privateLoggedInAtTime  = timeStamp().stampNanoseconds
+        self.privateFirebaseRID     = timeStamp().stampNanoseconds
+        self.privateRequests        = timeStamp().stampNanoseconds
     }
     
-    var location: CLLocation? = nil
+    required convenience init   (
+                              internallyWithFirebaseUID
+        firebaseUID:    String,
+                              whoIsACoachOrNot
+        isCoach:        String,
+                              withProvider
+        provider:       String,
+                              whoLoggedInAt
+        loggedInAtTime: String,
+                              withFacebookUID
+        facebookUID:    String,
+                              whoseFullNameIs
+        fullName:       String,
+                              andEmailIs
+        email:          String,
+                              andCellNumberIs
+        cell:           String,
+                              withActiveRequestWithFirebaseRID
+        firebaseRID:    String,
+                              withPastRequests
+        requests:       String,
+                              andHasRatedOrBeenRatedBy
+        firebaseUIDs:   String,
+                              withAnAverageRatingOf
+        rating:         String,
+                              withAllRatings
+        ratings:        String,
+                              andAllReviews
+        reviews:        String
+    )
+    {
+        self.init()
+        self.privateFirebaseUID         = firebaseUID
+        self.privateIsCoach             = isCoach
+        self.privateProvider            = provider
+        self.privateLoggedInAtTime      = loggedInAtTime
+        self.privateFacebookUID         = facebookUID
+        self.privateFullName            = fullName
+        self.privateEmail               = email
+        self.privateCell                = cell
+        self.privateFirebaseRID         = firebaseRID
+        self.privateRequests            = requests
+        self.privateFirebaseUIDs        = firebaseUIDs
+        self.privateRating              = rating
+        self.privateRatings             = ratings
+        self.privateReviews             = reviews
+    }
     
-    var requestID: String? = nil
+    required convenience init?  (
+        fromUserData
+        data:   AnyDictionary
+                                )
+    {
+        guard   let firebaseUID = data[Constants.Protocols.FirebaseUserIDable       .firebaseUID]       as? String,
+                let isCoach     = data[Constants.Protocols.CoachTaggable            .isCoach]           as? String,
+                let provider    = data[Constants.Protocols.ProviderSpecifiable      .provider]          as? String,
+                let logInTime   = data[Constants.Protocols.LoginTimeStampable       .loggedInAtTime]    as? String,
+                let facebookUID = data[Constants.Protocols.FacebookUserIDable       .facebookUID]       as? String,
+                let imageURL    = data[Constants.Protocols.FacebookImageRetrievable .facebookImageURL]  as? String,
+                let fullName    = data[Constants.Protocols.Nameable                 .fullName]          as? String,
+                let firstName   = data[Constants.Protocols.Nameable                 .firstName]         as? String,
+                let email       = data[Constants.Protocols.Emailable                .email]             as? String,
+                let cell        = data[Constants.Protocols.Textable                 .cell]              as? String,
+                let firebaseRID = data[Constants.Protocols.FirebaseRequestIDable    .firebaseRID]       as? String,
+                let requests    = data[Constants.Protocols.RequestArchivable        .requests]          as? String,
+                let userIDs     = data[Constants.Protocols.FirebaseUIDListType      .firebaseUIDs]      as? String,
+                let rating      = data[Constants.Protocols.RatingArchivable         .rating]            as? String,
+                let ratings     = data[Constants.Protocols.RatingArchivable         .ratings]           as? String,
+                let reviews     = data[Constants.Protocols.ReviewArchivable         .reviews]           as? String
+        else
+        {
+            return nil
+        }
+        self.init   (
+            internallyWithFirebaseUID:          firebaseUID,
+            whoIsACoachOrNot:                   isCoach,
+            withProvider:                       provider,
+            whoLoggedInAt:                      logInTime,
+            withFacebookUID:                    facebookUID,
+            whoseFullNameIs:                    fullName,
+            andEmailIs:                         email,
+            andCellNumberIs:                    cell,
+            withActiveRequestWithFirebaseRID:   firebaseRID,
+            withPastRequests:                   requests,
+            andHasRatedOrBeenRatedBy:           userIDs,
+            withAnAverageRatingOf:              rating,
+            withAllRatings:                     ratings,
+            andAllReviews:                      reviews
+                    )
+    }
     
-    required init() {}
+    required convenience init? (fromServerWithFirebaseUID firebaseUID: String, forUserWhoIsACoachOrNot isCoach: Bool)
+    {
+        var data = [Key : Value]()
+        if isCoach
+        {
+            data = fetchFirebaseObject(from: firebaseUID.firebaseCoachRef)
+        }
+        else
+        {
+            data = fetchFirebaseObject(from: firebaseUID.firebaseStudentRef)
+        }
+        self.init   (
+            fromUserData:   data
+                    )
+    }
 }

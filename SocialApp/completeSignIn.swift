@@ -13,26 +13,38 @@ import FirebaseAuth
 
 import SwiftKeychainWrapper
 
+extension Bool
+{
+    func toString() -> String
+    {
+        if self { return "true" }
+        else    { return "false" }
+    }
+}
+
 func completeSignIn(isCoach: Bool, cell: String, user: FIRUser?, credential: FIRAuthCredential?, vc: UIViewController)
 {
     var id: String?
     var userData: FirebaseData?
-    (id, userData) = extractUserData(user: user, credential: credential)
-    let _ = userData?.updateValue(cell, forKey: Constants.DataService.User.Cell)
+    var userObject: User?
+    (id, userData, userObject) = extractUserData(isCoach: isCoach, cell: cell, user: user, credential: credential)
+    print("KRIS: ID \(id), userData \(userData) and userObject \(userObject)")
     
-    if let id = id, let userData = userData
+    if let id = id, let userObject = userObject
     {
         KeychainWrapper.standard.set(id, forKey: Constants.Firebase.KeychainWrapper.KeyUID)
+        userObject.push()
         if isCoach
         {
-            DataService.ds.createFirebaseObject(object: .Coaches, instanceID: id, data: userData)
             vc.performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToCoachRequests, sender: nil)
         }
         else
         {
-            DataService.ds.createFirebaseObject(object: .Users, instanceID: id, data: userData)
             vc.performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToSetGymMap, sender: nil)
         }
     }
-    print("KRIS: Authentication Failed.")
+    else
+    {
+        print("KRIS: Authentication Failed.")
+    }
 }

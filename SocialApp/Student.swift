@@ -7,8 +7,13 @@
 //
 
 import Foundation
+import Firebase
 
-class Student: User
+class Student: User, RevieweeArchivable
 {
-    
+    var keys: KeysType
+    {
+        return Constants.Protocols.StudentType.keys
+    }
 }
+

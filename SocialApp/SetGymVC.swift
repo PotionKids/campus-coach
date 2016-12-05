@@ -27,6 +27,16 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     var gymChoiceSelected: Int = 0
     
+    //MARK: Firebase Reference Handles and Observers
+
+    fileprivate var _requestCreatedHandle:      FIRDatabaseHandle!
+    fileprivate var _requestAcceptedHandle:     FIRDatabaseHandle!
+    fileprivate var _requestCommunicatedHandle: FIRDatabaseHandle!
+    fileprivate var _requestStartedHandle:      FIRDatabaseHandle!
+    fileprivate var _requestStoppedHandle:      FIRDatabaseHandle!
+    fileprivate var _requestPayedHandle:        FIRDatabaseHandle!
+    fileprivate var _requestReviewedHandle:     FIRDatabaseHandle!
+    
     //MARK: Outlets
     
     @IBOutlet weak var mapView: MKMapView!
@@ -102,24 +112,24 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         Alamofire.request(link, headers: headers).responseJSON { [weak weakSelf = self] (response) in
             DispatchQueue.main.async {
                 let string = "\(response)"
-                Gym.statistics = stringParser(string: string)
+                Gym.privateAllStats = stringParser(string: string)
                 
-                let whiteBldgStats = Gym.statistics[Constants.Gym.Name.WhiteBldg]!
+                let whiteBldgStats = Gym.allStats[Constants.Gym.Name.WhiteBldg]!
                 let whiteBldgOccupancy = Int(whiteBldgStats[Constants.Gym.Parsing.CurrentVal]!)
                 let whiteBldgCapacity = Int(whiteBldgStats[Constants.Gym.Parsing.MaxVal]!)
                 let whiteBldgOccupancyPercentage = Int(whiteBldgOccupancy! * 100 / whiteBldgCapacity!)
                 
-                let recHallStats = Gym.statistics[Constants.Gym.Name.RecHall]!
+                let recHallStats = Gym.allStats[Constants.Gym.Name.RecHall]!
                 let recHallOccupancy = Int(recHallStats[Constants.Gym.Parsing.CurrentVal]!)
                 let recHallCapacity = Int(recHallStats[Constants.Gym.Parsing.MaxVal]!)
                 let recHallOccupancyPercentage = Int(recHallOccupancy! * 100 / recHallCapacity!)
                 
-                let imBldgStats = Gym.statistics[Constants.Gym.Name.IMBldg]!
+                let imBldgStats = Gym.allStats[Constants.Gym.Name.IMBldg]!
                 let imBldgOccupancy = Int(imBldgStats[Constants.Gym.Parsing.CurrentVal]!)
                 let imBldgCapacity = Int(imBldgStats[Constants.Gym.Parsing.MaxVal]!)
                 let imBldgOccupancyPercentage = Int(imBldgOccupancy! * 100 / imBldgCapacity!)
                 
-                Gym.occupancyPercentage =   [
+                Gym.privateAllOccupancy =   [
                     Constants.Gym.Name.WhiteBldg : "\(whiteBldgOccupancyPercentage)",
                     Constants.Gym.Name.RecHall : "\(recHallOccupancyPercentage)",
                     Constants.Gym.Name.IMBldg : "\(imBldgOccupancyPercentage)"
@@ -158,6 +168,16 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         print("KRIS: The GeoFire Database Reference for Pokefinder is = \(geoFireRef)")
         
         CURLscrapeWebPage(link: Constants.Web.Link.PSUfitnessCURLscraping)
+    }
+    
+    deinit
+    {
+        
+    }
+    
+    func configureDatabase()
+    {
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -255,8 +275,9 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             if let key = key, let location = location
             {
                 //self.geoFire.removeKey(key)
-                let message = "\(Gym.occupancyPercentage[key]!) % Full."
+                let message = "\(Gym.allOccupancy[key]!) % Full."
                 let anno = GymAnnotation(coordinate: location.coordinate, gymName: key, message: message)
+                print("KRIS: \(key) Gym is located at latitude: \(location.coordinate.latitude) and longitude: \(location.coordinate.longitude) ")
                 self.mapView.addAnnotation(anno)
             }
         })

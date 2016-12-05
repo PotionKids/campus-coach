@@ -33,11 +33,12 @@ class RequestCell: UITableViewCell {
     
     func updateUI(request: Request)
     {
-        gymBldg.text = request.gymName
-        acceptRequestButtonDescription.text = request.action
-        userName.text = request.user
+        gymBldg.text                        = request.created.forGym
+        acceptRequestButtonDescription.text = Constants.DataService.Mirror.Accept
+        let student                         = request.created.student
+        userName.text                       = student.firstName
         
-        let urlstr = request.imageURL
+        let urlstr = student.facebookImageURLString
         
         if let urlstring = urlstr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         {
