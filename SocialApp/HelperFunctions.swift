@@ -99,13 +99,14 @@ func extractProviderData(user: FIRUser, credential: FIRAuthCredential) -> Fireba
             if let name = name,
                 let email = email
             {
-                userData = [
-                    Constants.Firebase.Key.UID : user.uid,
-                    Constants.Facebook.Key.Provider : credential.provider,
-                    Constants.Facebook.Key.UID : uid,
-                    Constants.Facebook.Key.Name : name,
-                    Constants.Facebook.Key.Email : email,
-                    Constants.Facebook.Key.ImageURLString : imageURLString
+                userData =
+                [
+                    Constants.Firebase.Key.UID:             user.uid,
+                    Constants.Facebook.Key.Provider:        credential.provider,
+                    Constants.Facebook.Key.UID:             uid,
+                    Constants.Facebook.Key.Name:            name,
+                    Constants.Facebook.Key.Email:           email,
+                    Constants.Facebook.Key.ImageURLString:  imageURLString
                 ]
             }
             else
@@ -134,12 +135,12 @@ func completeSignIn(isCoach: Bool, cell: String, user: FIRUser?, credential: FIR
         KeychainWrapper.standard.set(id, forKey: Constants.Firebase.KeychainWrapper.KeyUID)
         if isCoach
         {
-            DataService.ds.createFirebaseObject(object: .Coaches, instanceID: id, data: userData)
+            DataService.ds.createFirebaseObject(object: .coaches, instanceID: id, data: userData)
             vc.performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToCoachRequests, sender: nil)
         }
         else
         {
-            DataService.ds.createFirebaseObject(object: .Users, instanceID: id, data: userData)
+            DataService.ds.createFirebaseObject(object: .users, instanceID: id, data: userData)
             vc.performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToSetGymMap, sender: nil)
         }
     }
