@@ -111,7 +111,7 @@ func extractProviderData(user: FIRUser, credential: FIRAuthCredential) -> Fireba
             else
             {
                 print("Facebook Profile Details couldn't be retrieved for the user.")
-                imageURLString = Constants.String.Empty
+                imageURLString = Constants.Literal.Empty
             }
         }
         else

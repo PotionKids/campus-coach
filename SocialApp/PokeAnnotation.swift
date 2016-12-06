@@ -9,15 +9,21 @@
 import Foundation
 import MapKit
 
-class GymAnnotation: NSObject, MKAnnotation {
+class GymAnnotation: NSObject, MKAnnotation
+{
     var coordinate = CLLocationCoordinate2D()
     var gymName: String
     var title: String?
     
-    init(coordinate: CLLocationCoordinate2D, gymName: String) {
-        self.coordinate = coordinate
-        self.gymName = gymName
-        self.title = self.gymName
+    init(coordinate: CLLocationCoordinate2D, gymName: String)
+    {
+        self.coordinate         = coordinate
+        self.gymName            = gymName
+        let stats               = Gym.statistics[gymName]!
+        let occupancy           = Int(stats[Constants.Gym.Parsing.CurrentVal]!)
+        let capacity            = Int(stats[Constants.Gym.Parsing.MaxVal]!)
+        let occupancyPercentage = Int(occupancy! * 100 / capacity!)
+        self.title              = "\(self.gymName) is \(occupancyPercentage) % occupied."
     }
 }
 
