@@ -27,6 +27,7 @@
 		0D473E181DBBED6B008FF539 /* Coach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D473E171DBBED6B008FF539 /* Coach.swift */; };
 		0D47DC971DF67FE50076C360 /* DataStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D47DC961DF67FE50076C360 /* DataStructure.swift */; };
 		0D47DCA01DF680420076C360 /* DateAndTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D47DC9F1DF680420076C360 /* DateAndTime.swift */; };
+		0D47DCA21DF681BB0076C360 /* ModelProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D47DCA11DF681BB0076C360 /* ModelProtocols.swift */; };
 		0D6BB8FE1DB579380015AE04 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6BB8FD1DB579380015AE04 /* DataService.swift */; };
 		0D6DA2F31DC01BC90068CDBF /* MKGPX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6DA2F21DC01BC90068CDBF /* MKGPX.swift */; };
 		0D6DA2FC1DC01BD70068CDBF /* gpx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6DA2FB1DC01BD70068CDBF /* gpx.swift */; };
@@ -153,6 +154,7 @@
 		0D473E171DBBED6B008FF539 /* Coach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coach.swift; sourceTree = "<group>"; };
 		0D47DC961DF67FE50076C360 /* DataStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStructure.swift; sourceTree = "<group>"; };
 		0D47DC9F1DF680420076C360 /* DateAndTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateAndTime.swift; sourceTree = "<group>"; };
+		0D47DCA11DF681BB0076C360 /* ModelProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelProtocols.swift; sourceTree = "<group>"; };
 		0D6BB8FD1DB579380015AE04 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		0D6DA2F21DC01BC90068CDBF /* MKGPX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKGPX.swift; sourceTree = "<group>"; };
 		0D6DA2FB1DC01BD70068CDBF /* gpx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = gpx.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				0DD788B41DF659D300BFDE91 /* Dictionarizable.swift */,
 				0D47DC961DF67FE50076C360 /* DataStructure.swift */,
 				0D47DC9F1DF680420076C360 /* DateAndTime.swift */,
+				0D47DCA11DF681BB0076C360 /* ModelProtocols.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -560,6 +563,7 @@
 				0D4687111DC2F71C009950F2 /* GeoFire.m in Sources */,
 				0D9550BC1DBFF36000B2DB9D /* CustomTableView.swift in Sources */,
 				0D9550BA1DBFEB3000B2DB9D /* CustomImageView.swift in Sources */,
+				0D47DCA21DF681BB0076C360 /* ModelProtocols.swift in Sources */,
 				0DB001F41DB3179100EF1921 /* Constants.swift in Sources */,
 				0DB001F71DB32F2700EF1921 /* Gym.swift in Sources */,
 				0D473E181DBBED6B008FF539 /* Coach.swift in Sources */,

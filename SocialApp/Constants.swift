@@ -297,6 +297,24 @@ struct Constants {
         }
     }
     
+    struct Calendar
+    {
+        struct DateAndTimeFormat
+        {
+            static let DateDisplayCustom            = "customDate"
+            static let DateAndTimeDisplayCustom     = "customDateAndTime"
+            static let TimeStampNanoseconds         = "nanosecondsTime"
+            static let DateAndTimeStampNanoseconds  = "nanosecondsDateAndTime"
+            static let NanosecondIndexInStamp: Int  = 14
+            
+            static let DefaultFormat_mm_ss          = "mm:ss"
+        }
+        struct Date
+        {
+            static let ReferenceTime_mm_ss          = "00:00"
+        }
+    }
+    
     struct Protocols
     {
         struct Keys
