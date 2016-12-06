@@ -252,6 +252,7 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             {
                 //self.geoFire.removeKey(key)
                 let anno = GymAnnotation(coordinate: location.coordinate, gymName: key)
+                print("KRIS: Location of \(key) gym is latitude: \(location.coordinate.latitude) and longitude: \(location.coordinate.longitude)")
                 self.mapView.addAnnotation(anno)
             }
         })
