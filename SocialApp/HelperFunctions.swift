@@ -64,10 +64,11 @@ func extractUserData(user: FIRUser?, credential: FIRAuthCredential?) -> (String?
         }
         else
         {
-            userData = [
-                Constants.Firebase.Key.UID : id,
-                Constants.DataService.User.Provider : user.providerID,
-                Constants.DataService.User.Email : (user.email)!
+            userData =
+            [
+                Constants.Firebase.Key.UID:             id,
+                Constants.DataService.User.Provider:    user.providerID,
+                Constants.DataService.User.Email:       user.email!
             ]
         }
         return (id, userData)
@@ -96,10 +97,10 @@ func extractProviderData(user: FIRUser, credential: FIRAuthCredential) -> Fireba
         if let uid = uid
         {
             imageURLString = "\(Constants.Facebook.Profile.ImageURLPrefix)\(uid)\(Constants.Facebook.Profile.ImageURLSuffix)"
-            if let name = name,
-                let email = email
+            if  let name    = name,
+                let email   = email
             {
-                userData =
+                userData    =
                 [
                     Constants.Firebase.Key.UID:             user.uid,
                     Constants.Facebook.Key.Provider:        credential.provider,
