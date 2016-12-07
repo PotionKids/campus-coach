@@ -597,14 +597,15 @@ struct Constants {
                 {
                     self.other = [""]
                 }
-                if let firebase = firebase
-                {
-                    self.firebase = firebase
-                }
-                else
-                {
-                    self.firebase = self.get
-                }
+//                if let firebase = firebase
+//                {
+//                    self.firebase = firebase
+//                }
+//                else
+//                {
+//                    self.firebase = self.get
+//                }
+                self.firebase = self.set.chopFromSelf(fragment: "private").lowercaseFirst
             }
             init(set: [String])
             {

@@ -498,6 +498,63 @@ class DataService
     }
 }
 
+func getFirebaseUserRef(fromObject object: FirebaseUserIDable) -> FIRDatabaseReference
+{
+    if object.coachOrNot
+    {
+        return object.firebaseUID.firebaseCoachRef
+    }
+    else
+    {
+        return object.firebaseUID.firebaseStudentRef
+    }
+}
+
+func getFirebaseLocationRef(fromObject object: FirebaseLocationIDable) -> FIRDatabaseReference
+{
+    return object.firebaseLID.firebaseLocationRef
+}
+
+func getFirebaseRequestRef(fromObject object: FirebaseRequestIDable) -> FIRDatabaseReference
+{
+    return object.firebaseRID.firebaseRequestRef
+}
+
+func getRequestCreatedRef(fromObject object: FirebaseRequestIDable) -> FIRDatabaseReference
+{
+    return object.firebaseRID.requestCreatedRef
+}
+
+func getRequestAcceptedRef(fromObject object: FirebaseRequestIDable) -> FIRDatabaseReference
+{
+    return object.firebaseRID.requestAcceptedRef
+}
+
+func getRequestCommunicatedRef(fromObject object: FirebaseRequestIDable) -> FIRDatabaseReference
+{
+    return object.firebaseRID.requestCommunicatedRef
+}
+
+func getRequestServiceRef(fromObject object: FirebaseRequestIDable) -> FIRDatabaseReference
+{
+    return object.firebaseRID.requestServiceRef
+}
+
+func getRequestPayedRef(fromObject object: FirebaseRequestIDable) -> FIRDatabaseReference
+{
+    return object.firebaseRID.requestPayedRef
+}
+
+func getRequestReviewedRef(fromObject object: FirebaseRequestIDable) -> FIRDatabaseReference
+{
+    return object.firebaseRID.requestReviewedRef
+}
+
+func pushToFirebase(data: StringDictionary, atLocation location: FIRDatabaseReference)
+{
+    location.updateChildValues(data)
+}
+
 extension String
 {
     var firebaseUserRef: FIRDatabaseReference

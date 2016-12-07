@@ -27,7 +27,7 @@ func firebaseAuth(_ isCoach: Bool, cell: String, credential: FIRAuthCredential, 
     FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
         if let error = error
         {
-            print("KRIS ERROR: Unable to authenticate with Firebase = \(error)")
+            print("KRIS: ERROR - Unable to authenticate with Firebase = \(error)")
         }
         else
         {
@@ -64,12 +64,6 @@ func extractUserData(user: FIRUser?, isCoach: Bool, cell: String, credential: FI
         }
         else
         {
-//            userData =
-//            [
-//                Constants.Firebase.Key.UID:             id,
-//                Constants.DataService.User.Provider:    user.providerID,
-//                Constants.DataService.User.Email:       user.email!
-//            ]
             let loggedInAtTime  = timeStamp().stampNanoseconds
             let defaultName     = Constants.DataService.User.DefaultUserName
             userData            =
@@ -89,6 +83,10 @@ func extractUserData(user: FIRUser?, isCoach: Bool, cell: String, credential: FI
                     Constants.DataService.User.Ratings          : Constants.DataService.User.DefaultRating.string,
                     Constants.DataService.User.Reviews          : Constants.Literal.Empty
             ]
+            selfUser = User(fromUserData: userData)!
+            print("KRIS: selfUser String Dictionary of All Keys is \(selfUser.stringDictionary)")
+
+            print("KRIS: selfUser Firebase Keys are \(selfUser)")
         }
         return (id, userData)
     }
@@ -105,7 +103,6 @@ func extractProviderData(user: FIRUser, isCoach: Bool, cell: String, credential:
     var name: String?
     var email: String?
     var uid: String?
-    var imageURLString: String!
     
     let userProfile = user.providerData
     for profile in userProfile
@@ -115,19 +112,9 @@ func extractProviderData(user: FIRUser, isCoach: Bool, cell: String, credential:
         uid = profile.uid
         if let uid = uid
         {
-            imageURLString = "\(Constants.Facebook.Profile.ImageURLPrefix)\(uid)\(Constants.Facebook.Profile.ImageURLSuffix)"
             if  let name    = name,
                 let email   = email
             {
-//                userData    =
-//                [
-//                    Constants.Firebase.Key.UID:             user.uid,
-//                    Constants.Facebook.Key.Provider:        credential.provider,
-//                    Constants.Facebook.Key.UID:             uid,
-//                    Constants.Facebook.Key.Name:            name,
-//                    Constants.Facebook.Key.Email:           email,
-//                    Constants.Facebook.Key.ImageURLString:  imageURLString
-//                ]
                 let loggedInAtTime  = timeStamp().stampNanoseconds
                 userData =
                     [
@@ -145,18 +132,19 @@ func extractProviderData(user: FIRUser, isCoach: Bool, cell: String, credential:
                         Constants.DataService.User.Rating           : Constants.DataService.User.DefaultRating.string,
                         Constants.DataService.User.Ratings          : Constants.DataService.User.DefaultRating.string,
                         Constants.DataService.User.Reviews          : Constants.Literal.Empty
-                ]
-                
+                    ]
+                selfUser = User(fromUserData: userData)!
+                print("KRIS: selfUser String Dictionary of All Keys is \(selfUser.stringDictionary)")
+                print("KRIS: selfUser is \(selfUser)")
             }
             else
             {
-                print("Facebook Profile Details couldn't be retrieved for the user.")
-                imageURLString = Constants.Literal.Empty
+                print("KRIS: Facebook Profile Details couldn't be retrieved for the user.")
             }
         }
         else
         {
-            print("The Facebook Profile UID couldn't be retrieved.")
+            print("KRIS: The Facebook Profile UID couldn't be retrieved.")
         }
     }
     return userData
@@ -167,23 +155,27 @@ func completeSignIn(isCoach: Bool, cell: String, user: FIRUser?, credential: FIR
     var id: String?
     var userData: FirebaseData?
     (id, userData) = extractUserData(user: user, isCoach: isCoach, cell: cell, credential: credential)
-    let _ = userData?.updateValue(cell, forKey: Constants.DataService.User.Cell)
     
     if let id = id, let userData = userData
     {
         KeychainWrapper.standard.set(id, forKey: Constants.Firebase.KeychainWrapper.KeyUID)
         if isCoach
         {
-            DataService.ds.createFirebaseObject(object: .coaches, instanceID: id, data: userData)
+            //DataService.ds.createFirebaseObject(object: .coaches, instanceID: id, data: userData)
+            selfUser.push()
             vc.performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToCoachRequests, sender: nil)
         }
         else
         {
-            DataService.ds.createFirebaseObject(object: .students, instanceID: id, data: userData)
+            //DataService.ds.createFirebaseObject(object: .students, instanceID: id, data: userData)
+            selfUser.push()
             vc.performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToSetGymMap, sender: nil)
         }
     }
-    print("KRIS: Authentication Failed.")
+    else
+    {
+        print("KRIS: Authentication Failed.")
+    }
 }
 
 

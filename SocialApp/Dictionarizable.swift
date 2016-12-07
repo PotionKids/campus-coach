@@ -108,9 +108,10 @@ extension Dictionarizable
         
         // Key validity check
         
-        let allKeys                 = self.getAllKeys()
+        let allKeys                 = self.getKeysSuperSet()
+        print("KRIS: allKeys are \(allKeys)")
         let commonKeysFound         = allKeys.filter() {keys.contains($0)}
-        let keysNotFound            = keys.complementOf(elements: commonKeysFound)
+        print("KRIS: commonKeysFound are \(commonKeysFound)")
         let dictionary              = self.stringDictionary
         
         for key in commonKeysFound
@@ -136,6 +137,7 @@ extension Dictionarizable
             if let key = child.label
             {
                 dictionary.updateValue(child.value, forKey: key)
+                dictionary.updateValue(child.value, forKey: key.replacingOccurrences(of: Constants.Dictionary.Key.privateSmalls, with: Constants.Literal.Empty).lowercaseFirst)
             }
         }
         return dictionary
@@ -144,6 +146,11 @@ extension Dictionarizable
     func getAllKeys() -> Keys
     {
         return self.toDictionary().getAllKeys()
+    }
+    
+    func getKeysSuperSet() -> Keys
+    {
+        return self.toDictionary().getKeysSuperSet()
     }
     
     func getAllValues() -> Values
@@ -184,6 +191,11 @@ extension Dictionarizable
         return self.toDictionary().getPrivateKeys()
     }
     
+    func getFirebaseKeys() -> Keys
+    {
+        return self.toDictionary().getFirebaseKeys()
+    }
+    
     func getValuesForPrivateKeys() -> Values
     {
         return self.toDictionary().getValuesForPrivateKeys()
@@ -220,6 +232,11 @@ extension Dictionary
             keys.append("\(key)")
         }
         return keys
+    }
+    
+    func getKeysSuperSet() -> Keys
+    {
+        return addArray(first: self.getAllKeys(), with: self.getFirebaseKeys())
     }
     
     func getAllValues() -> Values
@@ -284,6 +301,11 @@ extension Dictionary
             Constants.Dictionary.Key.privateSmalls,
             Constants.Dictionary.Key.privateCapitalized
             ])
+    }
+    
+    func getFirebaseKeys() -> Keys
+    {
+        return self.getPrivateKeys().chopFromSelf(fragment: Constants.Dictionary.Key.privateSmalls).lowercaseFirst
     }
     
     func getValuesForPrivateKeys() -> Values

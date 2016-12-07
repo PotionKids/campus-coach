@@ -9,6 +9,8 @@
 import Foundation
 import Firebase
 
+internal var selfUser = User()
+
 protocol UserType: FirebaseUserIDable, ProviderSpecifiable, LoginTimeStampable, FacebookImageRetrievable, Nameable, Emailable, Textable, FirebaseRequestIDable, RequestArchivable, FirebaseUIDListType, RatingArchivable, ReviewArchivable, Pushable
 {
     init()
@@ -55,11 +57,11 @@ extension UserType
     {
         if coachOrNot
         {
-            pushValuesToFirebase(forKeys: keys.firebase, at: firebaseUID.firebaseCoachRef)
+            pushValuesToFirebase(forKeys: self.getFirebaseKeys(), at: firebaseUID.firebaseCoachRef)
         }
         else
         {
-            pushValuesToFirebase(forKeys: keys.firebase, at: firebaseUID.firebaseStudentRef)
+            pushValuesToFirebase(forKeys: self.getFirebaseKeys(), at: firebaseUID.firebaseStudentRef)
         }
     }
     var keys: KeysType

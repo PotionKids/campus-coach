@@ -17,10 +17,10 @@ import Alamofire
 
 class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
-    var coachOnTheWay = false
-    var locationManager = CLLocationManager()
-    var mapHasCenteredOnce = false
-    var userLocation: CLLocationCoordinate2D = Constants.Map.Location.BaseInitializer
+    var coachOnTheWay                           = false
+    var locationManager                         = CLLocationManager()
+    var mapHasCenteredOnce                      = false
+    var userLocation: CLLocationCoordinate2D    = Constants.Map.Location.BaseInitializer
     
     var geoFire: GeoFire!
     var geoFireRef: FIRDatabaseReference!
