@@ -447,7 +447,7 @@ struct Constants {
         {
             static let Accept                       =
                 Constants.DataService.Mirror.Accept                         .lowercaseFirst
-                        
+            
             static let Created                      =
                 Constants.DataService.Mirror.Created                        .lowercaseFirst
             static let Accepted                     =
@@ -2248,6 +2248,7 @@ struct Constants {
                 static let GymDataSeparator = "GymDataSeparator"
                 static let GymParameterKeys = "GymParameterKeys"
             }
+            
         }
     }
     
@@ -2392,25 +2393,6 @@ struct Constants {
     
     struct Gym
     {
-        struct Statistic
-        {
-            static let CurrentVal = "Occupancy"
-            static let FullCapacityWaiTime = "Wait Time"
-            static let GUID = "GUID"
-            static let LocationDescription = "Gym"
-            static let MaxVal = "Capacity"
-            static let numberOfParameters: Int = 5
-        }
-        
-        struct Parsing
-        {
-            static let GymDataSeparator = " = "
-            static let CurrentVal = "CurrentVal"
-            static let FullCapacityWaiTime = "FullCapacityWaiTime"
-            static let GUID = "GUID"
-            static let LocationDescription = "LocationDescription"
-            static let MaxVal = "MaxVal"        }
-        
         struct Name
         {
             static let WhiteBuilding = "White Building"
@@ -2421,6 +2403,34 @@ struct Constants {
             static let HepperFitness = "Hepper Fitness Center"
             static let IMWeightRoom = "IM Weight Room"
         }
+        
+        struct Statistic
+        {
+            static let CurrentVal                   = "Occupancy"
+            static let FullCapacityWaiTime          = "Wait Time"
+            static let GUID                         = "GUID"
+            static let LocationDescription          = "Gym"
+            static let MaxVal                       = "Capacity"
+            static let numberOfParameters: Int      = 5
+        }
+        
+        struct Parsing
+        {
+            static let GymDataSeparator             = " = "
+            static let CurrentVal                   = "CurrentVal"
+            static let FullCapacityWaiTime          = "FullCapacityWaiTime"
+            static let GUID                         = "GUID"
+            static let LocationDescription          = "LocationDescription"
+            static let MaxVal                       = "MaxVal"
+        }
+        
+        struct Location
+        {
+            static let WhiteBldg                    = CLLocation(latitude: 40.7985, longitude: -77.8590)
+            static let RecHall                      = CLLocation(latitude: 40.7985, longitude: -77.8590)
+            static let IMBldg                       = CLLocation(latitude: 40.7985, longitude: -77.8590)
+        }
+
     }
 }
 

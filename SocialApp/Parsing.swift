@@ -8,8 +8,6 @@
 
 import Foundation
 
-typealias GymStat = [String : [String : String]]
-
 extension Array {
     func removeIndices(indices: [Int]) -> Array {
         var counter = 0

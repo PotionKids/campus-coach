@@ -11,6 +11,12 @@
 		0D02918F1DBD7FA900C75BE5 /* RequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D02918E1DBD7FA900C75BE5 /* RequestCell.swift */; };
 		0D0291911DBD7FAF00C75BE5 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0291901DBD7FAF00C75BE5 /* Request.swift */; };
 		0D065B1E1DF85B3E00A5DB80 /* fetchFirebaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D065B1D1DF85B3E00A5DB80 /* fetchFirebaseObject.swift */; };
+		0D065B201DF85C8800A5DB80 /* Created.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D065B1F1DF85C8800A5DB80 /* Created.swift */; };
+		0D065B221DF85C9500A5DB80 /* Accepted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D065B211DF85C9500A5DB80 /* Accepted.swift */; };
+		0D065B241DF85CA500A5DB80 /* Communicated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D065B231DF85CA500A5DB80 /* Communicated.swift */; };
+		0D065B261DF85CAF00A5DB80 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D065B251DF85CAF00A5DB80 /* Service.swift */; };
+		0D065B281DF85CBC00A5DB80 /* Payed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D065B271DF85CBC00A5DB80 /* Payed.swift */; };
+		0D065B2A1DF85CD100A5DB80 /* Reviewed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D065B291DF85CD100A5DB80 /* Reviewed.swift */; };
 		0D3745C91DB04DFF009F061C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3745C81DB04DFF009F061C /* AppDelegate.swift */; };
 		0D3745CE1DB04DFF009F061C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D3745CC1DB04DFF009F061C /* Main.storyboard */; };
 		0D3745D01DB04DFF009F061C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D3745CF1DB04DFF009F061C /* Assets.xcassets */; };
@@ -126,6 +132,12 @@
 		0D02918E1DBD7FA900C75BE5 /* RequestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestCell.swift; sourceTree = "<group>"; };
 		0D0291901DBD7FAF00C75BE5 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		0D065B1D1DF85B3E00A5DB80 /* fetchFirebaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fetchFirebaseObject.swift; sourceTree = "<group>"; };
+		0D065B1F1DF85C8800A5DB80 /* Created.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Created.swift; sourceTree = "<group>"; };
+		0D065B211DF85C9500A5DB80 /* Accepted.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accepted.swift; sourceTree = "<group>"; };
+		0D065B231DF85CA500A5DB80 /* Communicated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Communicated.swift; sourceTree = "<group>"; };
+		0D065B251DF85CAF00A5DB80 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		0D065B271DF85CBC00A5DB80 /* Payed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Payed.swift; sourceTree = "<group>"; };
+		0D065B291DF85CD100A5DB80 /* Reviewed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reviewed.swift; sourceTree = "<group>"; };
 		0D3745C51DB04DFF009F061C /* SocialApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D3745C81DB04DFF009F061C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0D3745CD1DB04DFF009F061C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -288,6 +300,12 @@
 				0D47DC961DF67FE50076C360 /* DataStructure.swift */,
 				0D47DC9F1DF680420076C360 /* DateAndTime.swift */,
 				0D47DCA11DF681BB0076C360 /* ModelProtocols.swift */,
+				0D065B1F1DF85C8800A5DB80 /* Created.swift */,
+				0D065B211DF85C9500A5DB80 /* Accepted.swift */,
+				0D065B231DF85CA500A5DB80 /* Communicated.swift */,
+				0D065B251DF85CAF00A5DB80 /* Service.swift */,
+				0D065B271DF85CBC00A5DB80 /* Payed.swift */,
+				0D065B291DF85CD100A5DB80 /* Reviewed.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -569,19 +587,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D47DCA01DF680420076C360 /* DateAndTime.swift in Sources */,
+				0D065B201DF85C8800A5DB80 /* Created.swift in Sources */,
 				0DB001F91DB32F5200EF1921 /* Parsing.swift in Sources */,
 				0D47DC971DF67FE50076C360 /* DataStructure.swift in Sources */,
 				0D4687111DC2F71C009950F2 /* GeoFire.m in Sources */,
+				0D065B261DF85CAF00A5DB80 /* Service.swift in Sources */,
 				0D9550BC1DBFF36000B2DB9D /* CustomTableView.swift in Sources */,
 				0D9550BA1DBFEB3000B2DB9D /* CustomImageView.swift in Sources */,
 				0D47DCA21DF681BB0076C360 /* ModelProtocols.swift in Sources */,
 				0DB001F41DB3179100EF1921 /* Constants.swift in Sources */,
 				0DB001F71DB32F2700EF1921 /* Gym.swift in Sources */,
+				0D065B221DF85C9500A5DB80 /* Accepted.swift in Sources */,
 				0D473E181DBBED6B008FF539 /* Coach.swift in Sources */,
 				0D46871F1DC2FE32009950F2 /* PokeAnnotation.swift in Sources */,
 				0D6DA2FC1DC01BD70068CDBF /* gpx.swift in Sources */,
 				0D4687141DC2F71C009950F2 /* GFGeoHashQuery.m in Sources */,
+				0D065B281DF85CBC00A5DB80 /* Payed.swift in Sources */,
 				0DD8C4B01DBFD432002EACB3 /* Errors.swift in Sources */,
+				0D065B2A1DF85CD100A5DB80 /* Reviewed.swift in Sources */,
 				0D9D79091DB4307E006F7081 /* SetGymVC.swift in Sources */,
 				0D4687131DC2F71C009950F2 /* GFGeoHash.m in Sources */,
 				0DB001F21DB316A400EF1921 /* HelperFunctions.swift in Sources */,
@@ -590,6 +613,7 @@
 				0D43EBB51DBFA2460033CA95 /* Location.swift in Sources */,
 				0D473E161DBBED5E008FF539 /* Student.swift in Sources */,
 				0D3745C91DB04DFF009F061C /* AppDelegate.swift in Sources */,
+				0D065B241DF85CA500A5DB80 /* Communicated.swift in Sources */,
 				0D065B1E1DF85B3E00A5DB80 /* fetchFirebaseObject.swift in Sources */,
 				0D9550AF1DBFE76000B2DB9D /* ViewStyling.swift in Sources */,
 				0D4687121DC2F71C009950F2 /* GFBase32Utils.m in Sources */,
