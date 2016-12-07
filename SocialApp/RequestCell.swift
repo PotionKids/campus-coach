@@ -33,11 +33,11 @@ class RequestCell: UITableViewCell {
     
     func updateUI(request: Request)
     {
-        gymBldg.text = request.gymName
-        acceptRequestButtonDescription.text = request.action
-        userName.text = request.user
+        gymBldg.text = request.created.forGym
+        acceptRequestButtonDescription.text = Constants.DataService.Request.Accept
+        userName.text = request.created.student.firstName
         
-        let urlstr = request.imageURL
+        let urlstr = request.created.student.facebookImageURLString
         
         if let urlstring = urlstr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         {
@@ -45,11 +45,11 @@ class RequestCell: UITableViewCell {
             {
                 do
                 {
-                    let data = try Data(contentsOf: url)
-                    let image = UIImage(data: data)
-                    userImage.contentMode = .scaleAspectFit
+                    let data                = try Data(contentsOf: url)
+                    let image               = UIImage(data: data)
+                    userImage.contentMode   = .scaleAspectFit
                     userImage.clipsToBounds = true
-                    userImage.image = image
+                    userImage.image         = image
                 }
                 catch Errors.DataRetrival
                 {

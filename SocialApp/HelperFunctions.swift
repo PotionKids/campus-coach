@@ -52,7 +52,7 @@ func firebaseAuth(_ isCoach: Bool, cell: String, credential: FIRAuthCredential, 
     })
 }
 
-func extractUserData(user: FIRUser?, credential: FIRAuthCredential?) -> (String?, FirebaseData?)
+func extractUserData(user: FIRUser?, isCoach: Bool, cell: String, credential: FIRAuthCredential?) -> (String?, FirebaseData?)
 {
     if let user = user
     {
@@ -60,15 +60,34 @@ func extractUserData(user: FIRUser?, credential: FIRAuthCredential?) -> (String?
         var userData: FirebaseData = [:]
         if let credential = credential
         {
-            userData = extractProviderData(user: user, credential: credential)
+            userData = extractProviderData(user: user, isCoach: isCoach, cell: cell, credential: credential)
         }
         else
         {
-            userData =
-            [
-                Constants.Firebase.Key.UID:             id,
-                Constants.DataService.User.Provider:    user.providerID,
-                Constants.DataService.User.Email:       user.email!
+//            userData =
+//            [
+//                Constants.Firebase.Key.UID:             id,
+//                Constants.DataService.User.Provider:    user.providerID,
+//                Constants.DataService.User.Email:       user.email!
+//            ]
+            let loggedInAtTime  = timeStamp().stampNanoseconds
+            let defaultName     = Constants.DataService.User.DefaultUserName
+            userData            =
+                [
+                    Constants.DataService.User.FirebaseUID      : user.uid,
+                    Constants.DataService.User.IsCoach          : isCoach.stringYesNo,
+                    Constants.DataService.User.Provider         : user.providerID,
+                    Constants.DataService.User.LoggedInAtTime   : loggedInAtTime,
+                    Constants.DataService.User.FacebookUID      : Constants.DataService.User.DefaultFacebookUID,
+                    Constants.DataService.User.FullName         : defaultName,
+                    Constants.DataService.User.Email            : user.email!,
+                    Constants.DataService.User.Cell             : cell,
+                    Constants.DataService.User.FirebaseRID      : Constants.Literal.Empty,
+                    Constants.DataService.User.Requests         : Constants.Literal.Empty,
+                    Constants.DataService.User.FirebaseUIDs     : user.uid,
+                    Constants.DataService.User.Rating           : Constants.DataService.User.DefaultRating.string,
+                    Constants.DataService.User.Ratings          : Constants.DataService.User.DefaultRating.string,
+                    Constants.DataService.User.Reviews          : Constants.Literal.Empty
             ]
         }
         return (id, userData)
@@ -80,7 +99,7 @@ func extractUserData(user: FIRUser?, credential: FIRAuthCredential?) -> (String?
     }
 }
 
-func extractProviderData(user: FIRUser, credential: FIRAuthCredential) -> FirebaseData
+func extractProviderData(user: FIRUser, isCoach: Bool, cell: String, credential: FIRAuthCredential) -> FirebaseData
 {
     var userData: FirebaseData = [:]
     var name: String?
@@ -100,15 +119,34 @@ func extractProviderData(user: FIRUser, credential: FIRAuthCredential) -> Fireba
             if  let name    = name,
                 let email   = email
             {
-                userData    =
-                [
-                    Constants.Firebase.Key.UID:             user.uid,
-                    Constants.Facebook.Key.Provider:        credential.provider,
-                    Constants.Facebook.Key.UID:             uid,
-                    Constants.Facebook.Key.Name:            name,
-                    Constants.Facebook.Key.Email:           email,
-                    Constants.Facebook.Key.ImageURLString:  imageURLString
+//                userData    =
+//                [
+//                    Constants.Firebase.Key.UID:             user.uid,
+//                    Constants.Facebook.Key.Provider:        credential.provider,
+//                    Constants.Facebook.Key.UID:             uid,
+//                    Constants.Facebook.Key.Name:            name,
+//                    Constants.Facebook.Key.Email:           email,
+//                    Constants.Facebook.Key.ImageURLString:  imageURLString
+//                ]
+                let loggedInAtTime  = timeStamp().stampNanoseconds
+                userData =
+                    [
+                        Constants.DataService.User.FirebaseUID      : user.uid,
+                        Constants.DataService.User.IsCoach          : isCoach.stringYesNo,
+                        Constants.DataService.User.Provider         : credential.provider,
+                        Constants.DataService.User.LoggedInAtTime   : loggedInAtTime,
+                        Constants.DataService.User.FacebookUID      : uid,
+                        Constants.DataService.User.FullName         : name,
+                        Constants.DataService.User.Email            : email,
+                        Constants.DataService.User.Cell             : cell,
+                        Constants.DataService.User.FirebaseRID      : Constants.Literal.Empty,
+                        Constants.DataService.User.Requests         : Constants.Literal.Empty,
+                        Constants.DataService.User.FirebaseUIDs     : user.uid,
+                        Constants.DataService.User.Rating           : Constants.DataService.User.DefaultRating.string,
+                        Constants.DataService.User.Ratings          : Constants.DataService.User.DefaultRating.string,
+                        Constants.DataService.User.Reviews          : Constants.Literal.Empty
                 ]
+                
             }
             else
             {
@@ -128,7 +166,7 @@ func completeSignIn(isCoach: Bool, cell: String, user: FIRUser?, credential: FIR
 {
     var id: String?
     var userData: FirebaseData?
-    (id, userData) = extractUserData(user: user, credential: credential)
+    (id, userData) = extractUserData(user: user, isCoach: isCoach, cell: cell, credential: credential)
     let _ = userData?.updateValue(cell, forKey: Constants.DataService.User.Cell)
     
     if let id = id, let userData = userData
@@ -141,7 +179,7 @@ func completeSignIn(isCoach: Bool, cell: String, user: FIRUser?, credential: FIR
         }
         else
         {
-            DataService.ds.createFirebaseObject(object: .users, instanceID: id, data: userData)
+            DataService.ds.createFirebaseObject(object: .students, instanceID: id, data: userData)
             vc.performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToSetGymMap, sender: nil)
         }
     }

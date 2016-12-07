@@ -111,11 +111,14 @@ class CoachRequestsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         CURLscrapeWebPage(link: Constants.Web.Link.PSUfitnessCURLscraping)
         
-        let testURL = "https://graph.facebook.com/10210569767665956/picture?type=large&w‌ idth=1000&height=1000"
-        
-        let testRequestA = Request(gymName: "Rec Hall", action: "Accept", user: "Kris", imageURL: testURL)
-        let testRequestB = Request(gymName: "IM Bldg", action: "Accepted", user: "Katie", imageURL: testURL)
-        let testRequestC = Request(gymName: "White Bldg", action: "Accept", user: "Lisa", imageURL: testURL)
+        //let testURL = "https://graph.facebook.com/10210569767665956/picture?type=large&w‌ idth=1000&height=1000"
+        let studentUID  = Constants.DataService.User.DefaultFirebaseUID
+        let white       = Building.White.name
+        let rec         = Building.Rec.name
+        let im          = Building.IM.name
+        let testRequestA = Request(byStudent: studentUID, forGym: white)
+        let testRequestB = Request(byStudent: studentUID, forGym: rec)
+        let testRequestC = Request(byStudent: studentUID, forGym: im)
         
         requests =  [
                         testRequestA,

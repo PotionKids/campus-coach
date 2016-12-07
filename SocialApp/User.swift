@@ -41,6 +41,12 @@ protocol UserType: FirebaseUserIDable, ProviderSpecifiable, LoginTimeStampable, 
          andAllReviews
         reviews:        String
     )
+    
+    init?   (
+        fromUserData
+        data:   AnyDictionary
+            )
+    
     init?(fromServerWithFirebaseUID firebaseUID: String, forUserWhoIsACoachOrNot isCoach: Bool)
 }
 extension UserType
@@ -137,16 +143,14 @@ class User: UserType
     required convenience init?  (
         fromUserData
         data:   AnyDictionary
-        )
+                                )
     {
         guard   let firebaseUID = data[Constants.Protocols.FirebaseUserIDable       .firebaseUID]       as? String,
             let isCoach     = data[Constants.Protocols.CoachTaggable            .isCoach]           as? String,
             let provider    = data[Constants.Protocols.ProviderSpecifiable      .provider]          as? String,
             let logInTime   = data[Constants.Protocols.LoginTimeStampable       .loggedInAtTime]    as? String,
             let facebookUID = data[Constants.Protocols.FacebookUserIDable       .facebookUID]       as? String,
-            let imageURL    = data[Constants.Protocols.FacebookImageRetrievable .facebookImageURL]  as? String,
             let fullName    = data[Constants.Protocols.Nameable                 .fullName]          as? String,
-            let firstName   = data[Constants.Protocols.Nameable                 .firstName]         as? String,
             let email       = data[Constants.Protocols.Emailable                .email]             as? String,
             let cell        = data[Constants.Protocols.Textable                 .cell]              as? String,
             let firebaseRID = data[Constants.Protocols.FirebaseRequestIDable    .firebaseRID]       as? String,
@@ -174,7 +178,7 @@ class User: UserType
             withAnAverageRatingOf:              rating,
             withAllRatings:                     ratings,
             andAllReviews:                      reviews
-        )
+                    )
     }
     
     required convenience init? (fromServerWithFirebaseUID firebaseUID: String, forUserWhoIsACoachOrNot isCoach: Bool)
@@ -183,12 +187,15 @@ class User: UserType
         if isCoach
         {
             data = fetchFirebaseObject(from: firebaseUID.firebaseCoachRef)
+            print("KRIS: Coach Data from Firebase = \(data)")
         }
         else
         {
             data = fetchFirebaseObject(from: firebaseUID.firebaseStudentRef)
+            print("KRIS: Student Data from Firebase = \(data)")
+
         }
-        self.init   (
+        self.init (
             fromUserData:   data
         )
     }
