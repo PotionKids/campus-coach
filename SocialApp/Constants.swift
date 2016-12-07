@@ -197,34 +197,272 @@ extension String
 
 struct Constants {
     
+    /*
+ 
+     struct DataService
+     {
+     struct Firebase
+     {
+     static let BaseNode                     =               Constants.Literal.Empty
+     static let BaseURL                      =               FIRDatabase.database().reference()
+     static let Provider                     =               "firebase"
+     static let Base                         =               "base"
+     static let Requests                     =               "requests"
+     static let Users                        =               "users"
+     static let AllUsers                     =               "allUsers"
+     static let Students                     =               "students"
+     static let Coaches                      =               "coaches"
+     static let Locations                    =               "locations"
+     static let Latitude                     =               "latitude"
+     static let Longitude                    =               "longitude"
+     
+     static let FirebaseRID                  =
+     Constants.DataService.Mirror.FirebaseRID            .lowercaseFirst
+     static let Created                      =
+     Constants.DataService.Mirror.Created                .lowercaseFirst
+     static let Accepted                     =
+     Constants.DataService.Mirror.Accepted               .lowercaseFirst
+     static let Communicated                 =
+     Constants.DataService.Mirror.Communicated           .lowercaseFirst
+     static let Service                      =
+     Constants.DataService.Mirror.Service                .lowercaseFirst
+     static let Payed                        =
+     Constants.DataService.Mirror.Payed                  .lowercaseFirst
+     static let Reviewed                     =
+     Constants.DataService.Mirror.Reviewed               .lowercaseFirst
+     }
+     
+     struct Mirror
+     {
+     static let Firebase                     =
+     Constants.DataService.Firebase.Provider             .capitalized
+     static let Locations                    =
+     Constants.DataService.Firebase.Locations            .capitalized
+     static let Requests                     =
+     Constants.DataService.Firebase.Requests             .capitalized
+     static let Users                        =
+     Constants.DataService.Firebase.Users                .capitalized
+     static let Coaches                      =
+     Constants.DataService.Firebase.Coaches              .capitalized
+     
+     static let FirebaseUID                  =               "FirebaseUID"
+     static let IsCoach                      =               "IsCoach"
+     static let Provider                     =               "Provider"
+     static let FacebookUID                  =               "FacebookUID"
+     static let LoggedInAtTime               =               "LoggedInAtTime"
+     static let FullName                     =               "FullName"
+     static let FirstName                    =               "FirstName"
+     static let Email                        =               "Email"
+     static let Cell                         =               "Cell"
+     static let ImageURLString               =               "ImageURL"
+     static let FirebaseRID                  =               "FirebaseRID"
+     //  static let Requests                     =               "Requests". Defined above.
+     static let FirebaseUIDs                 =               "FirebaseUIDs"
+     static let Rating                       =               "Rating"
+     static let Ratings                      =               "Ratings"
+     static let Review                       =               "Review"
+     static let Reviews                      =               "Reviews"
+     
+     static let Created                      =               "Created"
+     static let Accepted                     =               "Accepted"
+     static let Communicated                 =               "Communicated"
+     static let Service                      =               "Service"
+     static let Payed                        =               "Payed"
+     static let Reviewed                     =               "Reviewed"
+     
+     static let Activated                    =               "Activated"
+     static let Started                      =               "Started"
+     static let Stopped                      =               "Stopped"
+     
+     static let Accept                       =               "Accept"
+     }
+}
+ 
+    */
+    
     struct DataService
     {
         struct Firebase
         {
-            static let BaseURL = FIRDatabase.database().reference()
-            static let Provider = "firebase"
-            static let Locations = "locations"
-            static let Requests = "requests"
-            static let Users = "users"
-            static let Coaches = "coaches"
+            static let BaseNode                     =               Constants.Literal.Empty
+            static let BaseURL                      =               FIRDatabase.database().reference()
+            static let Provider                     =               "firebase"
+            static let Base                         =               "base"
+            static let Requests                     =               "requests"
+            static let Users                        =               "users"
+            static let AllUsers                     =               "allUsers"
+            static let Students                     =               "students"
+            static let Coaches                      =               "coaches"
+            static let Locations                    =               "locations"
+            static let Latitude                     =               "latitude"
+            static let Longitude                    =               "longitude"
+            
+            static let FirebaseRID                  =
+                Constants.DataService.Mirror.FirebaseRID            .lowercaseFirst
+            static let Created                      =
+                Constants.DataService.Mirror.Created                .lowercaseFirst
+            static let Accepted                     =
+                Constants.DataService.Mirror.Accepted               .lowercaseFirst
+            static let Communicated                 =
+                Constants.DataService.Mirror.Communicated           .lowercaseFirst
+            static let Service                      =
+                Constants.DataService.Mirror.Service                .lowercaseFirst
+            static let Payed                        =
+                Constants.DataService.Mirror.Payed                  .lowercaseFirst
+            static let Reviewed                     =
+                Constants.DataService.Mirror.Reviewed               .lowercaseFirst
         }
         struct Mirror
         {
-            static let Firebase = Constants.DataService.Firebase.Provider.capitalized
-            static let Locations = Constants.DataService.Firebase.Locations.capitalized
-            static let Requests = Constants.DataService.Firebase.Requests.capitalized
-            static let Users = Constants.DataService.Firebase.Users.capitalized
-            static let Coaches = Constants.DataService.Firebase.Coaches.capitalized
+            static let Firebase                     =
+                Constants.DataService.Firebase.Provider             .capitalized
+            static let Locations                    =
+                Constants.DataService.Firebase.Locations            .capitalized
+            static let Requests                     =
+                Constants.DataService.Firebase.Requests             .capitalized
+            static let Users                        =
+                Constants.DataService.Firebase.Users                .capitalized
+            static let Coaches                      =
+                Constants.DataService.Firebase.Coaches              .capitalized
+            
+            static let FirebaseUID                  =               "FirebaseUID"
+            static let IsCoach                      =               "IsCoach"
+            static let Provider                     =               "Provider"
+            static let FacebookUID                  =               "FacebookUID"
+            static let LoggedInAtTime               =               "LoggedInAtTime"
+            static let FullName                     =               "FullName"
+            static let FirstName                    =               "FirstName"
+            static let Email                        =               "Email"
+            static let Cell                         =               "Cell"
+            static let ImageURLString               =               "ImageURL"
+            static let FirebaseRID                  =               "FirebaseRID"
+            //  static let Requests                     =               "Requests". Defined above.
+            static let FirebaseUIDs                 =               "FirebaseUIDs"
+            static let Rating                       =               "Rating"
+            static let Ratings                      =               "Ratings"
+            static let Review                       =               "Review"
+            static let Reviews                      =               "Reviews"
+            
+            static let Created                      =               "Created"
+            static let Accepted                     =               "Accepted"
+            static let Communicated                 =               "Communicated"
+            static let Service                      =               "Service"
+            static let Payed                        =               "Payed"
+            static let Reviewed                     =               "Reviewed"
+            
+            static let Activated                    =               "Activated"
+            static let Started                      =               "Started"
+            static let Stopped                      =               "Stopped"
+            
+            static let Accept                       =               "Accept"
         }
+        
         struct User
         {
-            static let UID = Constants.Firebase.KeychainWrapper.KeyUID
-            static let Location = Constants.DataService.Firebase.Locations.removeLast
-            static let Name = "name"
-            static let Provider = "provider"
-            static let Cell = "cellNumber"
-            static let Email = Constants.Facebook.Key.Email
-            static let Requests = Constants.DataService.Firebase.Requests
+            static let BaseNode                     =               Constants.Literal.Empty
+            static let UID                          =               "uid"
+            static let Profile                      =               "profile"
+            static let Name                         =               "name"
+            
+            static let FirebaseUID                  =
+                Mirror.FirebaseUID.lowercaseFirst
+            static let IsCoach                      =
+                Mirror.IsCoach.lowercaseFirst
+            static let Provider                     =
+                Mirror.Provider.lowercaseFirst
+            static let FacebookUID                  =
+                Mirror.FacebookUID.lowercaseFirst
+            static let LoggedInAtTime               =
+                Mirror.LoggedInAtTime.lowercaseFirst
+            static let FullName                     =
+                Mirror.FullName.lowercaseFirst
+            static let FirstName                    =
+                Mirror.FirstName.lowercaseFirst
+            static let Email                        =
+                Mirror.Email.lowercaseFirst
+            static let Cell                         =
+                Mirror.Cell.lowercaseFirst
+            static let ImageURLString               =
+                Mirror.ImageURLString.lowercaseFirst
+            static let FirebaseRID                  =
+                Mirror.FirebaseRID.lowercaseFirst
+            static let Requests                     =
+                Mirror.Requests.lowercaseFirst
+            static let FirebaseUIDs                 =
+                Mirror.FirebaseUIDs.lowercaseFirst
+            static let Rating                       =
+                Mirror.Rating.lowercaseFirst
+            static let Ratings                      =
+                Mirror.Ratings.lowercaseFirst
+            static let Review                       =
+                Mirror.Review.lowercaseFirst
+            static let Reviews                      =
+                Mirror.Reviews.lowercaseFirst
+            
+            //MARK: USER Firebase Keys
+            static let keys                         =               Constants.Protocols.UserType.keys
+            
+            static let Location                     =
+                Constants.DataService.Firebase.Locations            .removeLast
+            static let Latitude                     =
+                Constants.DataService.Firebase.Latitude
+            static let Longitude                    =
+                Constants.DataService.Firebase.Longitude
+            
+            static let DefaultFirebaseUID           =               "T6YUL8OUBTSylEPVkLfY02slDaw1"
+            static let DefaultUserName              =               "Kris Rajendren"
+            static let DefaultProvider              =               "facebook.com"
+            static let DefaultFacebookUID           =               "10210569767665956"
+            static let DefaultEmail                 =               "kur158@psu.edu"
+            static let DefaultCell                  =               "8143217651"
+            static let DefaultRating                =               5.00
+            static let DefaultImageURL              =               getFacebookImageURLStringFrom(User.DefaultFacebookUID)
+        }
+        
+        struct Coach
+        {
+            static let Rating                       =
+                Constants.DataService.Mirror.Rating                         .lowercaseFirst
+            static let Ratings                      =
+                Constants.DataService.Mirror.Ratings                        .lowercaseFirst
+            static let Review                       =
+                Constants.DataService.Mirror.Review                         .lowercaseFirst
+            static let Reviews                      =
+                Constants.DataService.Mirror.Reviews                        .lowercaseFirst
+        }
+        
+        struct Cost
+        {
+            static let StudentCostPerHour           =               10.00
+            static let StudentCostPerHourString     =               Cost.StudentCostPerHour.string
+            static let CampusCoachCommission        =               10.00 // Percentage
+            static let CampusCoachCommissionString  =               Cost.CampusCoachCommission.string
+            static let DefaultTip                   =               00.00
+            static let DefaultTipString             =               Cost.DefaultTip.string
+            static let DefaultTipCommission         =               05.00
+            static let DefaultTipCommissionString   =               Cost.DefaultTipCommission.string
+        }
+        
+        struct Request
+        {
+            static let Accept                       =
+                Constants.DataService.Mirror.Accept                         .lowercaseFirst
+                        
+            static let Created                      =
+                Constants.DataService.Mirror.Created                        .lowercaseFirst
+            static let Accepted                     =
+                Constants.DataService.Mirror.Accepted                       .lowercaseFirst
+            static let Communicated                 =
+                Constants.DataService.Mirror.Communicated                   .lowercaseFirst
+            static let Service                      =
+                Constants.DataService.Mirror.Service                        .lowercaseFirst
+            static let Payed                        =
+                Constants.DataService.Mirror.Payed                          .lowercaseFirst
+            static let Reviewed                     =
+                Constants.DataService.Mirror.Reviewed                       .lowercaseFirst
+            
+            static let FirebaseRID                  =
+                Constants.DataService.Mirror.FirebaseRID                    .lowercaseFirst
         }
     }
     

@@ -19,7 +19,7 @@ class GymAnnotation: NSObject, MKAnnotation
     {
         self.coordinate         = coordinate
         self.gymName            = gymName
-        let stats               = Gym.statistics[gymName]!
+        let stats               = Gym.allStats[gymName]!
         let occupancy           = Int(stats[Constants.Gym.Parsing.CurrentVal]!)
         let capacity            = Int(stats[Constants.Gym.Parsing.MaxVal]!)
         let occupancyPercentage = Int(occupancy! * 100 / capacity!)

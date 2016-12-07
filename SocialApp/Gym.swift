@@ -10,5 +10,9 @@ import Foundation
 
 class Gym
 {
-    static var statistics: GymStat = [:]
+    static var privateAllStats: GymStat = [:]
+    static var allStats: GymStat
+    {
+        return privateAllStats
+    }
 }

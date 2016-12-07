@@ -62,19 +62,19 @@ class CoachRequestsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         Alamofire.request(link, headers: headers).responseJSON { [weak weakSelf = self] (response) in
             DispatchQueue.main.async {
                 let string = "\(response)"
-                Gym.statistics = stringParser(string: string)
+                Gym.privateAllStats = stringParser(string: string)
                 
-                let whiteBldgStats = Gym.statistics[Constants.Gym.Name.WhiteBldg]!
+                let whiteBldgStats = Gym.allStats[Constants.Gym.Name.WhiteBldg]!
                 let whiteBldgOccupancy = Int(whiteBldgStats[Constants.Gym.Parsing.CurrentVal]!)
                 let whiteBldgCapacity = Int(whiteBldgStats[Constants.Gym.Parsing.MaxVal]!)
                 let whiteBldgOccupancyPercentage = Int(whiteBldgOccupancy! * 100 / whiteBldgCapacity!)
                 
-                let recHallStats = Gym.statistics[Constants.Gym.Name.RecHall]!
+                let recHallStats = Gym.allStats[Constants.Gym.Name.RecHall]!
                 let recHallOccupancy = Int(recHallStats[Constants.Gym.Parsing.CurrentVal]!)
                 let recHallCapacity = Int(recHallStats[Constants.Gym.Parsing.MaxVal]!)
                 let recHallOccupancyPercentage = Int(recHallOccupancy! * 100 / recHallCapacity!)
                 
-                let imBldgStats = Gym.statistics[Constants.Gym.Name.IMBldg]!
+                let imBldgStats = Gym.allStats[Constants.Gym.Name.IMBldg]!
                 let imBldgOccupancy = Int(imBldgStats[Constants.Gym.Parsing.CurrentVal]!)
                 let imBldgCapacity = Int(imBldgStats[Constants.Gym.Parsing.MaxVal]!)
                 let imBldgOccupancyPercentage = Int(imBldgOccupancy! * 100 / imBldgCapacity!)
