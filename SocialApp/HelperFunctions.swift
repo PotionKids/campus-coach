@@ -156,19 +156,17 @@ func completeSignIn(isCoach: Bool, cell: String, user: FIRUser?, credential: FIR
     var userData: FirebaseData?
     (id, userData) = extractUserData(user: user, isCoach: isCoach, cell: cell, credential: credential)
     
-    if let id = id, let userData = userData
+    if let id = id
     {
         KeychainWrapper.standard.set(id, forKey: Constants.Firebase.KeychainWrapper.KeyUID)
+        selfUser.push()
+        selfUser.updateAllUsers()
         if isCoach
         {
-            //DataService.ds.createFirebaseObject(object: .coaches, instanceID: id, data: userData)
-            selfUser.push()
             vc.performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToCoachRequests, sender: nil)
         }
         else
         {
-            //DataService.ds.createFirebaseObject(object: .students, instanceID: id, data: userData)
-            selfUser.push()
             vc.performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToSetGymMap, sender: nil)
         }
     }

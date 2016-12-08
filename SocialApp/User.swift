@@ -57,13 +57,18 @@ extension UserType
     {
         if coachOrNot
         {
-            pushValuesToFirebase(forKeys: self.getFirebaseKeys(), at: firebaseUID.firebaseCoachRef)
+            pushValuesToFirebase(forKeys: firebaseKeys, at: firebaseUID.firebaseCoachRef)
         }
         else
         {
-            pushValuesToFirebase(forKeys: self.getFirebaseKeys(), at: firebaseUID.firebaseStudentRef)
+            pushValuesToFirebase(forKeys: firebaseKeys, at: firebaseUID.firebaseStudentRef)
         }
     }
+    func updateAllUsers()
+    {
+        firebaseUID.firebaseAllUsersRef.updateChildValues(["isCoach" : isCoach])
+    }
+    
     var keys: KeysType
     {
         return Constants.Protocols.UserType.keys
@@ -123,7 +128,7 @@ class User: UserType
         ratings:        String,
         andAllReviews
         reviews:        String
-        )
+                                )
     {
         self.init()
         self.privateFirebaseUID         = firebaseUID
@@ -197,8 +202,8 @@ class User: UserType
             print("KRIS: Student Data from Firebase = \(data)")
 
         }
-        self.init (
+        self.init   (
             fromUserData:   data
-        )
+                    )
     }
 }

@@ -43,7 +43,7 @@ extension CustomStringConvertible
         var isTrue = false
         for fragment in fragments
         {
-            if self.description.contains(fragment.description)
+            if description.contains(fragment.description)
             {
                 isTrue = true
             }
@@ -72,34 +72,74 @@ protocol Dictionarizable {}
 
 extension Dictionarizable
 {
-    var dictionary: [Key : Value]
+    var anyDictionary: [Key : Value]
     {
-        return self.toDictionary()
+        var dictionary = [Key : Value]()
+        let otherSelf = Mirror(reflecting: self)
+        for child in otherSelf.children
+        {
+            if let key = child.label
+            {
+                dictionary.updateValue(child.value, forKey: key)
+                dictionary.updateValue(child.value, forKey: key.replacingOccurrences(of: Constants.Dictionary.Key.privateSmalls, with: Constants.Literal.Empty).lowercaseFirst)
+            }
+        }
+        return dictionary
     }
     
     var stringDictionary: StringDictionary
     {
-        return dictionary.forceConvertToStringLiteral()
+        return anyDictionary.forcedStringLiteral
     }
     
-    var keysAll: Keys
+    var allKeys: Keys
     {
-        return self.getAllKeys()
+        return anyDictionary.allKeys
     }
     
-    var keysNonPrivate: Keys
+    var privateKeys: Keys
     {
-        return self.getNonPrivateKeys()
+        return anyDictionary.privateKeys
     }
     
-    var dictionaryOfNonPrivateKeys: [Key : Value]
+    var nonPrivateKeys: Keys
     {
-        return self.dictionary.filterWith(keys: self.keysNonPrivate)
+        return allKeys.complementOf(elements: privateKeys)
+    }
+    
+    var firebaseKeys: Keys
+    {
+        return anyDictionary.firebaseKeys
+    }
+    
+    var valuesForPrivateKeys: Values
+    {
+        return anyDictionary.valuesForPrivateKeys
+    }
+    
+    var valuesForNonPrivateKeys: Values
+    {
+        return anyDictionary.valuesForNonPrivateKeys
+    }
+    
+    var anyDictionaryOfNonPrivateKeys: [Key : Value]
+    {
+        return anyDictionary.filterWith(keys: nonPrivateKeys)
     }
     
     var stringDictionaryOfNonPrivateKeys: StringDictionary
     {
-        return dictionaryOfNonPrivateKeys.forceConvertToStringLiteral()
+        return anyDictionaryOfNonPrivateKeys.forcedStringLiteral
+    }
+    
+    var superSetKeys: Keys
+    {
+        return anyDictionary.superSetKeys
+    }
+    
+    var allValues: Values
+    {
+        return anyDictionary.allValues
     }
     
     func toStringDictionaryForSpecific(keys: [Key]) -> StringDictionary
@@ -108,11 +148,8 @@ extension Dictionarizable
         
         // Key validity check
         
-        let allKeys                 = self.getKeysSuperSet()
-        print("KRIS: allKeys are \(allKeys)")
-        let commonKeysFound         = allKeys.filter() {keys.contains($0)}
-        print("KRIS: commonKeysFound are \(commonKeysFound)")
-        let dictionary              = self.stringDictionary
+        let commonKeysFound         = superSetKeys.filter() {keys.contains($0)}
+        let dictionary              = stringDictionary
         
         for key in commonKeysFound
         {
@@ -128,93 +165,38 @@ extension Dictionarizable
         ref.updateChildValues(stringDictionary)
     }
     
-    func toDictionary() -> [Key : Value]
-    {
-        var dictionary = [Key : Value]()
-        let otherSelf = Mirror(reflecting: self)
-        for child in otherSelf.children
-        {
-            if let key = child.label
-            {
-                dictionary.updateValue(child.value, forKey: key)
-                dictionary.updateValue(child.value, forKey: key.replacingOccurrences(of: Constants.Dictionary.Key.privateSmalls, with: Constants.Literal.Empty).lowercaseFirst)
-            }
-        }
-        return dictionary
-    }
-    
-    func getAllKeys() -> Keys
-    {
-        return self.toDictionary().getAllKeys()
-    }
-    
-    func getKeysSuperSet() -> Keys
-    {
-        return self.toDictionary().getKeysSuperSet()
-    }
-    
-    func getAllValues() -> Values
-    {
-        return self.toDictionary().getAllValues()
-    }
-    
     func getValuesForKeys(keys: Keys) -> Values
     {
-        return self.toDictionary().getValuesForKeys(keys: keys)
+        return anyDictionary.getValuesForKeys(keys: keys)
     }
     
     func getKeysContaining(fragments: Fragments) -> Keys
     {
-        return self.toDictionary().getKeysContaining(fragments: fragments)
+        return anyDictionary.getKeysContaining(fragments: fragments)
     }
     
     func getValuesForKeysContaining(fragments: Fragments) -> Values
     {
-        return self.toDictionary().getValuesFoKeysContaining(fragments: fragments)
+        return anyDictionary.getValuesFoKeysContaining(fragments: fragments)
     }
     
     func getKeysContaining(fragment: Fragment) -> Keys
     {
-        return self.toDictionary().getAllKeys().filter
+        return anyDictionary.allKeys.filter
             {
                 key in return key.contains(fragment)
-        }
+            }
     }
     
     func getValuesForKeysContaining(fragment: Fragment) -> Values
     {
-        return self.toDictionary().getValuesForKeysContaining(fragment: fragment)
-    }
-    
-    func getPrivateKeys() -> Keys
-    {
-        return self.toDictionary().getPrivateKeys()
-    }
-    
-    func getFirebaseKeys() -> Keys
-    {
-        return self.toDictionary().getFirebaseKeys()
-    }
-    
-    func getValuesForPrivateKeys() -> Values
-    {
-        return self.toDictionary().getValuesForPrivateKeys()
-    }
-    
-    func getNonPrivateKeys() -> Keys
-    {
-        return self.getAllKeys().complementOf(elements: self.getPrivateKeys())
-    }
-    
-    func getValuesForNonPrivateKeys() -> Values
-    {
-        return self.getValuesForKeys(keys: self.getNonPrivateKeys())
+        return anyDictionary.getValuesForKeysContaining(fragment: fragment)
     }
 }
 
 extension Dictionary
 {
-    func forceConvertToStringLiteral() -> StringDictionary
+    var forcedStringLiteral: StringDictionary
     {
         var stringLiteralDictionary = StringDictionary()
         for (key, value) in self
@@ -224,7 +206,7 @@ extension Dictionary
         return stringLiteralDictionary
     }
     
-    func getAllKeys() -> Keys
+    var allKeys: Keys
     {
         var keys = Keys()
         for (key, _) in self
@@ -234,12 +216,12 @@ extension Dictionary
         return keys
     }
     
-    func getKeysSuperSet() -> Keys
+    var superSetKeys: Keys
     {
-        return addArray(first: self.getAllKeys(), with: self.getFirebaseKeys())
+        return addArray(first: allKeys, with: firebaseKeys)
     }
     
-    func getAllValues() -> Values
+    var allValues: Values
     {
         var values = Values()
         for (_, value) in self
@@ -264,7 +246,7 @@ extension Dictionary
     
     func getKeysContaining(fragments: Fragments) -> Keys
     {
-        return self.getAllKeys().containsMultiple(fragments)
+        return allKeys.containsMultiple(fragments)
     }
     
     func getValuesFoKeysContaining(fragments: Fragments) -> Values
@@ -287,7 +269,7 @@ extension Dictionary
     
     func getKeysContaining(fragment: Fragment) -> Keys
     {
-        return self.getAllKeys().filter {$0.contains(fragment)}
+        return allKeys.filter {$0.contains(fragment)}
     }
     
     func getValuesForKeysContaining(fragment: Fragment) -> Values
@@ -295,31 +277,33 @@ extension Dictionary
         return self.getValuesForKeys(keys: self.getKeysContaining(fragment: fragment))
     }
     
-    func getPrivateKeys() -> Keys
+    var privateKeys: Keys
     {
-        return self.getAllKeys().containsMultiple([
-            Constants.Dictionary.Key.privateSmalls,
-            Constants.Dictionary.Key.privateCapitalized
-            ])
+        return allKeys.containsMultiple    (
+            [
+                Constants.Dictionary.Key.privateSmalls,
+                Constants.Dictionary.Key.privateCapitalized
+            ]
+                                                )
     }
     
-    func getFirebaseKeys() -> Keys
+    var firebaseKeys: Keys
     {
-        return self.getPrivateKeys().chopFromSelf(fragment: Constants.Dictionary.Key.privateSmalls).lowercaseFirst
+        return privateKeys.chopFromSelf(fragment: Constants.Dictionary.Key.privateSmalls).lowercaseFirst
     }
     
-    func getValuesForPrivateKeys() -> Values
+    var valuesForPrivateKeys: Values
     {
-        return self.getValuesForKeys(keys: self.getPrivateKeys())
+        return self.getValuesForKeys(keys: privateKeys)
     }
     
-    func getNonPrivateKeys() -> Keys
+    var nonPrivateKeys: Keys
     {
-        return self.getAllKeys().complementOf(elements: self.getPrivateKeys())
+        return allKeys.complementOf(elements: privateKeys)
     }
     
-    func getValuesForNonPrivateKeys() -> Values
+    var valuesForNonPrivateKeys: Values
     {
-        return self.getValuesForKeys(keys: self.getNonPrivateKeys())
+        return self.getValuesForKeys(keys: nonPrivateKeys)
     }
 }

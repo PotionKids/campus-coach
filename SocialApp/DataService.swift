@@ -569,7 +569,6 @@ extension String
     {
         return FirebaseStudentsURL.child(self)
     }
-    
     var firebaseCoachRef: FIRDatabaseReference
     {
         return FirebaseCoachesURL.child(self)
