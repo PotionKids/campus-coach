@@ -153,26 +153,30 @@ func extractProviderData(user: FIRUser, isCoach: Bool, cell: String, credential:
 func completeSignIn(isCoach: Bool, cell: String, user: FIRUser?, credential: FIRAuthCredential?, vc: UIViewController)
 {
     var id: String?
-    var userData: FirebaseData?
-    (id, userData) = extractUserData(user: user, isCoach: isCoach, cell: cell, credential: credential)
+    (id, _) = extractUserData(user: user, isCoach: isCoach, cell: cell, credential: credential)
     
     if let id = id
     {
         KeychainWrapper.standard.set(id, forKey: Constants.Firebase.KeychainWrapper.KeyUID)
         selfUser.push()
         selfUser.updateAllUsers()
-        if isCoach
-        {
-            vc.performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToCoachRequests, sender: nil)
-        }
-        else
-        {
-            vc.performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToSetGymMap, sender: nil)
-        }
+        vc.performSegue(withIdentifier: loginSegueIdentifier(isCoach: isCoach), sender: nil)
     }
     else
     {
         print("KRIS: Authentication Failed.")
+    }
+}
+
+func loginSegueIdentifier(isCoach: Bool) -> String
+{
+    if isCoach
+    {
+        return Constants.SignUpVC.Segue.SignUpToCoachRequests
+    }
+    else
+    {
+        return Constants.SignUpVC.Segue.SignUpToSetGymMap
     }
 }
 

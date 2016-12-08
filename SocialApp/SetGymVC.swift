@@ -51,6 +51,11 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var gymSecondChoiceHoursLabel: UILabel!
     @IBOutlet weak var gymThirdChoiceHoursLabel: UILabel!
     
+    @IBAction func callCoach(_ sender: UIButton)
+    {
+        print("KRIS: Call Coach Button Pressed.")
+        performSegue(withIdentifier: Constants.SetGymVC.Segue.ToGymSelection, sender: nil)
+    }
     
     @IBAction func mapLocation(_ sender: UILongPressGestureRecognizer)
     {
@@ -68,7 +73,7 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     {
         KeychainWrapper.standard.removeObject(forKey: Constants.Firebase.KeychainWrapper.KeyUID)
         try! FIRAuth.auth()?.signOut()
-        performSegue(withIdentifier: Constants.SetGymVC.Segue.SetGymToSignIn, sender: nil)
+        performSegue(withIdentifier: Constants.SetGymVC.Segue.ToSignIn, sender: nil)
     }
     
     

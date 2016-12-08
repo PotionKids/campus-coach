@@ -8,8 +8,8 @@
 
 import UIKit
 
-class RequestCell: UITableViewCell {
-
+class RequestCell: UITableViewCell
+{
     @IBOutlet weak var gymIcon: UIImageView!
     @IBOutlet weak var acceptRequestButton: UIButton!
     @IBOutlet weak var userImage: UIImageView!

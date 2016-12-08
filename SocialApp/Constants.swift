@@ -2051,7 +2051,17 @@ struct Constants {
     {
         struct Segue
         {
-            static let SetGymToSignIn = "SetGymMapToSignIn"
+            static let ToSignIn         = "SetGymMapToSignIn"
+            static let ToGymSelection   = "SetGymToGymSelection"
+        }
+    }
+    
+    struct GymSelection
+    {
+        struct Segue
+        {
+            static let ToSignUp         = "GymSelectionToSignUp"
+            static let ToRequest        = "GymSelectionToRequest"
         }
     }
     

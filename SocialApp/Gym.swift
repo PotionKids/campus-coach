@@ -75,6 +75,16 @@ extension GymType
         self.init()
         self.privateName    = gym
     }
+    
+    static var allGyms: [Gym]
+    {
+        return  [
+                    Gym(withNameOf: Building.White.name),
+                    Gym(withNameOf: Building.Rec.name),
+                    Gym(withNameOf: Building.IM.name)
+                ]
+    }
+    
     static var allStats:            GymStat
     {
         return privateAllStats

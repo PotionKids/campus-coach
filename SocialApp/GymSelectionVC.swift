@@ -1,8 +1,8 @@
 //
-//  ViewController.swift
-//  TableVCPractice
+//  GymSelectionVC.swift
+//  SocialApp
 //
-//  Created by Kris Rajendren on Oct/23/16.
+//  Created by Kris Rajendren on Dec/8/16.
 //  Copyright © 2016 Campus Coach. All rights reserved.
 //
 
@@ -15,8 +15,10 @@ import SwiftKeychainWrapper
 
 import Alamofire
 
-class CoachRequestsVC: UIViewController, UITableViewDelegate, UITableViewDataSource
+class GymSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 {
+    
+    
     @IBOutlet weak var gymFirstChoiceCoachLabel: UILabel!
     @IBOutlet weak var gymSecondChoiceCoachLabel: UILabel!
     @IBOutlet weak var gymThirdChoiceCoachLabel: UILabel!
@@ -50,7 +52,7 @@ class CoachRequestsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     {
         KeychainWrapper.standard.removeObject(forKey: Constants.Firebase.KeychainWrapper.KeyUID)
         try! FIRAuth.auth()?.signOut()
-        performSegue(withIdentifier: Constants.CoachRequestsVC.Segue.CoachRequestsToSignUp, sender: nil)
+        performSegue(withIdentifier: Constants.GymSelection.Segue.ToSignUp, sender: nil)
     }
     
     @IBOutlet weak var tableView: UITableView!
@@ -100,7 +102,7 @@ class CoachRequestsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
     }
     
-    var requests = [Request]()
+    var gyms = Gym.allGyms
     
     override func viewDidLoad()
     {
@@ -112,19 +114,6 @@ class CoachRequestsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         CURLscrapeWebPage(link: Constants.Web.Link.PSUfitnessCURLscraping)
         
         //let testURL = "https://graph.facebook.com/10210569767665956/picture?type=large&w‌ idth=1000&height=1000"
-        let studentUID  = Constants.DataService.User.DefaultFirebaseUID
-        let white       = Building.White.name
-        let rec         = Building.Rec.name
-        let im          = Building.IM.name
-        let testRequestA = Request(byStudent: studentUID, forGym: white)
-        let testRequestB = Request(byStudent: studentUID, forGym: rec)
-        let testRequestC = Request(byStudent: studentUID, forGym: im)
-        
-        requests =  [
-                        testRequestA,
-                        testRequestB,
-                        testRequestC
-                    ]
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -134,10 +123,10 @@ class CoachRequestsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         
-        if let cell = tableView.dequeueReusableCell(withIdentifier: Constants.CoachRequestsVC.Cell.Request, for: indexPath) as? RequestCell
+        if let cell = tableView.dequeueReusableCell(withIdentifier: Constants.CoachRequestsVC.Cell.Request, for: indexPath) as? GymCell
         {
-            let request = requests[indexPath.row]
-            cell.updateUI(request: request)
+            let gym = gyms[indexPath.row]
+            cell.updateUI(gym: gym)
             return cell
         }
         else
@@ -148,7 +137,6 @@ class CoachRequestsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return requests.count
+        return 3
     }
 }
-

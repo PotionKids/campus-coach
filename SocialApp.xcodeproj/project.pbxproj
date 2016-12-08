@@ -41,6 +41,8 @@
 		0D9550AF1DBFE76000B2DB9D /* ViewStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9550AE1DBFE76000B2DB9D /* ViewStyling.swift */; };
 		0D9550BA1DBFEB3000B2DB9D /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9550B91DBFEB3000B2DB9D /* CustomImageView.swift */; };
 		0D9550BC1DBFF36000B2DB9D /* CustomTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9550BB1DBFF36000B2DB9D /* CustomTableView.swift */; };
+		0D9AD6061DF9EC4300B6A21F /* GymSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9AD6051DF9EC4300B6A21F /* GymSelectionVC.swift */; };
+		0D9AD60F1DF9F7A200B6A21F /* GymCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9AD60E1DF9F7A200B6A21F /* GymCell.swift */; };
 		0D9D78DF1DB4041E006F7081 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D9D78D21DB40373006F7081 /* Alamofire.framework */; };
 		0D9D78E01DB4041E006F7081 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0D9D78D21DB40373006F7081 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0D9D79091DB4307E006F7081 /* SetGymVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9D79081DB4307E006F7081 /* SetGymVC.swift */; };
@@ -175,6 +177,8 @@
 		0D9550AE1DBFE76000B2DB9D /* ViewStyling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewStyling.swift; sourceTree = "<group>"; };
 		0D9550B91DBFEB3000B2DB9D /* CustomImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		0D9550BB1DBFF36000B2DB9D /* CustomTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableView.swift; sourceTree = "<group>"; };
+		0D9AD6051DF9EC4300B6A21F /* GymSelectionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GymSelectionVC.swift; sourceTree = "<group>"; };
+		0D9AD60E1DF9F7A200B6A21F /* GymCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GymCell.swift; sourceTree = "<group>"; };
 		0D9D78C61DB40373006F7081 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		0D9D79081DB4307E006F7081 /* SetGymVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetGymVC.swift; sourceTree = "<group>"; };
 		0DB001EF1DB309CB00EF1921 /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
@@ -265,6 +269,8 @@
 			children = (
 				0DB001EF1DB309CB00EF1921 /* SignUpVC.swift */,
 				0D9D79081DB4307E006F7081 /* SetGymVC.swift */,
+				0D9AD6051DF9EC4300B6A21F /* GymSelectionVC.swift */,
+				0D9AD60E1DF9F7A200B6A21F /* GymCell.swift */,
 				0D0291851DBD7FA100C75BE5 /* CoachRequestsVC.swift */,
 				0D02918E1DBD7FA900C75BE5 /* RequestCell.swift */,
 				0DB001F11DB316A400EF1921 /* HelperFunctions.swift */,
@@ -600,6 +606,7 @@
 				0D065B221DF85C9500A5DB80 /* Accepted.swift in Sources */,
 				0D473E181DBBED6B008FF539 /* Coach.swift in Sources */,
 				0D46871F1DC2FE32009950F2 /* PokeAnnotation.swift in Sources */,
+				0D9AD6061DF9EC4300B6A21F /* GymSelectionVC.swift in Sources */,
 				0D6DA2FC1DC01BD70068CDBF /* gpx.swift in Sources */,
 				0D4687141DC2F71C009950F2 /* GFGeoHashQuery.m in Sources */,
 				0D065B281DF85CBC00A5DB80 /* Payed.swift in Sources */,
@@ -614,6 +621,7 @@
 				0D473E161DBBED5E008FF539 /* Student.swift in Sources */,
 				0D3745C91DB04DFF009F061C /* AppDelegate.swift in Sources */,
 				0D065B241DF85CA500A5DB80 /* Communicated.swift in Sources */,
+				0D9AD60F1DF9F7A200B6A21F /* GymCell.swift in Sources */,
 				0D065B1E1DF85B3E00A5DB80 /* fetchFirebaseObject.swift in Sources */,
 				0D9550AF1DBFE76000B2DB9D /* ViewStyling.swift in Sources */,
 				0D4687121DC2F71C009950F2 /* GFBase32Utils.m in Sources */,
