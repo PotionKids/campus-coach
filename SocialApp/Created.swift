@@ -52,7 +52,7 @@ extension Creatable
     
     func push()
     {
-        pushValuesToFirebase(forKeys: keys.firebase, at: requestCreatedRef)
+        pushValuesToFirebase(forKeys: firebaseKeys, at: requestCreatedRef)
     }
     
     var keys: KeysType
@@ -87,6 +87,9 @@ class Created: Creatable
         )
     {
         self.init()
+        self.privateFirebaseRID = firebaseRID
+        self.privateAtTime      = firebaseRID
+        self.privateEndedAtTime = firebaseRID
         self.privateByStudent   = byStudent
         self.privateHasEnded    = YesOrNo.No.string
         self.privateEndedAtTime = firebaseRID

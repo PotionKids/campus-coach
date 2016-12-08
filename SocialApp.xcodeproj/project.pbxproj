@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0D0291861DBD7FA100C75BE5 /* CoachRequestsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0291851DBD7FA100C75BE5 /* CoachRequestsVC.swift */; };
 		0D02918F1DBD7FA900C75BE5 /* RequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D02918E1DBD7FA900C75BE5 /* RequestCell.swift */; };
-		0D0291911DBD7FAF00C75BE5 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0291901DBD7FAF00C75BE5 /* Request.swift */; };
 		0D065B1E1DF85B3E00A5DB80 /* fetchFirebaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D065B1D1DF85B3E00A5DB80 /* fetchFirebaseObject.swift */; };
 		0D065B201DF85C8800A5DB80 /* Created.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D065B1F1DF85C8800A5DB80 /* Created.swift */; };
 		0D065B221DF85C9500A5DB80 /* Accepted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D065B211DF85C9500A5DB80 /* Accepted.swift */; };
@@ -43,6 +42,7 @@
 		0D9550BC1DBFF36000B2DB9D /* CustomTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9550BB1DBFF36000B2DB9D /* CustomTableView.swift */; };
 		0D9AD6061DF9EC4300B6A21F /* GymSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9AD6051DF9EC4300B6A21F /* GymSelectionVC.swift */; };
 		0D9AD60F1DF9F7A200B6A21F /* GymCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9AD60E1DF9F7A200B6A21F /* GymCell.swift */; };
+		0D9AD6111DFA04F400B6A21F /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9AD6101DFA04F400B6A21F /* Request.swift */; };
 		0D9D78DF1DB4041E006F7081 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D9D78D21DB40373006F7081 /* Alamofire.framework */; };
 		0D9D78E01DB4041E006F7081 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0D9D78D21DB40373006F7081 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0D9D79091DB4307E006F7081 /* SetGymVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9D79081DB4307E006F7081 /* SetGymVC.swift */; };
@@ -132,7 +132,6 @@
 /* Begin PBXFileReference section */
 		0D0291851DBD7FA100C75BE5 /* CoachRequestsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoachRequestsVC.swift; sourceTree = "<group>"; };
 		0D02918E1DBD7FA900C75BE5 /* RequestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestCell.swift; sourceTree = "<group>"; };
-		0D0291901DBD7FAF00C75BE5 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		0D065B1D1DF85B3E00A5DB80 /* fetchFirebaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fetchFirebaseObject.swift; sourceTree = "<group>"; };
 		0D065B1F1DF85C8800A5DB80 /* Created.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Created.swift; sourceTree = "<group>"; };
 		0D065B211DF85C9500A5DB80 /* Accepted.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accepted.swift; sourceTree = "<group>"; };
@@ -179,6 +178,7 @@
 		0D9550BB1DBFF36000B2DB9D /* CustomTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableView.swift; sourceTree = "<group>"; };
 		0D9AD6051DF9EC4300B6A21F /* GymSelectionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GymSelectionVC.swift; sourceTree = "<group>"; };
 		0D9AD60E1DF9F7A200B6A21F /* GymCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GymCell.swift; sourceTree = "<group>"; };
+		0D9AD6101DFA04F400B6A21F /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		0D9D78C61DB40373006F7081 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		0D9D79081DB4307E006F7081 /* SetGymVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetGymVC.swift; sourceTree = "<group>"; };
 		0DB001EF1DB309CB00EF1921 /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
@@ -300,7 +300,7 @@
 				0D473E0C1DBBED45008FF539 /* User.swift */,
 				0D473E151DBBED5E008FF539 /* Student.swift */,
 				0D473E171DBBED6B008FF539 /* Coach.swift */,
-				0D0291901DBD7FAF00C75BE5 /* Request.swift */,
+				0D9AD6101DFA04F400B6A21F /* Request.swift */,
 				0D43EBB41DBFA2460033CA95 /* Location.swift */,
 				0DD788B41DF659D300BFDE91 /* Dictionarizable.swift */,
 				0D47DC961DF67FE50076C360 /* DataStructure.swift */,
@@ -609,6 +609,7 @@
 				0D9AD6061DF9EC4300B6A21F /* GymSelectionVC.swift in Sources */,
 				0D6DA2FC1DC01BD70068CDBF /* gpx.swift in Sources */,
 				0D4687141DC2F71C009950F2 /* GFGeoHashQuery.m in Sources */,
+				0D9AD6111DFA04F400B6A21F /* Request.swift in Sources */,
 				0D065B281DF85CBC00A5DB80 /* Payed.swift in Sources */,
 				0DD8C4B01DBFD432002EACB3 /* Errors.swift in Sources */,
 				0D065B2A1DF85CD100A5DB80 /* Reviewed.swift in Sources */,
@@ -627,7 +628,6 @@
 				0D4687121DC2F71C009950F2 /* GFBase32Utils.m in Sources */,
 				0D6BB8FE1DB579380015AE04 /* DataService.swift in Sources */,
 				0D473E0D1DBBED45008FF539 /* User.swift in Sources */,
-				0D0291911DBD7FAF00C75BE5 /* Request.swift in Sources */,
 				0DD788B51DF659D300BFDE91 /* Dictionarizable.swift in Sources */,
 				0D0291861DBD7FA100C75BE5 /* CoachRequestsVC.swift in Sources */,
 				0D02918F1DBD7FA900C75BE5 /* RequestCell.swift in Sources */,

@@ -21,7 +21,9 @@ class GymCell: UITableViewCell
     
     @IBAction func selectRequest(_ sender: AnyObject)
     {
-        
+        let atTime  = timeStamp().stampNanoseconds
+        selfRequest = Request(withFirebaseRID: atTime, byStudent: selfUser.firebaseUID, forGym: gymBldg.text!)
+        selfRequest.push()
     }
     
     
