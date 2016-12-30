@@ -26,19 +26,38 @@ protocol Acceptable: CoachInitiatable, FirebaseRequestIDable, Pushable
         internallyWithFirebaseRID
         firebaseRID:    String,
         byCoach:        String,
+        withName
+        fullName:       String,
         whoIsAtTheGym
         andIsAtTheGym:  String,
         andWillTake
         andTimeToReach: String
     )
     
+    init?  (
+        withFirebaseRID
+        firebaseRID:    String,
+        fromData
+        data:           AnyDictionary
+            )
+    
     init?   (
-        fromServerWithFirebaseRID
-        firebaseRID:    String
-    )
+        fromData
+        data:           AnyDictionary
+            )
+    
+//    init?   (
+//        fromServerWithFirebaseRID
+//        firebaseRID:    String
+//            )
 }
 extension Acceptable
 {
+    var firebaseID: String
+    {
+        return firebaseRID
+    }
+    
     var andIsAtTheGym: String
     {
         return privateAndIsAtTheGym
@@ -66,10 +85,10 @@ extension Acceptable
     
     func push()
     {
-        pushValuesToFirebase(forKeys: keys.firebase, at: requestAcceptedRef)
+        pushValuesToFirebase(forKeys: Self.keys.firebase, at: requestAcceptedRef)
     }
     
-    var keys: KeysType
+    static var keys: KeysType
     {
         return Constants.Protocols.Acceptable.keys
     }
@@ -77,12 +96,17 @@ extension Acceptable
 
 class Accepted: Acceptable
 {
-    var privateOrNot:           String! = YesOrNo.Yes.string
+    static var setObject:              Firebase.Object!    = Firebase.Object   .none
+    static var setChildOf:             Firebase.Object!    = Firebase.Object   .requests
+    static var setChild:               Firebase.Child!     = Firebase.Child    .accepted
+    
+    var privateOrNot:           String!             = YesOrNo.Yes.string
     var privateAtTime:          String!
-    var privateByCoach:         String! = Constants.DataService.User.DefaultFirebaseUID
+    var privateByCoach:         String!             = Constants.DataService.User.DefaultFirebaseUID
+    var privateFullName:        String!             = Constants.DataService.User.DefaultUserName
     var privateFirebaseRID:     String!
-    var privateAndIsAtTheGym:   String! = YesOrNo.Yes.string
-    var privateAndTimeToReach:  String! = Constants.Calendar.Date.ReferenceTime_mm_ss
+    var privateAndIsAtTheGym:   String!             = YesOrNo.Yes.string
+    var privateAndTimeToReach:  String!             = Constants.Calendar.Date.ReferenceTime_mm_ss
     
     required init()
     {
@@ -94,39 +118,74 @@ class Accepted: Acceptable
         internallyWithFirebaseRID
         firebaseRID:    String,
         byCoach:        String,
+        withName
+        fullName:       String,
         whoIsAtTheGym
         andIsAtTheGym:  String = YesOrNo.Yes.string,
         andWillTake
         andTimeToReach: String = Constants.Calendar.Date.ReferenceTime_mm_ss
-        )
+                                )
     {
         self.init()
         self.privateFirebaseRID     = firebaseRID
         self.privateByCoach         = byCoach
+        self.privateFullName        = fullName
         self.privateAndIsAtTheGym   = andIsAtTheGym
         self.privateAndTimeToReach  = andTimeToReach
     }
     
     required convenience init?  (
-        fromServerWithFirebaseRID
-        firebaseRID:    String
-        )
+        withFirebaseRID
+        firebaseRID:    String,
+        fromData
+        data:           AnyDictionary
+                                )
     {
-        let data        = fetchFirebaseObject(from: firebaseRID.requestAcceptedRef)
         guard   let atTime      = data[Constants.Protocols.HappenedType.atTime]             as? String,
-            let byCoach     = data[Constants.Protocols.CoachInitiatable.byCoach]        as? String,
-            let afterTimeOf = data[Constants.Protocols.CoachInitiatable.afterTimeOf]    as? String,
-            let isAtTheGym  = data[Constants.Protocols.Acceptable.andIsAtTheGym]        as? String,
-            let timeToReach = data[Constants.Protocols.Acceptable.andTimeToReach]       as? String
-            else
+                let byCoach     = data[Constants.Protocols.CoachInitiatable.byCoach]        as? String,
+                let fullName    = data[Constants.Protocols.Nameable.fullName]               as? String,
+                let _ = data[Constants.Protocols.CoachInitiatable.afterTimeOf]    as? String,
+                let isAtTheGym  = data[Constants.Protocols.Acceptable.andIsAtTheGym]        as? String,
+                let timeToReach = data[Constants.Protocols.Acceptable.andTimeToReach]       as? String
+        else
         {
             return nil
         }
         self.init   (
             internallyWithFirebaseRID:  firebaseRID,
             byCoach:                    byCoach,
+            withName:                   fullName,
             whoIsAtTheGym:              isAtTheGym,
             andWillTake:                timeToReach
+                    )
+        self.privateAtTime  = atTime
+    }
+    
+    required convenience init?  (
+        fromData
+        data:           AnyDictionary
+        )
+    {
+        guard let firebaseRID = data[Constants.Protocols.FirebaseRequestIDable.firebaseRID] as? String
+            else
+        {
+            return nil
+        }
+        self.init   (
+            withFirebaseRID:    firebaseRID,
+            fromData:           data
         )
     }
+    
+//    required convenience init?  (
+//        fromServerWithFirebaseRID
+//        firebaseRID:    String
+//        )
+//    {
+//        let data        = fetchFirebaseObject(from: firebaseRID.requestAcceptedRef)
+//        self.init   (
+//            withFirebaseRID:    firebaseRID,
+//            fromData:           data
+//                    )
+//    }
 }

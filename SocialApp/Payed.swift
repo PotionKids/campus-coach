@@ -49,13 +49,18 @@ protocol Payable: HappenedType, Billable, Commissionable, Tippable, TipCommissio
         tip:            String
     )
     
-    init?   (
-        fromServerWithFirebaseRID
-        firebaseRID:    String
-    )
+//    init?   (
+//        fromServerWithFirebaseRID
+//        firebaseRID:    String
+//    )
 }
 extension Payable
 {
+    var firebaseID: String
+    {
+        return firebaseRID
+    }
+    
     var service: Service?
     {
         return privateService
@@ -147,10 +152,10 @@ extension Payable
     
     func push()
     {
-        pushValuesToFirebase(forKeys: keys.firebase, at: requestPayedRef)
+        pushValuesToFirebase(forKeys: Self.keys.firebase, at: requestPayedRef)
     }
     
-    var keys: KeysType
+    static var keys: KeysType
     {
         return Constants.Protocols.Payable.keys
     }
@@ -158,16 +163,20 @@ extension Payable
 
 class Payed: Payable
 {
-    var privateOrNot:           String!     = YesOrNo.Yes.string
+    static var setObject:              Firebase.Object!    = Firebase.Object   .none
+    static var setChildOf:             Firebase.Object!    = Firebase.Object   .requests
+    static var setChild:               Firebase.Child!     = Firebase.Child    .payed
+    
+    var privateOrNot:           String!             = YesOrNo.Yes.string
     var privateAtTime:          String!
-    var privateService:         Service?    = nil
-    var privateCostPerHour:     String!     =
+    var privateService:         Service?            = nil
+    var privateCostPerHour:     String!             =
         Constants.DataService.Cost.StudentCostPerHourString
-    var privateCommision:       String!     =
+    var privateCommision:       String!             =
         Constants.DataService.Cost.CampusCoachCommissionString
-    var privateTip:             String!     =
+    var privateTip:             String!             =
         Constants.DataService.Cost.DefaultTipString
-    var privateTipCommission:   String!     =
+    var privateTipCommission:   String!             =
         Constants.DataService.Cost.DefaultTipCommissionString
     var privateFirebaseRID:     String!
     
@@ -196,37 +205,37 @@ class Payed: Payable
         self.privateTip             = tip
     }
     
-    required convenience init?   (
-        fromServerWithFirebaseRID
-        firebaseRID:    String
-        )
-    {
-        guard   let service         = Service(fromServerWithFirebaseRID: firebaseRID)
-            else
-        {
-            return nil
-        }
-        let data            = fetchFirebaseObject(from: firebaseRID.requestPayedRef)
-        guard   let costPerHour     =
-            data[Constants.Protocols.Billable.costPerHour]              as? String,
-            let commission      =
-            data[Constants.Protocols.Commissionable.commission]         as? String,
-            let tipCommission   =
-            data[Constants.Protocols.TipCommissionable.tipCommission]   as? String,
-            let tip             =
-            data[Constants.Protocols.Tippable.tip]                      as? String
-            else
-        {
-            return nil
-        }
-        self.init   (
-            internallyWithFirebaseRID:  firebaseRID,
-            service:                    service,
-            costPerHour:                costPerHour,
-            commission:                 commission,
-            tipCommission:              tipCommission,
-            tip:                        tip
-        )
-    }
+//    required convenience init?   (
+//        fromServerWithFirebaseRID
+//        firebaseRID:    String
+//        )
+//    {
+//        guard   let service         = Service(fromServerWithFirebaseRID: firebaseRID)
+//            else
+//        {
+//            return nil
+//        }
+//        let data            = fetchFirebaseObject(from: firebaseRID.requestPayedRef)
+//        guard   let costPerHour     =
+//            data[Constants.Protocols.Billable.costPerHour]              as? String,
+//            let commission      =
+//            data[Constants.Protocols.Commissionable.commission]         as? String,
+//            let tipCommission   =
+//            data[Constants.Protocols.TipCommissionable.tipCommission]   as? String,
+//            let tip             =
+//            data[Constants.Protocols.Tippable.tip]                      as? String
+//            else
+//        {
+//            return nil
+//        }
+//        self.init   (
+//            internallyWithFirebaseRID:  firebaseRID,
+//            service:                    service,
+//            costPerHour:                costPerHour,
+//            commission:                 commission,
+//            tipCommission:              tipCommission,
+//            tip:                        tip
+//        )
+//    }
 }
 

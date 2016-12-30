@@ -10,6 +10,7 @@
 import MapKit
 
 import Firebase
+import FirebaseDatabase
 
 extension String {
     var first: String {
@@ -54,6 +55,16 @@ extension Array where Element: ExpressibleByStringLiteral
         return self.map {"\($0)".lowercaseFirst}
     }
     
+    var emptyStringDictionary: StringDictionary
+    {
+        var emptyDictionary = StringDictionary()
+        for element in self
+        {
+            emptyDictionary.updateValue(Constants.Literal.Empty, forKey: "\(element)")
+        }
+        return emptyDictionary
+    }
+    
     func chopFromSelf(fragment: String) -> [String]
     {
         var choppedArray = [String]()
@@ -63,12 +74,13 @@ extension Array where Element: ExpressibleByStringLiteral
             {
                 choppedArray.append("\(element)".replacingOccurrences(of: fragment, with: Constants.Literal.Empty))
             }
-            else
-            {
-                choppedArray.append("\(element)")
-            }
         }
         return choppedArray
+    }
+    
+    var stringArray: [String]
+    {
+        return self.map {"\($0)"}
     }
 }
 
@@ -101,6 +113,16 @@ extension RawRepresentable
         return "\(self)".capitalized
     }
     
+    var capitalized: String
+    {
+        return stringCapitalized
+    }
+    
+    var lowercase: String
+    {
+        return stringLowerCase
+    }
+    
     var bool: Bool?
     {
         return self.stringLowerCase.bool
@@ -111,30 +133,35 @@ enum TrueOrFalse: String
 {
     case True
     case False
+    case None
 }
 
 enum YesOrNo: String
 {
     case Yes
     case No
+    case None
 }
 
 enum SuccessOrFailure: String
 {
     case Success
     case Failure
+    case None
 }
 
 enum SucceededOrFailed: String
 {
     case Succeeded
     case Failed
+    case None
 }
 
 enum PassOrFail: String
 {
     case Pass
     case Fail
+    case None
 }
 
 extension Bool
@@ -158,6 +185,21 @@ extension Bool
     var stringPassOrFail: String
     {
         return self == true ? PassOrFail.Pass.stringLowerCase : PassOrFail.Fail.stringLowerCase
+    }
+    
+    func optionalAND(bool: Bool?) -> Bool
+    {
+        var and = self
+        if let bool = bool
+        {
+            and = and && bool
+        }
+        return and
+    }
+    
+    func AND(bool: Bool) -> Bool
+    {
+        return self && bool
     }
 }
 
@@ -191,6 +233,36 @@ extension String
         {
             print("The string (\(self)) is not one of the truth strings (\(truthStrings))")
             return nil
+        }
+    }
+    var yesOrNo: YesOrNo
+    {
+        guard let bool = bool else { return YesOrNo.None}
+        if bool
+        {
+            return YesOrNo.Yes
+        }
+        else
+        {
+            return YesOrNo.No
+        }
+    }
+    var isCoach: IsCoach
+    {
+        if yesOrNo == YesOrNo.None
+        {
+            return IsCoach.none
+        }
+        else
+        {
+            if yesOrNo == YesOrNo.Yes
+            {
+                return IsCoach.yes
+            }
+            else
+            {
+                return IsCoach.no
+            }
         }
     }
 }
@@ -297,6 +369,17 @@ struct Constants {
             static let Latitude                     =               "latitude"
             static let Longitude                    =               "longitude"
             
+            static let User                         =
+                Constants.DataService.Firebase.Users                .lowercaseFirst
+            static let Request                      =
+                Constants.DataService.Firebase.Requests             .lowercaseFirst
+            static let Student                      =
+                Constants.DataService.Firebase.Students             .lowercaseFirst
+            static let Coach                        =
+                Constants.DataService.Firebase.Coaches              .lowercaseFirst
+            static let Location                     =
+                Constants.DataService.Firebase.Locations            .lowercaseFirst
+            
             static let FirebaseRID                  =
                 Constants.DataService.Mirror.FirebaseRID            .lowercaseFirst
             static let Created                      =
@@ -325,8 +408,11 @@ struct Constants {
             static let Coaches                      =
                 Constants.DataService.Firebase.Coaches              .capitalized
             
+            static let HasSignedUp                  =               "HasSignedUp"
             static let FirebaseUID                  =               "FirebaseUID"
             static let IsCoach                      =               "IsCoach"
+            static let CoachOrNot                   =
+                "CoachOrNot"
             static let Provider                     =               "Provider"
             static let FacebookUID                  =               "FacebookUID"
             static let LoggedInAtTime               =               "LoggedInAtTime"
@@ -334,7 +420,7 @@ struct Constants {
             static let FirstName                    =               "FirstName"
             static let Email                        =               "Email"
             static let Cell                         =               "Cell"
-            static let ImageURLString               =               "ImageURL"
+            static let ImageURLString               =               "FacebookImageURLString"
             static let FirebaseRID                  =               "FirebaseRID"
             //  static let Requests                     =               "Requests". Defined above.
             static let FirebaseUIDs                 =               "FirebaseUIDs"
@@ -359,15 +445,20 @@ struct Constants {
         
         struct User
         {
+            static let KeyForSaveKeys               =               "userSaveKeys"
             static let BaseNode                     =               Constants.Literal.Empty
             static let UID                          =               "uid"
             static let Profile                      =               "profile"
             static let Name                         =               "name"
             
+            static let HasSignedUp                  =
+                Mirror.HasSignedUp.lowercaseFirst
             static let FirebaseUID                  =
                 Mirror.FirebaseUID.lowercaseFirst
             static let IsCoach                      =
                 Mirror.IsCoach.lowercaseFirst
+            static let CoachOrNot                   =
+                Mirror.CoachOrNot.lowercaseFirst
             static let Provider                     =
                 Mirror.Provider.lowercaseFirst
             static let FacebookUID                  =
@@ -478,6 +569,7 @@ struct Constants {
     struct Literal
     {
         static let Empty                            = ""
+        static let Underscore                       = "_"
     }
     
     struct Facebook
@@ -515,10 +607,22 @@ struct Constants {
     {
         struct Segue
         {
-            static let SignUpToSetGym = "SignUpToSetGym"
-            static let SignUpToSetGymMap = "SignUpToSetGymMap"
-            static let SignUpToSaveCellNumber = "SignUpToSaveCellNumber"
-            static let SignUpToCoachRequests = "SignUpToCoachRequests"
+            static let SignUpToSetGym           = "SignUpToSetGym"
+            static let SignUpToSetGymMap        = "SignUpToSetGymMap"
+            static let SignUpToSaveCellNumber   = "SignUpToSaveCellNumber"
+            static let SignUpToCoachRequests    = "SignUpToCoachRequests"
+            static let ToStudentService         = "SignUpToStudentServiceVC"
+            static let ToCoachServiceVC         = "SignUpToCoachServiceVC"
+            static let ToSaveCellVC             = "SignUpToSaveCellVC"
+        }
+    }
+    
+    struct SaveCellVC
+    {
+        struct Segue
+        {
+            static let ToSetGymVC               = "SaveCellToSetGymVC"
+            static let ToCoachRequestsVC        = "SaveCellToCoachRequestsVC"
         }
     }
     
@@ -526,12 +630,29 @@ struct Constants {
     {
         struct Segue
         {
-            static let CoachRequestsToSignUp = "CoachRequestsToSignUp"
+            static let CoachRequestsToSignUp    = "CoachRequestsToSignUp"
+            static let ToService                = "CoachRequestsToCoachServiceVC"
         }
         
         struct Cell
         {
             static let Request = "Request"
+        }
+    }
+    
+    struct CoachServiceVC
+    {
+        struct Segue
+        {
+            static let ToSignUp = "CoachServiceToSignUpVC"
+        }
+    }
+    
+    struct StudentServiceVC
+    {
+        struct Segue
+        {
+            static let ToSignUpVC = "StudentServiceToSignUpVC"
         }
     }
     
@@ -561,6 +682,7 @@ struct Constants {
             var get:        [String]
             var other:      [String]
             var firebase:   [String]
+            var save:       [String]
             
             init    (
                 set:
@@ -605,7 +727,8 @@ struct Constants {
 //                {
 //                    self.firebase = self.get
 //                }
-                self.firebase = self.set.chopFromSelf(fragment: "private").lowercaseFirst
+                self.firebase   = self.set.chopFromSelf(fragment: "private").lowercaseFirst
+                self.save       = self.firebase
             }
             init(set: [String])
             {
@@ -635,6 +758,104 @@ struct Constants {
             {
                 self.init(set: nil, get: nil, other: other, firebase: firebase)
             }
+        }
+        
+        struct Persistence
+        {
+            struct Users
+            {
+                static let KeyForSaveKeys           = "users_saveKeys"
+                static let Standard                 = User()
+                static let FirebaseKeys             = Users.Standard.firebaseKeys
+                static let ShouldSave               = true
+                static let ShouldPrint              = true
+            }
+            
+            struct Students
+            {
+                static let KeyForSaveKeys           = "students_saveKeys"
+                static let Standard                 = User()
+                static let FirebaseKeys             = Students.Standard.firebaseKeys
+                static let ShouldSave               = true
+                static let ShouldPrint              = true
+            }
+            
+            struct Coaches
+            {
+                static let KeyForSaveKeys           = "coaches_saveKeys"
+                static let Standard                 = User()
+                static let FirebaseKeys             = Coaches.Standard.firebaseKeys
+                static let ShouldSave               = true
+                static let ShouldPrint              = true
+            }
+            
+            struct Requests
+            {
+//                static let KeyForSaveKeys           = "requests_saveKeys"
+//                static let Standard                 = Request()
+//                static let FirebaseKeys             = Requests.Standard.firebaseKeys
+                
+//                static let KeyForCreatedSaveKeys    = "requests_created_saveKeys"
+//                static let StandardCreated          = Created()
+//                static let CreatedFirebaseKeys      = Requests.StandardCreated.firebaseKeys
+                
+                static let ShouldSave               = true
+                static let ShouldPrint              = true
+            }
+            
+            struct Created
+            {
+                static let ShouldSave               = true
+                static let ShouldPrint              = true
+            }
+            
+            struct Accepted
+            {
+                static let ShouldSave               = true
+                static let ShouldPrint              = true
+            }
+            
+            struct Communicated
+            {
+                static let ShouldSave               = true
+                static let ShouldPrint              = true
+            }
+            
+            struct Service
+            {
+                static let ShouldSave               = true
+                static let ShouldPrint              = true
+            }
+            
+            struct Payed
+            {
+                static let ShouldSave               = true
+                static let ShouldPrint              = true
+            }
+            
+            struct Reviewed
+            {
+                static let ShouldSave               = true
+                static let ShouldPrint              = true
+            }
+            
+            struct Time
+            {
+                static let ShouldSave               = true
+                static let ShouldPrint              = true
+            }
+            
+            static let timeSaveKeys             =       "requests_time_saveKeys"
+            static let keyHasSignedUp           =       "hasSignedUp"
+            static let keyIsLoggedIn            =       "isLoggedIn"
+            static let keyIsCoach               =       "isCoach"
+            static let ShouldPrint              =       true
+        }
+        
+        struct FirebaseIDable
+        {
+            static let saveKeys                 =       "saveKeys"
+            static let keyForSaveKeys           =       "keyForSaveKeys"
         }
         
         struct CoachTaggable
@@ -2062,6 +2283,11 @@ struct Constants {
         {
             static let ToSignUp         = "GymSelectionToSignUp"
             static let ToRequest        = "GymSelectionToRequest"
+            static let ToService        = "GymSelectionToStudentServiceVC"
+        }
+        struct Cell
+        {
+            static let GymCellIdentifier       = "GymSelection"
         }
     }
     
@@ -2120,6 +2346,8 @@ struct Constants {
             static let FailedToCallCoach = "Coach Unreachable."
             static let CurrentLocationNotFound = "Current Location Undetected"
             static let GymNotSelected = "No Gym Selection Made"
+            static let UserStatusBlank = "User Status Not Indicated"
+            static let UserStatusAmbiguous = "User Status Ambiguous"
             
         }
         struct Message
@@ -2134,6 +2362,8 @@ struct Constants {
             static let FailedToCallCoach = Constants.Display.Message.FailedToCallCoach
             static let CurrentLocationNotFound = "Your current location could not be detected. Please try again in a few moments."
             static let GymNotSelected = "No gym has been selected for sighting. Please select the gym you want to spot on the map."
+            static let UserStatusBlank = "Please indicate if you wish to signup as a user or coach."
+            static let UserStatusAmbiguous = "You can signup as either a user or a coach. Please select a single choice again."
         }
     }
     struct Key

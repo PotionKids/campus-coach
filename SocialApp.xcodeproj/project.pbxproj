@@ -16,6 +16,8 @@
 		0D065B261DF85CAF00A5DB80 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D065B251DF85CAF00A5DB80 /* Service.swift */; };
 		0D065B281DF85CBC00A5DB80 /* Payed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D065B271DF85CBC00A5DB80 /* Payed.swift */; };
 		0D065B2A1DF85CD100A5DB80 /* Reviewed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D065B291DF85CD100A5DB80 /* Reviewed.swift */; };
+		0D1B24A51DFC8166005E861D /* CoachServiceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B24A41DFC8166005E861D /* CoachServiceVC.swift */; };
+		0D1B24AE1DFCAF98005E861D /* StudentServiceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B24AD1DFCAF98005E861D /* StudentServiceVC.swift */; };
 		0D3745C91DB04DFF009F061C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3745C81DB04DFF009F061C /* AppDelegate.swift */; };
 		0D3745CE1DB04DFF009F061C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D3745CC1DB04DFF009F061C /* Main.storyboard */; };
 		0D3745D01DB04DFF009F061C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D3745CF1DB04DFF009F061C /* Assets.xcassets */; };
@@ -34,6 +36,8 @@
 		0D47DC971DF67FE50076C360 /* DataStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D47DC961DF67FE50076C360 /* DataStructure.swift */; };
 		0D47DCA01DF680420076C360 /* DateAndTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D47DC9F1DF680420076C360 /* DateAndTime.swift */; };
 		0D47DCA21DF681BB0076C360 /* ModelProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D47DCA11DF681BB0076C360 /* ModelProtocols.swift */; };
+		0D69751A1E00AAD700F696D3 /* SaveCellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6975191E00AAD700F696D3 /* SaveCellVC.swift */; };
+		0D6975231E00B68800F696D3 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6975221E00B68800F696D3 /* CustomTextField.swift */; };
 		0D6BB8FE1DB579380015AE04 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6BB8FD1DB579380015AE04 /* DataService.swift */; };
 		0D6DA2F31DC01BC90068CDBF /* MKGPX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6DA2F21DC01BC90068CDBF /* MKGPX.swift */; };
 		0D6DA2FC1DC01BD70068CDBF /* gpx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6DA2FB1DC01BD70068CDBF /* gpx.swift */; };
@@ -51,8 +55,10 @@
 		0DB001F41DB3179100EF1921 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB001F31DB3179100EF1921 /* Constants.swift */; };
 		0DB001F71DB32F2700EF1921 /* Gym.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB001F61DB32F2700EF1921 /* Gym.swift */; };
 		0DB001F91DB32F5200EF1921 /* Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB001F81DB32F5200EF1921 /* Parsing.swift */; };
+		0DC1DB261DFF60D6006A8541 /* signOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC1DB251DFF60D6006A8541 /* signOut.swift */; };
 		0DD788B51DF659D300BFDE91 /* Dictionarizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD788B41DF659D300BFDE91 /* Dictionarizable.swift */; };
 		0DD8C4B01DBFD432002EACB3 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD8C4AF1DBFD432002EACB3 /* Errors.swift */; };
+		0DDF252B1E035EF2003133F4 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF252A1E035EF2003133F4 /* Persistence.swift */; };
 		982CDC6EA7FE0E496070F067 /* Pods_SocialApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B0BA4C830293FEDC9E91481 /* Pods_SocialApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -139,6 +145,8 @@
 		0D065B251DF85CAF00A5DB80 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		0D065B271DF85CBC00A5DB80 /* Payed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Payed.swift; sourceTree = "<group>"; };
 		0D065B291DF85CD100A5DB80 /* Reviewed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reviewed.swift; sourceTree = "<group>"; };
+		0D1B24A41DFC8166005E861D /* CoachServiceVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoachServiceVC.swift; sourceTree = "<group>"; };
+		0D1B24AD1DFCAF98005E861D /* StudentServiceVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentServiceVC.swift; sourceTree = "<group>"; };
 		0D3745C51DB04DFF009F061C /* SocialApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D3745C81DB04DFF009F061C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0D3745CD1DB04DFF009F061C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -170,6 +178,8 @@
 		0D47DC961DF67FE50076C360 /* DataStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStructure.swift; sourceTree = "<group>"; };
 		0D47DC9F1DF680420076C360 /* DateAndTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateAndTime.swift; sourceTree = "<group>"; };
 		0D47DCA11DF681BB0076C360 /* ModelProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelProtocols.swift; sourceTree = "<group>"; };
+		0D6975191E00AAD700F696D3 /* SaveCellVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveCellVC.swift; sourceTree = "<group>"; };
+		0D6975221E00B68800F696D3 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		0D6BB8FD1DB579380015AE04 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		0D6DA2F21DC01BC90068CDBF /* MKGPX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKGPX.swift; sourceTree = "<group>"; };
 		0D6DA2FB1DC01BD70068CDBF /* gpx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = gpx.swift; sourceTree = "<group>"; };
@@ -187,8 +197,10 @@
 		0DB001F61DB32F2700EF1921 /* Gym.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gym.swift; sourceTree = "<group>"; };
 		0DB001F81DB32F5200EF1921 /* Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parsing.swift; sourceTree = "<group>"; };
 		0DB910701DB1B565002EFAC9 /* SocialApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SocialApp.entitlements; sourceTree = "<group>"; };
+		0DC1DB251DFF60D6006A8541 /* signOut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = signOut.swift; sourceTree = "<group>"; };
 		0DD788B41DF659D300BFDE91 /* Dictionarizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionarizable.swift; sourceTree = "<group>"; };
 		0DD8C4AF1DBFD432002EACB3 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		0DDF252A1E035EF2003133F4 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		8B0BA4C830293FEDC9E91481 /* Pods_SocialApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SocialApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D59A66993E69C268A3308B02 /* Pods-SocialApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SocialApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-SocialApp/Pods-SocialApp.release.xcconfig"; sourceTree = "<group>"; };
 		F1CFDF931D9794B93FEFE25A /* Pods-SocialApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SocialApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SocialApp/Pods-SocialApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -211,6 +223,9 @@
 			isa = PBXGroup;
 			children = (
 				0D065B1D1DF85B3E00A5DB80 /* fetchFirebaseObject.swift */,
+				0DC1DB251DFF60D6006A8541 /* signOut.swift */,
+				0DDF252A1E035EF2003133F4 /* Persistence.swift */,
+				0DB001F11DB316A400EF1921 /* HelperFunctions.swift */,
 			);
 			name = "Helper Functions";
 			sourceTree = "<group>";
@@ -273,7 +288,9 @@
 				0D9AD60E1DF9F7A200B6A21F /* GymCell.swift */,
 				0D0291851DBD7FA100C75BE5 /* CoachRequestsVC.swift */,
 				0D02918E1DBD7FA900C75BE5 /* RequestCell.swift */,
-				0DB001F11DB316A400EF1921 /* HelperFunctions.swift */,
+				0D1B24A41DFC8166005E861D /* CoachServiceVC.swift */,
+				0D1B24AD1DFCAF98005E861D /* StudentServiceVC.swift */,
+				0D6975191E00AAD700F696D3 /* SaveCellVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -285,6 +302,7 @@
 				0D9550AE1DBFE76000B2DB9D /* ViewStyling.swift */,
 				0D9550B91DBFEB3000B2DB9D /* CustomImageView.swift */,
 				0D9550BB1DBFF36000B2DB9D /* CustomTableView.swift */,
+				0D6975221E00B68800F696D3 /* CustomTextField.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -297,15 +315,15 @@
 				0DB001F31DB3179100EF1921 /* Constants.swift */,
 				0DB001F61DB32F2700EF1921 /* Gym.swift */,
 				0DB001F81DB32F5200EF1921 /* Parsing.swift */,
-				0D473E0C1DBBED45008FF539 /* User.swift */,
-				0D473E151DBBED5E008FF539 /* Student.swift */,
-				0D473E171DBBED6B008FF539 /* Coach.swift */,
-				0D9AD6101DFA04F400B6A21F /* Request.swift */,
 				0D43EBB41DBFA2460033CA95 /* Location.swift */,
 				0DD788B41DF659D300BFDE91 /* Dictionarizable.swift */,
 				0D47DC961DF67FE50076C360 /* DataStructure.swift */,
 				0D47DC9F1DF680420076C360 /* DateAndTime.swift */,
 				0D47DCA11DF681BB0076C360 /* ModelProtocols.swift */,
+				0D473E0C1DBBED45008FF539 /* User.swift */,
+				0D473E151DBBED5E008FF539 /* Student.swift */,
+				0D473E171DBBED6B008FF539 /* Coach.swift */,
+				0D9AD6101DFA04F400B6A21F /* Request.swift */,
 				0D065B1F1DF85C8800A5DB80 /* Created.swift */,
 				0D065B211DF85C9500A5DB80 /* Accepted.swift */,
 				0D065B231DF85CA500A5DB80 /* Communicated.swift */,
@@ -602,10 +620,12 @@
 				0D9550BA1DBFEB3000B2DB9D /* CustomImageView.swift in Sources */,
 				0D47DCA21DF681BB0076C360 /* ModelProtocols.swift in Sources */,
 				0DB001F41DB3179100EF1921 /* Constants.swift in Sources */,
+				0D1B24AE1DFCAF98005E861D /* StudentServiceVC.swift in Sources */,
 				0DB001F71DB32F2700EF1921 /* Gym.swift in Sources */,
 				0D065B221DF85C9500A5DB80 /* Accepted.swift in Sources */,
 				0D473E181DBBED6B008FF539 /* Coach.swift in Sources */,
 				0D46871F1DC2FE32009950F2 /* PokeAnnotation.swift in Sources */,
+				0DDF252B1E035EF2003133F4 /* Persistence.swift in Sources */,
 				0D9AD6061DF9EC4300B6A21F /* GymSelectionVC.swift in Sources */,
 				0D6DA2FC1DC01BD70068CDBF /* gpx.swift in Sources */,
 				0D4687141DC2F71C009950F2 /* GFGeoHashQuery.m in Sources */,
@@ -625,6 +645,8 @@
 				0D9AD60F1DF9F7A200B6A21F /* GymCell.swift in Sources */,
 				0D065B1E1DF85B3E00A5DB80 /* fetchFirebaseObject.swift in Sources */,
 				0D9550AF1DBFE76000B2DB9D /* ViewStyling.swift in Sources */,
+				0D1B24A51DFC8166005E861D /* CoachServiceVC.swift in Sources */,
+				0D69751A1E00AAD700F696D3 /* SaveCellVC.swift in Sources */,
 				0D4687121DC2F71C009950F2 /* GFBase32Utils.m in Sources */,
 				0D6BB8FE1DB579380015AE04 /* DataService.swift in Sources */,
 				0D473E0D1DBBED45008FF539 /* User.swift in Sources */,
@@ -632,6 +654,8 @@
 				0D0291861DBD7FA100C75BE5 /* CoachRequestsVC.swift in Sources */,
 				0D02918F1DBD7FA900C75BE5 /* RequestCell.swift in Sources */,
 				0D4687151DC2F71C009950F2 /* GFQuery.m in Sources */,
+				0DC1DB261DFF60D6006A8541 /* signOut.swift in Sources */,
+				0D6975231E00B68800F696D3 /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

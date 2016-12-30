@@ -19,14 +19,11 @@ class GymCell: UITableViewCell
     @IBOutlet weak var acceptRequestButtonDescription: UILabel!
     @IBOutlet weak var userName: UILabel!
     
+    var gymSelected: String!
     @IBAction func selectRequest(_ sender: AnyObject)
     {
-        let atTime  = timeStamp().stampNanoseconds
-        selfRequest = Request(withFirebaseRID: atTime, byStudent: selfUser.firebaseUID, forGym: gymBldg.text!)
-        selfRequest.push()
+        gymSelected = gymBldg.text!
     }
-    
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()

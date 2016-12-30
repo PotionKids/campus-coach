@@ -23,16 +23,33 @@ protocol Creatable: StudentInitiatable, Ending, FirebaseRequestIDable, Pushable
         internallyWithFirebaseRID
         firebaseRID:    String,
         byStudent:      String,
+        withName
+        fullName:       String,
         forGymWith
         gymName:        String
-    )
+            )
     init?   (
-        fromServerWithFirebaseRID
-        firebaseRID:    String
-    )
+        withFirebaseRID
+        firebaseRID:    String,
+        fromData
+        data:           AnyDictionary
+            )
+    init?   (
+        fromData
+        data:           AnyDictionary
+            )
+//    init?   (
+//        fromServerWithFirebaseRID
+//        firebaseRID:    String
+//            )
 }
 extension Creatable
 {
+    var firebaseID: String
+    {
+        return firebaseRID
+    }
+
     var forGym: String
     {
         return privateForGym
@@ -55,7 +72,7 @@ extension Creatable
         pushValuesToFirebase(forKeys: firebaseKeys, at: requestCreatedRef)
     }
     
-    var keys: KeysType
+    static var keys: KeysType
     {
         return Constants.Protocols.Creatable.keys
     }
@@ -63,13 +80,18 @@ extension Creatable
 
 class Created: Creatable
 {
-    var privateOrNot:       String! = YesOrNo.Yes.string
+    static var setObject:          Firebase.Object!    = Firebase.Object  .none
+    static var setChildOf:         Firebase.Object!    = Firebase.Object  .requests
+    static var setChild:           Firebase.Child!     = Firebase.Child   .created
+    
+    var privateOrNot:       String!             = YesOrNo.Yes.string
     var privateAtTime:      String!
-    var privateByStudent:   String! = Constants.DataService.User.DefaultFirebaseUID
-    var privateHasEnded:    String! = YesOrNo.No.string
+    var privateByStudent:   String!             = Constants.DataService.User.DefaultFirebaseUID
+    var privateFullName:    String!             = Constants.DataService.User.DefaultUserName
+    var privateHasEnded:    String!             = YesOrNo.No.string
     var privateEndedAtTime: String!
     var privateFirebaseRID: String!
-    var privateForGym:      String! = Building.White.name
+    var privateForGym:      String!             = Building.White.name
     
     required init()
     {
@@ -78,19 +100,22 @@ class Created: Creatable
         self.privateEndedAtTime = self.privateAtTime
     }
     
-    required convenience init    (
+    required convenience init   (
         internallyWithFirebaseRID
         firebaseRID:        String,
         byStudent:          String,
+        withName
+        fullName:           String,
         forGymWith
         gymName:            String
-        )
+                                )
     {
         self.init()
         self.privateFirebaseRID = firebaseRID
         self.privateAtTime      = firebaseRID
         self.privateEndedAtTime = firebaseRID
         self.privateByStudent   = byStudent
+        self.privateFullName    = fullName
         self.privateHasEnded    = YesOrNo.No.string
         self.privateEndedAtTime = firebaseRID
         self.privateFirebaseRID = firebaseRID
@@ -98,17 +123,19 @@ class Created: Creatable
     }
     
     required convenience init?  (
-        fromServerWithFirebaseRID
-        firebaseRID:    String
-        )
+        withFirebaseRID
+        firebaseRID:    String,
+        fromData
+        data:           AnyDictionary
+                                )
     {
-        let data        = fetchFirebaseObject(from: firebaseRID         .requestCreatedRef)
         guard   let atTime      = data[Constants.Protocols.HappenedType         .atTime]        as? String,
-            let byStudent   = data[Constants.Protocols.StudentInitiatable   .byStudent]     as? String,
-            let hasEnded    = data[Constants.Protocols.Ending               .hasEnded]      as? String,
-            let endedAtTime = data[Constants.Protocols.Ending               .endedAtTime]   as? String,
-            let firebaseRID = data[Constants.Protocols.FirebaseRequestIDable.firebaseRID]   as? String,
-            let forGym      = data[Constants.Protocols.Creatable            .forGym]        as? String
+                let byStudent   = data[Constants.Protocols.StudentInitiatable   .byStudent]     as? String,
+                let fullName    = data[Constants.Protocols.Nameable             .fullName]      as? String,
+                let hasEnded    = data[Constants.Protocols.Ending               .hasEnded]      as? String,
+                let endedAtTime = data[Constants.Protocols.Ending               .endedAtTime]   as? String,
+                let firebaseRID = data[Constants.Protocols.FirebaseRequestIDable.firebaseRID]   as? String,
+                let forGym      = data[Constants.Protocols.Creatable            .forGym]        as? String
             else
         {
             return nil
@@ -116,7 +143,39 @@ class Created: Creatable
         self.init   (
             internallyWithFirebaseRID:  firebaseRID,
             byStudent:                  byStudent,
+            withName:                   fullName,
             forGymWith:                 forGym
-        )
+                    )
+        self.privateAtTime      = atTime
+        self.privateHasEnded    = hasEnded
+        self.privateEndedAtTime = endedAtTime
     }
+    
+    required convenience init?  (
+        fromData
+        data:           AnyDictionary
+                                )
+    {
+        guard let firebaseRID = data[Constants.Protocols.FirebaseRequestIDable.firebaseRID] as? String
+        else
+        {
+            return nil
+        }
+        self.init   (
+            withFirebaseRID:    firebaseRID,
+            fromData:           data
+                    )
+    }
+    
+//    required convenience init?  (
+//        fromServerWithFirebaseRID
+//        firebaseRID:    String
+//        )
+//    {
+//        let data        = fetchFirebaseObject(from: firebaseRID         .requestCreatedRef)
+//        self.init   (
+//            withFirebaseRID:    firebaseRID,
+//            fromData:           data
+//                    )
+//    }
 }

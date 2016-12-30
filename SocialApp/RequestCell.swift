@@ -7,9 +7,15 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
 
 class RequestCell: UITableViewCell
 {
+    private var request: Request!
+    private var studentRef: FIRDatabaseReference!
+    private var _studentRefHandle: FIRDatabaseHandle!
+    
     @IBOutlet weak var gymIcon: UIImageView!
     @IBOutlet weak var acceptRequestButton: UIButton!
     @IBOutlet weak var userImage: UIImageView!
@@ -21,21 +27,32 @@ class RequestCell: UITableViewCell
     
     @IBAction func acceptRequest(_ sender: AnyObject)
     {
-        
+        studentRef          = Persistence.shared.studentRef!
+        _studentRefHandle   = studentRef.observe(.value, with:
+        {(snapshot) in
+            print("KRIS: Snap \(snapshot)")
+            print("KRIS: Default selfStudent \(Persistence.shared.student?.stringDictionary)")
+            if let data = snapshot.value as? AnyDictionary
+            {
+                Persistence.shared.privateStudent = Student(fromUserData: data)!
+                let _ = Persistence.shared.saveStudent()
+                print("KRIS: Accepted Request Created by Student \(Persistence.shared.student?.stringDictionary))")
+            }
+        })
     }
     
-    
-    
-    override func awakeFromNib() {
+    override func awakeFromNib()
+    {
         super.awakeFromNib()
         // Initialization code
     }
     
     func updateUI(request: Request)
     {
-        gymBldg.text = request.created.forGym
-        acceptRequestButtonDescription.text = Constants.DataService.Request.Accept
-        userName.text = request.created.student.firstName
+        self.request                        = request
+        gymBldg.text                        = request.created.forGym
+        acceptRequestButtonDescription.text = Constants.DataService.Request.Accept.capitalized
+        userName.text                       = request.created.firstName
         
         let urlstr = request.created.student.facebookImageURLString
         
@@ -61,6 +78,11 @@ class RequestCell: UITableViewCell
                 }
             }
         }
+    }
+    
+    deinit
+    {
+        studentRef.removeObserver(withHandle: _studentRefHandle)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

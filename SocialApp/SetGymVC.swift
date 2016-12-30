@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 
 import Firebase
+import FirebaseDatabase
 import FirebaseAuth
 import SwiftKeychainWrapper
 
@@ -71,9 +72,10 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     @IBAction func signOut(_ sender: AnyObject)
     {
-        KeychainWrapper.standard.removeObject(forKey: Constants.Firebase.KeychainWrapper.KeyUID)
-        try! FIRAuth.auth()?.signOut()
-        performSegue(withIdentifier: Constants.SetGymVC.Segue.ToSignIn, sender: nil)
+        signOutOf(viewController: self, withSegue: Constants.SetGymVC.Segue.ToSignIn)
+//        KeychainWrapper.standard.removeObject(forKey: Constants.Firebase.KeychainWrapper.KeyUID)
+//        try! FIRAuth.auth()?.signOut()
+//        performSegue(withIdentifier: Constants.SetGymVC.Segue.ToSignIn, sender: nil)
     }
     
     
@@ -223,7 +225,7 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             annotationView = av
         }
         
-        if let annotationView = annotationView, let anno = annotation as? GymAnnotation
+        if let annotationView = annotationView, let _ = annotation as? GymAnnotation
         {
             annotationView.canShowCallout = true
             annotationView.image = UIImage(named: "200")

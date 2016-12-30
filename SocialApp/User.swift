@@ -9,11 +9,10 @@
 import Foundation
 import Firebase
 
-internal var selfUser = User()
-
 protocol UserType: FirebaseUserIDable, ProviderSpecifiable, LoginTimeStampable, FacebookImageRetrievable, Nameable, Emailable, Textable, FirebaseRequestIDable, RequestArchivable, FirebaseUIDListType, RatingArchivable, ReviewArchivable, Pushable
 {
     init()
+    
     init(internallyWithFirebaseUID
         firebaseUID:    String,
          whoIsACoachOrNot
@@ -49,13 +48,17 @@ protocol UserType: FirebaseUserIDable, ProviderSpecifiable, LoginTimeStampable, 
         data:   AnyDictionary
             )
     
-    init?(fromServerWithFirebaseUID firebaseUID: String, forUserWhoIsACoachOrNot isCoach: Bool)
+//    init?(fromServerWithFirebaseUID firebaseUID: String, forUserWhoIsACoachOrNot isCoach: Bool)
 }
 extension UserType
 {
+    var firebaseID: String
+    {
+        return firebaseUID
+    }
     func push()
     {
-        if coachOrNot
+        if coachOrNot!
         {
             pushValuesToFirebase(forKeys: firebaseKeys, at: firebaseUID.firebaseCoachRef)
         }
@@ -64,12 +67,12 @@ extension UserType
             pushValuesToFirebase(forKeys: firebaseKeys, at: firebaseUID.firebaseStudentRef)
         }
     }
-    func updateAllUsers()
+    func updateUsers()
     {
-        firebaseUID.firebaseAllUsersRef.updateChildValues(["isCoach" : isCoach])
+        firebaseUID.firebaseUserRef.updateChildValues(["isCoach" : isCoach])
     }
     
-    var keys: KeysType
+    static var keys: KeysType
     {
         return Constants.Protocols.UserType.keys
     }
@@ -77,15 +80,25 @@ extension UserType
 
 class User: UserType
 {
-    var privateFirebaseUID:     String! = Constants.DataService.User.DefaultFirebaseUID
-    var privateIsCoach:         String! = YesOrNo.No.string
-    var privateProvider:        String! = Constants.DataService.User.DefaultProvider
+    static var setObject:       Firebase.Object!    = Firebase.Object.users
+    static var setChildOf:      Firebase.Object!    = Firebase.Object.none
+    static var setChild:        Firebase.Child!     = Firebase.Child.none
+    
+    var privateFirebaseUID:     String!             = Constants.Literal.Empty
+    var privateIsCoach:         String!             = YesOrNo.None.string
+    var privateProvider:        String!             = Constants.Literal.Empty
     var privateLoggedInAtTime:  String!
-    var privateFacebookUID:     String! = Constants.DataService.User.DefaultFacebookUID
-    var privateFullName:        String! = Constants.DataService.User.DefaultUserName
-    var privateEmail:           String! = Constants.DataService.User.DefaultEmail
-    var privateCell:            String! = Constants.DataService.User.DefaultCell
-    var privateFirebaseRID:     String!
+    var privateFacebookUID:     String!             = Constants.DataService.User.DefaultFacebookUID
+    var privateFullName:        String!             = Constants.DataService.User.DefaultUserName
+    var privateEmail:           String!             = Constants.DataService.User.DefaultEmail
+    var privateCell:            String!             = Constants.DataService.User.DefaultCell
+    var privateFirebaseRID:     String!             = Constants.Literal.Empty
+    {
+        willSet
+        {
+            privateRequests = "\(requests) \(newValue)"
+        }
+    }
     var privateRequests:        String!
     var privateFirebaseUIDs:    String! = Constants.DataService.User.DefaultFirebaseUID
     var privateRating:          String! = Constants.DataService.User.DefaultRating.string
@@ -95,8 +108,6 @@ class User: UserType
     required init()
     {
         self.privateLoggedInAtTime  = timeStamp().stampNanoseconds
-        self.privateFirebaseRID     = timeStamp().stampNanoseconds
-        self.privateRequests        = timeStamp().stampNanoseconds
     }
     
     required convenience init   (
@@ -145,6 +156,14 @@ class User: UserType
         self.privateRating              = rating
         self.privateRatings             = ratings
         self.privateReviews             = reviews
+        if isCoach.bool!
+        {
+            User.setObject  = Firebase.Object.coaches
+        }
+        else
+        {
+            User.setObject  = Firebase.Object.students
+        }
     }
     
     required convenience init?  (
@@ -153,20 +172,21 @@ class User: UserType
                                 )
     {
         guard   let firebaseUID = data[Constants.Protocols.FirebaseUserIDable       .firebaseUID]       as? String,
-            let isCoach     = data[Constants.Protocols.CoachTaggable            .isCoach]           as? String,
-            let provider    = data[Constants.Protocols.ProviderSpecifiable      .provider]          as? String,
-            let logInTime   = data[Constants.Protocols.LoginTimeStampable       .loggedInAtTime]    as? String,
-            let facebookUID = data[Constants.Protocols.FacebookUserIDable       .facebookUID]       as? String,
-            let fullName    = data[Constants.Protocols.Nameable                 .fullName]          as? String,
-            let email       = data[Constants.Protocols.Emailable                .email]             as? String,
-            let cell        = data[Constants.Protocols.Textable                 .cell]              as? String,
-            let firebaseRID = data[Constants.Protocols.FirebaseRequestIDable    .firebaseRID]       as? String,
-            let requests    = data[Constants.Protocols.RequestArchivable        .requests]          as? String,
-            let userIDs     = data[Constants.Protocols.FirebaseUIDListType      .firebaseUIDs]      as? String,
-            let rating      = data[Constants.Protocols.RatingArchivable         .rating]            as? String,
-            let ratings     = data[Constants.Protocols.RatingArchivable         .ratings]           as? String,
-            let reviews     = data[Constants.Protocols.ReviewArchivable         .reviews]           as? String
-            else
+                let isCoach     = data[Constants.Protocols.CoachTaggable            .isCoach]           as? String,
+                let provider    = data[Constants.Protocols.ProviderSpecifiable      .provider]          as? String,
+                let logInTime   = data[Constants.Protocols.LoginTimeStampable       .loggedInAtTime]    as? String,
+                let facebookUID = data[Constants.Protocols.FacebookUserIDable       .facebookUID]       as? String,
+                let fullName    = data[Constants.Protocols.Nameable                 .fullName]          as? String,
+                let email       = data[Constants.Protocols.Emailable                .email]             as? String,
+                let cell        = data[Constants.Protocols.Textable                 .cell]              as? String,
+                let firebaseRID = data[Constants.Protocols.FirebaseRequestIDable    .firebaseRID]       as? String,
+                let requests    = data[Constants.Protocols.RequestArchivable        .requests]          as? String,
+                let userIDs     = data[Constants.Protocols.FirebaseUIDListType      .firebaseUIDs]
+                    as? String,
+                let rating      = data[Constants.Protocols.RatingArchivable         .rating]            as? String,
+                let ratings     = data[Constants.Protocols.RatingArchivable         .ratings]           as? String,
+                let reviews     = data[Constants.Protocols.ReviewArchivable         .reviews]           as? String
+        else
         {
             return nil
         }
@@ -188,22 +208,22 @@ class User: UserType
                     )
     }
     
-    required convenience init? (fromServerWithFirebaseUID firebaseUID: String, forUserWhoIsACoachOrNot isCoach: Bool)
-    {
-        var data = [Key : Value]()
-        if isCoach
-        {
-            data = fetchFirebaseObject(from: firebaseUID.firebaseCoachRef)
-            print("KRIS: Coach Data from Firebase = \(data)")
-        }
-        else
-        {
-            data = fetchFirebaseObject(from: firebaseUID.firebaseStudentRef)
-            print("KRIS: Student Data from Firebase = \(data)")
-
-        }
-        self.init   (
-            fromUserData:   data
-                    )
-    }
+//    required convenience init? (fromServerWithFirebaseUID firebaseUID: String, forUserWhoIsACoachOrNot isCoach: Bool)
+//    {
+//        var data = [Key : Value]()
+//        if isCoach
+//        {
+//            data = fetchFirebaseObject(from: firebaseUID.firebaseCoachRef)
+//            print("KRIS: Coach Data from Firebase = \(data)")
+//        }
+//        else
+//        {
+//            data = fetchFirebaseObject(from: firebaseUID.firebaseStudentRef)
+//            print("KRIS: Student Data from Firebase = \(data)")
+//
+//        }
+//        self.init   (
+//            fromUserData:   data
+//                    )
+//    }
 }

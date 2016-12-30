@@ -9,8 +9,6 @@
 import Foundation
 import Firebase
 
-internal var selfRequest = Request()
-
 protocol RequestType: RequestTimeSequenceType, FirebaseRequestIDable, Pushable
 {
     var privateCreated:         Created!            { get set }
@@ -32,30 +30,33 @@ protocol RequestType: RequestTimeSequenceType, FirebaseRequestIDable, Pushable
         withFirebaseRID
         firebaseRID:    String,
         byStudent:      String,
+        withName:       String,
         forGym:         String
             )
     init    (
         byStudent:      String,
+        withName:       String,
         forGym:         String
             )
     init    (
-        internallyWithFirebaseRID
-        firebaseRID:    String,
         created:        Created,
         accepted:       Accepted?,
         communicated:   Communicated?,
         service:        Service?,
         payed:          Payed?,
         reviewed:       Reviewed?
-    )
-    init?   (
-        fromServerWithFirebaseRID
-        firebaseRID:    String
-        )
+            )
+    init    (
+        created:        Created
+            )
+//    init?   (
+//        fromServerWithFirebaseRID
+//        firebaseRID:    String
+//            )
     
     func push()
     
-    mutating func accept(byCoach: String, atTheGym: String, timeToReach: String)
+    mutating func acceptByCoach(withFirebaseUID firebaseUID: String, withName: String, atTheGym: String, timeToReach: String)
     mutating func communicate(byCallOrText: String, byCoachOrNot: String)
     mutating func start()
     mutating func stop()
@@ -64,6 +65,15 @@ protocol RequestType: RequestTimeSequenceType, FirebaseRequestIDable, Pushable
 }
 extension RequestType
 {
+    static var firebaseKeys: Keys
+    {
+        return Constants.Protocols.RequestType.keys.firebase
+    }
+    var firebaseID: String
+    {
+        return firebaseRID
+    }
+    
     var created: Created
     {
         return privateCreated
@@ -132,9 +142,21 @@ extension RequestType
         requestTimeRef  .updateChildValues(time)
     }
     
-    mutating func accept(byCoach: String, atTheGym: String, timeToReach: String)
+    mutating func acceptByCoach(withFirebaseUID firebaseUID: String, withName: String, atTheGym: String, timeToReach: String)
     {
-        self.privateAccepted                = Accepted(internallyWithFirebaseRID: firebaseRID, byCoach: byCoach, whoIsAtTheGym: atTheGym, andWillTake: timeToReach)
+        self.privateAccepted                =   Accepted  (
+                                                internallyWithFirebaseRID:  firebaseRID,
+                                                byCoach:                    firebaseUID,
+                                                withName:                   withName,
+                                                whoIsAtTheGym:              atTheGym,
+                                                andWillTake:                timeToReach
+                                                            )
+    }
+    mutating func accept()
+    {
+        let user = Persistence.shared.user
+        acceptByCoach(withFirebaseUID: user.firebaseUID, withName: user.fullName, atTheGym: YesOrNo.Yes.string, timeToReach: Constants.Calendar.Date.ReferenceTime_mm_ss)
+        
     }
     mutating func communicate(byCallOrText: String, byCoachOrNot: String)
     {
@@ -161,7 +183,6 @@ extension RequestType
     }
     mutating func pay(withTip tip: String)
     {
-        let atTime                          = timeStamp().stampNanoseconds
         self.privatePayed                   = Payed(internallyWithFirebaseRID: firebaseRID, service: service!, tip: tip)
     }
     mutating func review(withRating rating: String, withReview review: String)
@@ -172,7 +193,7 @@ extension RequestType
         self.privateCreated.privateEndedAtTime  = atTime
     }
     
-    var keys: KeysType
+    static var keys: KeysType
     {
         return Constants.Protocols.RequestType.keys
     }
@@ -180,25 +201,30 @@ extension RequestType
 
 class Request: RequestType
 {
+    static var setObject:              Firebase.Object!    = Firebase.Object   .requests
+    static var setChildOf:             Firebase.Object!    = Firebase.Object   .none
+    static var setChild:               Firebase.Child!     = Firebase.Child    .none
+    
     var privateFirebaseRID:     String!
     var privateCreated:         Created!
-    var privateAccepted:        Accepted?       = nil
-    var privateCommunicated:    Communicated?   = nil
-    var privateService:         Service?        = nil
-    var privatePayed:           Payed?          = nil
-    var privateReviewed:        Reviewed?       = nil
+    var privateAccepted:        Accepted?           = nil
+    var privateCommunicated:    Communicated?       = nil
+    var privateService:         Service?            = nil
+    var privatePayed:           Payed?              = nil
+    var privateReviewed:        Reviewed?           = nil
     
     required init()
     {
-        self.privateFirebaseRID = timeStamp().stampNanoseconds
+        self.privateFirebaseRID = ""
         self.privateCreated     = Created()
     }
     
     required convenience init   (
         withFirebaseRID
-        firebaseRID: String,
-        byStudent: String,
-        forGym: String
+        firebaseRID:    String,
+        byStudent:      String,
+        withName:       String,
+        forGym:         String
                                 )
     {
         self.init()
@@ -206,12 +232,14 @@ class Request: RequestType
         self.privateCreated     = Created   (
             internallyWithFirebaseRID:  firebaseRID,
             byStudent:                  byStudent,
+            withName:                   withName,
             forGymWith:                 forGym
-        )
+                                            )
     }
     
     required convenience init   (
         byStudent:      String,
+        withName:       String,
         forGym:         String
                                 )
     {
@@ -219,13 +247,12 @@ class Request: RequestType
         self.privateCreated     =   Created (
                                     internallyWithFirebaseRID:  privateFirebaseRID,
                                     byStudent:                  byStudent,
+                                    withName:                   withName,
                                     forGymWith:                 forGym
                                             )
     }
     
     required convenience init   (
-        internallyWithFirebaseRID
-        firebaseRID:    String,
         created:        Created,
         accepted:       Accepted?,
         communicated:   Communicated?,
@@ -235,38 +262,51 @@ class Request: RequestType
                                 )
     {
         self.init()
+        self.privateFirebaseRID     = created.firebaseRID
         self.privateCreated         = created
         self.privateAccepted        = accepted
         self.privateCommunicated    = communicated
         self.privateService         = service
         self.privatePayed           = payed
         self.privateReviewed        = reviewed
-        self.privateFirebaseRID     = firebaseRID
     }
     
-    required convenience init?  (
-        fromServerWithFirebaseRID
-        firebaseRID:    String
+    required convenience init   (
+        created:        Created
                                 )
     {
-        guard   let created         =   Created       (fromServerWithFirebaseRID: firebaseRID)
-            else
-        {
-            return nil
-        }
-        let accepted        =   Accepted      (fromServerWithFirebaseRID: firebaseRID)
-        let communicated    =   Communicated  (fromServerWithFirebaseRID: firebaseRID)
-        let service         =   Service       (fromServerWithFirebaseRID: firebaseRID)
-        let payed           =   Payed         (fromServerWithFirebaseRID: firebaseRID)
-        let reviewed        =   Reviewed      (fromServerWithFirebaseRID: firebaseRID)
         self.init   (
-            internallyWithFirebaseRID:  firebaseRID,
-            created:                    created,
-            accepted:                   accepted,
-            communicated:               communicated,
-            service:                    service,
-            payed:                      payed,
-            reviewed:                   reviewed
-        )
+            created:        created,
+            accepted:       nil,
+            communicated:   nil,
+            service:        nil,
+            payed:          nil,
+            reviewed:       nil
+                    )
     }
+    
+//    required convenience init?  (
+//        fromServerWithFirebaseRID
+//        firebaseRID:    String
+//                                )
+//    {
+//        guard   let created         =   Created       (fromServerWithFirebaseRID: firebaseRID)
+//            else
+//        {
+//            return nil
+//        }
+//        let accepted        =   Accepted      (fromServerWithFirebaseRID: firebaseRID)
+//        let communicated    =   Communicated  (fromServerWithFirebaseRID: firebaseRID)
+//        let service         =   Service       (fromServerWithFirebaseRID: firebaseRID)
+//        let payed           =   Payed         (fromServerWithFirebaseRID: firebaseRID)
+//        let reviewed        =   Reviewed      (fromServerWithFirebaseRID: firebaseRID)
+//        self.init   (
+//            created:                    created,
+//            accepted:                   accepted,
+//            communicated:               communicated,
+//            service:                    service,
+//            payed:                      payed,
+//            reviewed:                   reviewed
+//                    )
+//    }
 }

@@ -11,13 +11,13 @@ import Firebase
 
 protocol Reviewable: HappenedType, FirebaseRequestIDable, Pushable
 {
-    var privateRating:                      String!     { get set }
-    var privateReview:                      String!     { get set }
+    var privateRating:  String!     { get set }
+    var privateReview:  String!     { get set }
     
-    var rating:                             String      { get }
-    var review:                             String      { get }
+    var rating:         String      { get }
+    var review:         String      { get }
     
-    var ratingValue:                        Double      { get }
+    var ratingValue:    Double      { get }
     
     init    ()
     
@@ -29,15 +29,20 @@ protocol Reviewable: HappenedType, FirebaseRequestIDable, Pushable
         review:         String
     )
     
-    init?   (
-        fromServerWithFirebaseRID
-        firebaseRID:    String
-    )
+//    init?   (
+//        fromServerWithFirebaseRID
+//        firebaseRID:    String
+//    )
     
     func push()
 }
 extension Reviewable
 {
+    var firebaseID: String
+    {
+        return firebaseRID
+    }
+    
     var rating: String
     {
         return privateRating
@@ -53,10 +58,10 @@ extension Reviewable
     
     func push()
     {
-        pushValuesToFirebase(forKeys: keys.firebase, at: requestReviewedRef)
+        pushValuesToFirebase(forKeys: Self.keys.firebase, at: requestReviewedRef)
     }
     
-    var keys: KeysType
+    static var keys: KeysType
     {
         return Constants.Protocols.Reviewable.keys
     }
@@ -64,10 +69,14 @@ extension Reviewable
 
 class Reviewed: Reviewable
 {
-    var privateOrNot:       String! = YesOrNo.Yes.string
+    static var setObject:          Firebase.Object!    = Firebase.Object   .none
+    static var setChildOf:         Firebase.Object!    = Firebase.Object   .requests
+    static var setChild:           Firebase.Child!     = Firebase.Child    .reviewed
+    
+    var privateOrNot:       String!             = YesOrNo.Yes.string
     var privateAtTime:      String!
-    var privateRating:      String! = Constants.DataService.User.DefaultRating.string
-    var privateReview:      String! = Constants.Literal.Empty
+    var privateRating:      String!             = Constants.DataService.User.DefaultRating.string
+    var privateReview:      String!             = Constants.Literal.Empty
     var privateFirebaseRID: String!
     
     required init()
@@ -91,24 +100,24 @@ class Reviewed: Reviewable
         self.privateFirebaseRID = firebaseRID
     }
     
-    required convenience init?  (
-        fromServerWithFirebaseRID
-        firebaseRID:    String
-        )
-    {
-        let data    = fetchFirebaseObject(from: firebaseRID.requestReviewedRef)
-        guard   let atTime  = data[Constants.Protocols.HappenedType .atTime]    as? String,
-            let rating  = data[Constants.Protocols.Reviewable   .rating]    as? String,
-            let review  = data[Constants.Protocols.Reviewable   .review]    as? String
-            else
-        {
-            return nil
-        }
-        self.init   (
-            internallyWithFirebaseRID:  firebaseRID,
-            atTime:                     atTime,
-            rating:                     rating,
-            review:                     review
-        )
-    }
+//    required convenience init?  (
+//        fromServerWithFirebaseRID
+//        firebaseRID:    String
+//        )
+//    {
+//        let data    = fetchFirebaseObject(from: firebaseRID.requestReviewedRef)
+//        guard   let atTime  = data[Constants.Protocols.HappenedType .atTime]    as? String,
+//            let rating  = data[Constants.Protocols.Reviewable   .rating]    as? String,
+//            let review  = data[Constants.Protocols.Reviewable   .review]    as? String
+//            else
+//        {
+//            return nil
+//        }
+//        self.init   (
+//            internallyWithFirebaseRID:  firebaseRID,
+//            atTime:                     atTime,
+//            rating:                     rating,
+//            review:                     review
+//        )
+//    }
 }

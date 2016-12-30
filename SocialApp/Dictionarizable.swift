@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import FirebaseDatabase
 
 typealias Label             = String
 typealias Key               = String
@@ -18,6 +19,7 @@ typealias Keys              = [Key]
 typealias Labels            = [Label]
 typealias Values            = [Value]
 typealias StringDictionary  = [String : String]
+typealias TimeObject        = StringDictionary
 typealias AnyDictionary     = [Key : Value]
 
 extension Array where Element: Equatable
@@ -68,10 +70,24 @@ extension Array where Element: CustomStringConvertible
     }
 }
 
-protocol Dictionarizable {}
+protocol Dictionarizable: Persisting
+{
+    
+}
 
 extension Dictionarizable
 {
+    func save() -> Bool
+    {
+        UserDefaults.standard.setValuesForKeys(anyDictionaryOfSaveKeys)
+        return UserDefaults.standard.synchronize()
+    }
+    
+    func retrieveAnyDictionary() -> AnyDictionary
+    {
+        return UserDefaults.standard.dictionaryWithValues(forKeys: keys.save)
+    }
+    
     var anyDictionary: [Key : Value]
     {
         var dictionary = [Key : Value]()
@@ -112,6 +128,16 @@ extension Dictionarizable
         return anyDictionary.firebaseKeys
     }
     
+    var setKeys: Keys
+    {
+        return privateKeys
+    }
+    
+    var keys: KeysType
+    {
+        return KeysType(set: setKeys)
+    }
+    
     var valuesForPrivateKeys: Values
     {
         return anyDictionary.valuesForPrivateKeys
@@ -132,6 +158,21 @@ extension Dictionarizable
         return anyDictionaryOfNonPrivateKeys.forcedStringLiteral
     }
     
+    var anyDictionaryOfFirebaseKeys: AnyDictionary
+    {
+        return self.toAnyDictionaryForSpecific(keys: keys.firebase)
+    }
+    
+    var anyDictionaryOfSaveKeys: AnyDictionary
+    {
+        return self.toAnyDictionaryForSpecific(keys: keys.save)
+    }
+
+    var stringDictionaryOfFirebaseKeys: StringDictionary
+    {
+        return self.toStringDictionaryForSpecific(keys: keys.firebase)
+    }
+    
     var superSetKeys: Keys
     {
         return anyDictionary.superSetKeys
@@ -140,6 +181,23 @@ extension Dictionarizable
     var allValues: Values
     {
         return anyDictionary.allValues
+    }
+    
+    func toAnyDictionaryForSpecific(keys: [Key]) -> AnyDictionary
+    {
+        var anyDictionaryForKeys    = AnyDictionary()
+        
+        // Key validity check
+        
+        let commonKeysFound         = superSetKeys.filter() {keys.contains($0)}
+        let dictionary              = anyDictionary
+        
+        for key in commonKeysFound
+        {
+            anyDictionaryForKeys.updateValue(dictionary[key]!, forKey: key)
+        }
+        
+        return anyDictionaryForKeys
     }
     
     func toStringDictionaryForSpecific(keys: [Key]) -> StringDictionary
@@ -158,7 +216,7 @@ extension Dictionarizable
         
         return stringDictionaryForKeys
     }
-    
+        
     func pushValuesToFirebase(forKeys keys: [Key], at ref: FIRDatabaseReference)
     {
         let stringDictionary        = self.toStringDictionaryForSpecific(keys: keys)
@@ -196,6 +254,23 @@ extension Dictionarizable
 
 extension Dictionary
 {
+    var keysShreddedFromSaveToFirebase: AnyDictionary
+    {
+        var dictionary = AnyDictionary()
+        for (key, value) in self
+        {
+            let components = "\(key)".components(separatedBy: Constants.Literal.Underscore)
+            if let shredded = components.last
+            {
+                dictionary.updateValue(value, forKey: shredded)
+            }
+            else
+            {
+                print("KRIS: Save Keys not Found. Save Keys are of the form \"firebaseID_path_email\" \n KRIS: Please check the dictionary and try again.")
+            }
+        }
+        return dictionary
+    }
     var forcedStringLiteral: StringDictionary
     {
         var stringLiteralDictionary = StringDictionary()
@@ -290,6 +365,11 @@ extension Dictionary
     var firebaseKeys: Keys
     {
         return privateKeys.chopFromSelf(fragment: Constants.Dictionary.Key.privateSmalls).lowercaseFirst
+    }
+    
+    var saveKeys: Keys
+    {
+        return firebaseKeys
     }
     
     var valuesForPrivateKeys: Values

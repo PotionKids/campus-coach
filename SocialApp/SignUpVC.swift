@@ -31,62 +31,88 @@ extension Optional
     }
 }
 
+enum IsCoach: String
+{
+    case yes
+    case no
+    case none
+}
+
+internal var hasSignedUp: Bool?
+
 class SignUpVC: UIViewController {
     
-    var isCoach = false
-    var userID: String!
+    private var isCoach: IsCoach = .none
+    {
+        willSet
+        {
+            coachOrNot = newValue.bool
+        }
+    }
+    private var coachOrNot: Bool?
+    
+    var userID:     String!
     
     @IBOutlet weak var cellNumberTextField: UITextField!
     
     
     @IBAction func facebookClockIn(_ sender: AnyObject)
     {
-        if let cell = cellNumberTextField.text
+        if isCoach  == .none
         {
-            if cell.isEmpty
-            {
-                displayAlert(self, title: Constants.Alert.Title.EmptyCellNumber, message: Constants.Alert.Message.EmptyCellNumber)
-            }
-            else
-            {
-                let facebookLogin = FBSDKLoginManager()
-                facebookLogin.logIn(withReadPermissions: ["email"], from: self)
-                { (result, error) in
-                    if let error = error
-                    {
-                        print("KRIS ERROR: Unable to authenticate with Facebook = \(error)")
-                    }
-                    else if result?.isCancelled == true
-                    {
-                        print("KRIS ERROR: Sorry, the user cancelled Facebook authentication.")
-                    }
-                    else
-                    {
-                        print("KRIS: Successfully authenticated with Facebook.")
-                        let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
-                        firebaseAuth(self.isCoach, cell: cell, credential: credential, vc: self)
-                    }
+            displayAlert(self, title: Constants.Alert.Title.UserStatusBlank, message: Constants.Alert.Message.UserStatusBlank)
+        }
+        else
+        {
+            let facebookLogin = FBSDKLoginManager()
+            facebookLogin.logIn(withReadPermissions: ["email"], from: self)
+            { (result, error) in
+                if let error = error
+                {
+                    print("KRIS ERROR: Unable to authenticate with Facebook = \(error)")
+                }
+                else if result?.isCancelled == true
+                {
+                    print("KRIS ERROR: Sorry, the user cancelled Facebook authentication.")
+                }
+                else
+                {
+                    print("KRIS: Successfully authenticated with Facebook.")
+                    let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+                    firebaseAuth(self.coachOrNot!, credential: credential, vc: self)
                 }
             }
         }
     }
     
+    @IBOutlet weak var userIndicateButton: UIButton!
+    @IBOutlet weak var coachIndicateButton: UIButton!
+    
     @IBAction func userIndicate(_ sender: AnyObject)
     {
-        if isCoach
+        if isCoach == .none
         {
-            isCoach = false
+            isCoach = .no
+        }
+        else if isCoach == .yes
+        {
+            isCoach = .none
+            displayAlert(self, title: Constants.Alert.Title.UserStatusAmbiguous, message: Constants.Alert.Message.UserStatusAmbiguous)
         }
     }
     
     @IBAction func coachIndicate(_ sender: AnyObject)
     {
-        if !isCoach
+        if isCoach == .none
         {
-            isCoach = true
+            isCoach = .yes
+        }
+        else if isCoach == .no
+        {
+            isCoach = .none
+            displayAlert(self, title: Constants.Alert.Title.UserStatusAmbiguous, message: Constants.Alert.Message.UserStatusAmbiguous)
         }
     }
-    
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -94,76 +120,113 @@ class SignUpVC: UIViewController {
     @IBOutlet weak var signInButton: UIButton!
     @IBAction func signIn(_ sender: AnyObject)
     {
-        if let cell = cellNumberTextField.text
+        if isCoach  == .none
         {
-            if cell.isEmpty
+            displayAlert(self, title: Constants.Alert.Title.UserStatusBlank, message: Constants.Alert.Message.UserStatusBlank)
+        }
+        else
+        {
+            if let email = emailTextField.text,
+                let password = passwordTextField.text
             {
-                displayAlert(self, title: Constants.Alert.Title.EmptyCellNumber, message: Constants.Alert.Message.EmptyCellNumber)
-            }
-            else
-            {
-                if let email = emailTextField.text,
-                    let password = passwordTextField.text
+                if email.isEmpty() && !password.isEmpty()
                 {
-                    if email.isEmpty() && !password.isEmpty()
+                    displayAlert(self, title: Constants.Alert.Title.EmptyUserName, message: Constants.Alert.Message.EmptyUserName)
+                }
+                else if !email.isEmpty() && password.isEmpty()
+                {
+                    displayAlert(self, title: Constants.Alert.Title.EmptyPassword, message: Constants.Alert.Message.EmptyPassword)
+                }
+                else if email.isEmpty() && password.isEmpty()
+                {
+                    displayAlert(self, title: Constants.Alert.Title.EmptyUserNameAndPassword, message: Constants.Alert.Message.EmptyUserNameAndPassword)
+                }
+                else
+                {
+                    FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
+                        if error != nil
+                        {
+                            FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
+                                if let error = error
+                                {
+                                    print("KRIS: Unable to create user using email in Firebase. Erro \(error)")
+                                }
+                                else
+                                {
+                                    print("KRIS: Successfully created a new user with email in Firebase.")
+                                    completeSignIn(isCoach: self.coachOrNot!, user: user, credential: nil, vc: self)
+                                }
+                            })
+                        }
+                        else
+                        {
+                            completeSignIn(isCoach: self.coachOrNot!, user: user, credential: nil, vc: self)
+                        }
+                    })
+                }
+            }
+        }
+    }
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        if signedUpOrLoggedIn()
+        {
+            print("KRIS: The User has Signed Up View Did Load.")
+            Persistence.shared.configureUser()
+            print("KRIS: selfUserDefault is \(Persistence.shared.user.anyDictionaryForSaving.forcedStringLiteral)")
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool)
+    {
+        if signedUpOrLoggedIn()
+        {
+            Persistence.shared.configureUser()
+            if !Persistence.shared.user.firebaseUID.isEmpty
+            {
+                print("KRIS: ID found in Keychain. \(Persistence.shared.user.firebaseUID)")
+                if Persistence.shared.isCoach != .none
+                {
+                    if Persistence.shared.firebaseRID.isNil()
                     {
-                        displayAlert(self, title: Constants.Alert.Title.EmptyUserName, message: Constants.Alert.Message.EmptyUserName)
-                    }
-                    else if !email.isEmpty() && password.isEmpty()
-                    {
-                        displayAlert(self, title: Constants.Alert.Title.EmptyPassword, message: Constants.Alert.Message.EmptyPassword)
-                    }
-                    else if email.isEmpty() && password.isEmpty()
-                    {
-                        displayAlert(self, title: Constants.Alert.Title.EmptyUserNameAndPassword, message: Constants.Alert.Message.EmptyUserNameAndPassword)
-                    }
+                        performLoginSegue(fromViewController: self, forUserWhoIsACoach: Persistence.shared.user.coachOrNot!)
+                     }
                     else
                     {
-                        FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
-                            if error != nil
-                            {
-                                FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
-                                    if let error = error
-                                    {
-                                        print("KRIS: Unable to create user using email in Firebase. Erro \(error)")
-                                    }
-                                    else
-                                    {
-                                        print("KRIS: Successfully created a new user with email in Firebase.")
-                                        completeSignIn(isCoach: self.isCoach, cell: cell, user: user, credential: nil, vc: self)
-                                    }
-                                })
-                            }
-                            else
-                            {
-                                completeSignIn(isCoach: self.isCoach, cell: cell, user: user, credential: nil, vc: self)
-                            }
-                        })
+                        print("KRIS: The Firebase RID is \(Persistence.shared.firebaseRID)")
+                        print("KRIS: The Request is \(Persistence.shared.request!.stringDictionary)")
+                        Persistence.shared.configureCreated()
+                        performServiceSegue(fromViewController: self, forUserWhoIsACoach: Persistence.shared.isCoach!)
                     }
                 }
             }
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        if let _ = KeychainWrapper.standard.string(forKey: Constants.Firebase.KeychainWrapper.KeyUID)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if let serviceVC = segue.destination as? StudentServiceVC
         {
-            print("KRIS: ID found in Keychain.")
-            if isCoach
+            if let request = sender as? Request
             {
-                performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToCoachRequests, sender: nil)
+                serviceVC.request       = Persistence.shared.request
+                serviceVC.requestRef    = request.firebaseRequestRef
             }
-            else
-            {
-                performSegue(withIdentifier: Constants.SignUpVC.Segue.SignUpToSetGymMap, sender: nil)
-            }
+        }
+        if let serviceVC = segue.destination as? CoachServiceVC
+        {
+            serviceVC.gymBldg           = Persistence.shared.created?.forGym
+            print("KRIS: Gym \(Persistence.shared.created?.forGym)")
+            serviceVC.studentName       = Persistence.shared.student?.firstName
+            serviceVC.studentImageURL   = Persistence.shared.student?.facebookImageURLString
+            serviceVC.studentCell       = Persistence.shared.student?.cell
+            print("KRIS: Student Name \(Persistence.shared.student?.firstName)")
+        }
+        if let saveCellVC = segue.destination as? SaveCellVC
+        {
+            saveCellVC.user = Persistence.shared.user
         }
     }
 

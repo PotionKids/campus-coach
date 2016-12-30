@@ -9,6 +9,7 @@
 import UIKit
 
 import Firebase
+import FirebaseDatabase
 import FirebaseAuth
 
 import SwiftKeychainWrapper
@@ -48,9 +49,10 @@ class CoachRequestsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBAction func signOutCoach(_ sender: AnyObject)
     {
-        KeychainWrapper.standard.removeObject(forKey: Constants.Firebase.KeychainWrapper.KeyUID)
-        try! FIRAuth.auth()?.signOut()
-        performSegue(withIdentifier: Constants.CoachRequestsVC.Segue.CoachRequestsToSignUp, sender: nil)
+        signOutOf(viewController: self, withSegue: Constants.CoachRequestsVC.Segue.CoachRequestsToSignUp)
+//        KeychainWrapper.standard.removeObject(forKey: Constants.Firebase.KeychainWrapper.KeyUID)
+//        try! FIRAuth.auth()?.signOut()
+//        performSegue(withIdentifier: Constants.CoachRequestsVC.Segue.CoachRequestsToSignUp, sender: nil)
     }
     
     @IBOutlet weak var tableView: UITableView!
@@ -100,43 +102,67 @@ class CoachRequestsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
     }
     
-    var requests = [Request]()
+    internal var selfRequests   = [Request]()
+    var requestArray            = [Request]()
+    {
+        didSet
+        {
+            tableView.reloadData()
+        }
+    }
+    var requestsRef         = FirebaseRequestsURL
+    var _requestsRefHandle: FIRDatabaseHandle!
+    var studentRef:         FIRDatabaseReference!
+    var _studentRefHandle:  FIRDatabaseHandle!
+
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        tableView.estimatedRowHeight = tableView.rowHeight
-        tableView.rowHeight = UITableViewAutomaticDimension
+        print("KRIS: Just curled.")
+        
+        tableView.delegate              = self
+        tableView.dataSource            = self
+        tableView.estimatedRowHeight    = tableView.rowHeight
+        tableView.rowHeight             = UITableViewAutomaticDimension
         
         CURLscrapeWebPage(link: Constants.Web.Link.PSUfitnessCURLscraping)
         
-        //let testURL = "https://graph.facebook.com/10210569767665956/picture?type=large&w‌ idth=1000&height=1000"
-        let studentUID  = Constants.DataService.User.DefaultFirebaseUID
-        let white       = Building.White.name
-        let rec         = Building.Rec.name
-        let im          = Building.IM.name
-        let testRequestA = Request(byStudent: studentUID, forGym: white)
-        let testRequestB = Request(byStudent: studentUID, forGym: rec)
-        let testRequestC = Request(byStudent: studentUID, forGym: im)
-        
-        requests =  [
-                        testRequestA,
-                        testRequestB,
-                        testRequestC
-                    ]
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
+        _requestsRefHandle = requestsRef.observe(.value, with: { (snapshot) in
+            if let snaps    = snapshot.children.allObjects as? [FIRDataSnapshot]
+            {
+                for snap in snaps
+                {
+                    print("KRIS: \(snap)")
+                    if let data = snap.value as? AnyDictionary
+                    {
+                        print("KRIS: Data \(data)")
+                        let firebaseRID = snap.key
+                        if let createdData = data[Constants.Protocols.RequestType.created] as? AnyDictionary
+                        {
+                            print("KRIS: Created Data \(createdData.forcedStringLiteral)")
+                            let created     = Created(withFirebaseRID: firebaseRID, fromData: createdData)!
+                            let request     = Request(created: created, accepted: nil, communicated: nil, service: nil, payed: nil, reviewed: nil)
+                            print("KRIS: Request Object \(request.created.toStringDictionaryForSpecific(keys: created.firebaseKeys))")
+                            self.requestArray.append(request)
+                            print("KRIS: Requests \(self.requestArray)")
+                        }
+                    }
+                }
+            }
+        })
+        print("KRIS: Requests \(self.requestArray)")
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        
+        print("KRIS: Requests \(requestArray)")
+        print("KRIS: Requests Count = \(requestArray.count)")
+
         if let cell = tableView.dequeueReusableCell(withIdentifier: Constants.CoachRequestsVC.Cell.Request, for: indexPath) as? RequestCell
         {
-            let request = requests[indexPath.row]
+            let request = requestArray[indexPath.row]
             cell.updateUI(request: request)
             return cell
         }
@@ -146,9 +172,60 @@ class CoachRequestsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        //Persistence.shared.acceptRequest(request: requestArray[indexPath.row])
+//        selfRequest                 = requestArray[indexPath.row]
+//        selfRequest.created.saveAnyDictionary()
+//        selfUser.privateFirebaseRID = selfRequest.firebaseRID
+//        selfUser.saveAnyDictionary()
+//        selfRequest.accept(byCoach: selfUser.firebaseUID, withName: selfUser.fullName, atTheGym: YesOrNo.Yes.string, timeToReach: Constants.Calendar.Date.ReferenceTime_mm_ss)
+//        selfRequest.push()
+//        selfRequest.accepted!.saveAnyDictionary()
+        
+        studentRef          = Persistence.shared.studentRef!
+        _studentRefHandle   = studentRef.observe(.value, with:
+            {(snapshot) in
+                print("KRIS: Snap \(snapshot)")
+                print("KRIS: Default selfStudent \(Persistence.shared.student?.stringDictionary)")
+                if let data = snapshot.value as? AnyDictionary
+                {
+                    Persistence.shared.privateStudent = Student(fromUserData: data)!
+                    //selfStudent.saveAnyDictionary()
+                    print("KRIS: Accepted Request Created by Student \(Persistence.shared.student?.stringDictionary))")
+                }
+        })
+        performServiceSegue(fromViewController: self, forUserWhoIsACoach: true, sender: Persistence.shared.student)
+//        performSegue(withIdentifier: Constants.CoachRequestsVC.Segue.ToService, sender: selfStudent)
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int
+    {
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return requests.count
+        return requestArray.count
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if let serviceVC = segue.destination as? CoachServiceVC
+        {
+            serviceVC.gymBldg           = Persistence.shared.created?.forGym
+            print("KRIS: Gym \(Persistence.shared.created?.forGym)")
+            serviceVC.studentName       = Persistence.shared.student?.firstName
+            serviceVC.studentImageURL   = Persistence.shared.student?.facebookImageURLString
+            serviceVC.studentCell       = Persistence.shared.student?.cell
+            print("KRIS: Student Name \(Persistence.shared.student?.firstName)")
+        }
+    }
+    
+    deinit
+    {
+        requestsRef .removeObserver(withHandle: _requestsRefHandle)
+        studentRef  .removeObserver(withHandle: _studentRefHandle)
     }
 }
 

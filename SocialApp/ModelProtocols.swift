@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import FirebaseDatabase
 
 typealias NameTriplet = (first: String, middle: String, last: String)
 
@@ -89,17 +90,199 @@ typealias KeysType = Constants.Protocols.Keys
 
 protocol SelfReflecting
 {
-    var keys:               KeysType        { get }
+    static var keys         : KeysType        { get }
 }
 
-protocol FirebaseIDable: Dictionarizable, SelfReflecting {}
+protocol Saveable
+{
+    func save() -> Bool
+}
 
+protocol Retrievable
+{
+    func retrieve() -> Any?
+}
+
+protocol Persisting: Saveable {}
+
+protocol ObjectHierarchyTraceable
+{
+    static var setObject:   Firebase.Object!    { get set }
+    static var setChildOf:  Firebase.Object!    { get set }
+    static var setChild:    Firebase.Child!     { get set }
+}
+extension ObjectHierarchyTraceable
+{
+    static var object: Firebase.Object
+    {
+        return Self.setObject
+    }
+    static var childOf: Firebase.Object
+    {
+        return Self.setChildOf
+    }
+    static var child: Firebase.Child
+    {
+        return Self.setChild
+    }
+    
+    var objectInstance: Firebase.Object
+    {
+        return Self.object
+    }
+    var childOfInstance: Firebase.Object
+    {
+        return Self.childOf
+    }
+    var childInstance: Firebase.Child
+    {
+        return Self.child
+    }
+    
+    static var path: String
+    {
+        var objectPath = String()
+        if Self.object.key.isEmpty
+        {
+            objectPath = Self.child.path
+        }
+        else
+        {
+            objectPath = Self.object.path
+        }
+        return objectPath
+    }
+}
+
+protocol FirebaseIDable: Dictionarizable, SelfReflecting, ObjectHierarchyTraceable
+{
+    var firebaseID:     String  { get }
+}
+extension FirebaseIDable
+{
+    var saveKeyPrefix: String
+    {
+       return "\(Self.path)"
+    }
+    static var keyForSaveKeys: Key
+    {
+        return "\(Self.path)_saveKeys"
+    }
+    var keyForSavingKeys: Key
+    {
+        return Self.keyForSaveKeys
+    }
+    
+    var saveKeys: Keys
+    {
+        return firebaseKeys.map { self.saveKey(forFirebaseKey: $0) }
+    }
+    func saveKey(forFirebaseKey key: Key) -> Key
+    {
+        return "\(saveKeyPrefix)_\(key)"
+    }
+    func firebaseKey(forSaveKey key: Key) -> Key
+    {
+        var shredded = Key()
+        if let firebaseKey = key.components(separatedBy: Constants.Literal.Underscore).last
+        {
+            shredded = firebaseKey
+        }
+        else
+        {
+            print("KRIS: The Save Key input \n KRIS: \(key) is not of the right format.")
+            shredded = Constants.Literal.Empty
+        }
+        return shredded
+    }
+    var anyDictionaryForSaving: AnyDictionary
+    {
+        var dictionary      = AnyDictionary()
+        var keyForSaving    = Key()
+        for (key, value) in anyDictionaryOfFirebaseKeys
+        {
+            keyForSaving    = saveKey(forFirebaseKey: key)
+            dictionary.updateValue(value, forKey: keyForSaving)
+        }
+        return dictionary
+    }
+    
+    var stringDictionaryForSaving: StringDictionary
+    {
+        return anyDictionaryForSaving.forcedStringLiteral
+    }
+    
+    func save() -> Bool
+    {
+        UserDefaults.standard.set(self, forKey: Self.keyForSaveKeys)
+        return UserDefaults.standard.synchronize()
+    }
+    
+    func retrieve() -> Any?
+    {
+        return UserDefaults.standard.value(forKey: Self.keyForSaveKeys)
+    }
+    
+    func saveAnyDictionary() -> Bool
+    {
+        print("KRIS: Any Dictionary Being Saved \(anyDictionaryForSaving)")
+        UserDefaults.standard.setValuesForKeys(anyDictionaryForSaving)
+        print("KRIS: Save Keys Being Saved FirebaseIDable \(saveKeys) \n KRIS: Save Keys Saved for key \(Self.keyForSaveKeys)")
+        UserDefaults.standard.setValue(saveKeys, forKey: Self.keyForSaveKeys)
+        return UserDefaults.standard.synchronize()
+    }
+    func saveStringDictionary() -> Bool
+    {
+        return saveAnyDictionary()
+    }
+    var saved: Any?
+    {
+        return UserDefaults.standard.value(forKey: Self.keyForSaveKeys)
+    }
+    var savedAnyDictionary: AnyDictionary
+    {
+        var savedDictionary     = AnyDictionary()
+        print("KRIS: Save Keys FirebaseIDable \(saveKeys)\n\n")
+        if let savedKeys        = UserDefaults.standard.value(forKey: Self.keyForSaveKeys) as? Keys
+        {
+            savedDictionary      = UserDefaults.standard.dictionaryWithValues(forKeys: savedKeys)
+            print("KRIS: Retrieved Any Dictionary \(savedDictionary.forcedStringLiteral)\n\n")
+        }
+        else
+        {
+            savedDictionary     = saveKeys.emptyStringDictionary
+            print("KRIS: Save Keys could not be found. Returning Empty String Dictionary \(savedDictionary)\n\n")
+        }
+        return savedDictionary
+    }
+    var savedFirebaseDictionary: AnyDictionary
+    {
+        var firebaseAnyDictionary   = AnyDictionary()
+        for i in 1...saveKeys.count
+        {
+            firebaseAnyDictionary.updateValue(savedAnyDictionary[saveKeys[i - 1]]!, forKey: firebaseKeys[i - 1])
+        }
+        print("KRIS: Saved Firebase Dictionary FirebaseIDable is \(firebaseAnyDictionary.forcedStringLiteral)")
+        return firebaseAnyDictionary
+    }
+    var savedStringDictionary: StringDictionary
+    {
+        var firebaseStringDictionary    = StringDictionary()
+        var savedStringDictionary       = StringDictionary()
+        savedStringDictionary           = UserDefaults.standard.dictionaryWithValues(forKeys: saveKeys).forcedStringLiteral
+        for i in 1...saveKeys.count
+        {
+            firebaseStringDictionary.updateValue(savedStringDictionary[saveKeys[i - 1]]!, forKey: firebaseKeys[i - 1])
+        }
+        return firebaseStringDictionary
+    }
+}
 
 protocol CoachTaggable: FirebaseIDable
 {
     var privateIsCoach:     String!         { get set }
     var isCoach:            String          { get }
-    var coachOrNot:         Bool            { get }
+    var coachOrNot:         Bool?           { get }
 }
 extension CoachTaggable
 {
@@ -107,9 +290,9 @@ extension CoachTaggable
     {
         return privateIsCoach
     }
-    var coachOrNot: Bool
+    var coachOrNot: Bool?
     {
-        return isCoach.bool!
+        return isCoach.bool
     }
     var keys: KeysType
     {
@@ -125,13 +308,17 @@ protocol FirebaseUserIDable: CoachTaggable
 }
 extension FirebaseUserIDable
 {
+    var firebaseID: String
+    {
+        return firebaseUID
+    }
     var firebaseUID: String
     {
         return privateFirebaseUID
     }
     var firebaseUserRef: FIRDatabaseReference
     {
-        if coachOrNot
+        if coachOrNot!
         {
             return firebaseUID.firebaseCoachRef
         }
@@ -143,7 +330,7 @@ extension FirebaseUserIDable
     
     func pushToFirebaseUser()
     {
-        pushValuesToFirebase(forKeys: keys.firebase, at: firebaseUserRef)
+        pushValuesToFirebase(forKeys: Self.keys.firebase, at: firebaseUserRef)
     }
     
     var keys: KeysType
@@ -377,6 +564,10 @@ protocol FirebaseRequestIDable: FirebaseIDable
 }
 extension FirebaseRequestIDable
 {
+    var firebaseID: String
+    {
+        return firebaseRID
+    }
     var firebaseRID: String
     {
         return privateFirebaseRID
@@ -460,7 +651,6 @@ extension RevieweeArchivable
     {
         return reviewedUsers.components(separatedBy: .whitespaces)
     }
-    
     var keys: KeysType
     {
         return Constants.Protocols.RevieweeArchivable.keys
@@ -486,15 +676,6 @@ extension ReviewerArchivable
     var keys: KeysType
     {
         return Constants.Protocols.ReviewerArchivable.keys
-    }
-}
-
-protocol CoachType: UserType, ReviewerArchivable {}
-extension CoachType
-{
-    var keys: KeysType
-    {
-        return Constants.Protocols.CoachType.keys
     }
 }
 
@@ -606,54 +787,11 @@ extension Ending
     }
 }
 
-protocol ActivityType: Starting, Ending, TimeIntervalCalculable, FirebaseRequestIDable, Pushable
-{
-    var timeInterval:   TimeInterval    { get }
-    var duration:       String          { get }
-    
-    init    ()
-    
-    init    (
-        internallyWithFirebaseRID
-        firebaseRID:    String,
-        startedAtTime:  String,
-        hasEnded:       String,
-        endedAtTime:    String
-    )
-    
-    init?   (
-        fromServerWithFirebaseRID
-        firebaseRID:    String
-    )
-    
-}
-extension ActivityType
-{
-    var timeInterval: TimeInterval
-    {
-        return intervalCalculator(start: startedAtDateAndTime, end: endedAtDateAndTime)
-    }
-    var duration: String
-    {
-        return componentsFormatter.string(from: timeInterval)!
-    }
-    
-    func push()
-    {
-        pushValuesToFirebase(forKeys: keys.firebase, at: requestServiceRef)
-    }
-    
-    var keys: KeysType
-    {
-        return Constants.Protocols.ActivityType.keys
-    }
-}
-
-protocol StudentInitiatable: HappenedType, TimeIntervalCalculable
+protocol StudentInitiatable: Nameable, HappenedType, TimeIntervalCalculable
 {
     var privateByStudent:                   String!         { get set }
     var byStudent:                          String          { get }
-    var student:                            Student         { get }
+    var student:                            User            { get }
     var afterTimeInterval:                  TimeInterval    { get }
     var afterTimeOf:                        String          { get }
 }
@@ -668,9 +806,9 @@ extension StudentInitiatable
         return componentsFormatter.string(from: afterTimeInterval)!
     }
     
-    var student:                            Student
+    var student:                            User
     {
-        return Student()
+        return User()
         //return Student(fromServerWithFirebaseUID: byStudent, forUserWhoIsACoachOrNot: false)!
     }
     var afterTimeInterval:                  TimeInterval
@@ -679,14 +817,12 @@ extension StudentInitiatable
     }
 }
 
-protocol CoachInitiatable: HappenedType, TimeIntervalCalculable
+protocol CoachInitiatable: Nameable, HappenedType, TimeIntervalCalculable
 {
     var privateByCoach:                     String!         { get set }
-    
     var byCoach:                            String          { get }
     var afterTimeOf:                        String          { get }
-    
-    var coach:                              Coach           { get }
+    var coach:                              User            { get }
     var afterTimeInterval:                  TimeInterval    { get }
 }
 extension CoachInitiatable
@@ -700,9 +836,10 @@ extension CoachInitiatable
         return componentsFormatter.string(from: afterTimeInterval)!
     }
     
-    var coach:                              Coach
+    var coach:                              User
     {
-        return Coach(fromServerWithFirebaseUID: byCoach, forUserWhoIsACoachOrNot: true)!
+        return User()
+        //return Coach(fromServerWithFirebaseUID: byCoach, forUserWhoIsACoachOrNot: true)!
     }
     var afterTimeInterval:                  TimeInterval
     {
@@ -881,6 +1018,21 @@ extension String
     {
         return Int(self)
     }
+//    var isCoach: IsCoach
+//    {
+//        guard let bool = bool
+//        else
+//        {
+//            return .none
+//        }
+//        switch bool
+//        {
+//        case true:
+//            return .yes
+//        case false:
+//            return .no
+//        }
+//    }
 }
 
 extension Int
@@ -1146,7 +1298,7 @@ extension RequestTimeSequenceType
             Constants.Protocols.RequestTimeSequenceType.toStart         : toStart,
             Constants.Protocols.RequestTimeSequenceType.toPay           : toPay,
             Constants.Protocols.RequestTimeSequenceType.toReview        : toReview
-        ]
+                ]
     }
     
     var keys: KeysType

@@ -8,12 +8,13 @@
 
 import Foundation
 import Firebase
+import FirebaseDatabase
 
 typealias FirebaseData = [String : String]
 
 let FirebaseBaseURL         = FIRDatabase.database().reference()
 
-let FirebaseAllUsersURL     = FirebaseBaseURL.child(Constants.DataService.Firebase.AllUsers)
+let FirebaseUsersURL        = FirebaseBaseURL.child(Constants.DataService.Firebase.Users)
 let FirebaseStudentsURL     = FirebaseBaseURL.child(Constants.DataService.Firebase.Students)
 let FirebaseCoachesURL      = FirebaseBaseURL.child(Constants.DataService.Firebase.Coaches)
 let FirebaseLocationsURL    = FirebaseBaseURL.child(Constants.DataService.Firebase.Locations)
@@ -25,6 +26,7 @@ let FirebaseCommunicatedURL = FirebaseRequestsURL.child(Constants.DataService.Fi
 let FirebaseServiceURL      = FirebaseRequestsURL.child(Constants.DataService.Firebase.Service)
 let FirebasePayedURL        = FirebaseRequestsURL.child(Constants.DataService.Firebase.Payed)
 let FirebaseReviewedURL     = FirebaseRequestsURL.child(Constants.DataService.Firebase.Reviewed)
+
 
 extension RawRepresentable
 {
@@ -64,10 +66,47 @@ extension RawRepresentable
 
 struct Firebase
 {
+    enum Child: String
+    {
+        case none                   = ""
+        case base                   = "child"
+        case created
+        case accepted
+        case communicated
+        case service
+        case payed
+        case reviewed
+        case time
+        
+        var firebaseRef: FIRDatabaseReference
+        {
+            return parent.firebaseRef.child(node)
+        }
+        var parent: Object
+        {
+            switch self
+            {
+            case .created,
+                 .accepted,
+                 .communicated,
+                 .service,
+                 .payed,
+                 .reviewed,
+                 .time:
+                return .requests
+            default:
+                return .none
+            }
+        }
+        var path: String
+        {
+            return "\(parent.key)_\(key)"
+        }
+    }
     enum Object: String
     {
+        case none                       = ""
         case base                       = "object"
-        case allUsers
         case users
         case students
         case coaches
@@ -78,12 +117,21 @@ struct Firebase
         {
             return FirebaseBaseURL.child(node)
         }
+        var parent: Object
+        {
+            return .none
+        }
+        var path: String
+        {
+            return key
+        }
         
         //MARK: Firebase.Object.Users STARTS Here.
         
-        enum AllUsers: String
+        enum Users: String
         {
-            case base                   = "allUsers"
+            case none                   = ""
+            case base                   = "users"
             case firebaseUID
             case isCoach
             
@@ -92,17 +140,24 @@ struct Firebase
                 return Constants.Protocols.AllUsersType.keys.firebase
             }
             
-            static var cases: [AllUsers]
+            static var cases: [Users]
             {
-                var all = [AllUsers]()
-                for key in AllUsers.keys
+                var all = [Users]()
+                for key in Users.keys
                 {
-                    all.append(AllUsers(rawValue: key)!)
+                    all.append(Users(rawValue: key)!)
                 }
                 return all
             }
             
-            
+            var parent: Object
+            {
+                return .users
+            }
+            var path: String
+            {
+                return "\(parent.key)_\(key)"
+            }
         }
         
         //MARK: Firebase.Object.Users ENDS Here.
@@ -111,6 +166,7 @@ struct Firebase
         
         enum Students: String
         {
+            case none                   = ""
             case base                   = "students"
             case firebaseUID
             case isCoach
@@ -143,12 +199,21 @@ struct Firebase
                 }
                 return all
             }
+            var parent: Object
+            {
+                return .students
+            }
+            var path: String
+            {
+                return "\(parent.key)_\(key)"
+            }
         }
         
         //MARK: Firebase.Object.Coaches STARTS Here.
         
         enum Coaches: String
         {
+            case none                   = ""
             case base                   = "coaches"
             case firebaseUID
             case isCoach
@@ -181,6 +246,14 @@ struct Firebase
                 }
                 return all
             }
+            var parent: Object
+            {
+                return .coaches
+            }
+            var path: String
+            {
+                return "\(parent.key)_\(key)"
+            }
         }
         
         //MARK: Firebase.Object.Coaches ENDS Here.
@@ -188,6 +261,7 @@ struct Firebase
         //MARK: Firebase.Object.Locations STARTS Here.
         enum Locations: String
         {
+            case none                   = ""
             case base                   = "locations"
         }
         
@@ -197,6 +271,7 @@ struct Firebase
         
         enum Requests: String
         {
+            case none                   = ""
             case base                   = "requests"
             case created
             case accepted
@@ -211,11 +286,21 @@ struct Firebase
                 return [""]
             }
             
+            var parent: Object
+            {
+                return .requests
+            }
+            var path: String
+            {
+                return "\(parent.key)_\(key)"
+            }
+            
             //MARK: Firebase.Object.Requests.Created STARTS Here
             
             enum Created: String
             {
-                case base              = "created"
+                case none               = ""
+                case base               = "created"
                 case orNot
                 case atTime
                 case byStudent
@@ -225,6 +310,19 @@ struct Firebase
                 case firebaseRID
                 case forGym
                 case lengthOfLife
+                
+                var grandparent: Object
+                {
+                    return .requests
+                }
+                var parent: Object.Requests
+                {
+                    return .created
+                }
+                var path: String
+                {
+                    return "\(grandparent.key)_\(parent.key)_\(key)"
+                }
             }
             
             //MARK: Firebase.Object.Requests.Created ENDS Here.
@@ -233,6 +331,7 @@ struct Firebase
             
             enum Accepted: String
             {
+                case none               = ""
                 case base               = "accepted"
                 case orNot
                 case atTime
@@ -256,6 +355,18 @@ struct Firebase
                     }
                     return all
                 }
+                var grandparent: Object
+                {
+                    return .requests
+                }
+                var parent: Object.Requests
+                {
+                    return .accepted
+                }
+                var path: String
+                {
+                    return "\(grandparent.key)_\(parent.key)_\(key)"
+                }
             }
             
             //MARK: Firebase.Object.Requests.Accepted ENDS Here.
@@ -264,6 +375,7 @@ struct Firebase
             
             enum Communicated: String
             {
+                case none               = ""
                 case base               = "communicated"
                 case orNot
                 case atTimes
@@ -285,10 +397,24 @@ struct Firebase
                     }
                     return all
                 }
+                
+                var grandparent: Object
+                {
+                    return .requests
+                }
+                var parent: Object.Requests
+                {
+                    return .communicated
+                }
+                var path: String
+                {
+                    return "\(grandparent.key)_\(parent.key)_\(key)"
+                }
             }
             
             enum Service: String
             {
+                case none               = ""
                 case base               = "service"
                 case hasStarted
                 case startedAtTime
@@ -317,6 +443,19 @@ struct Firebase
                     }
                     return all
                 }
+                
+                var grandparent: Object
+                {
+                    return .requests
+                }
+                var parent: Object.Requests
+                {
+                    return .service
+                }
+                var path: String
+                {
+                    return "\(grandparent.key)_\(parent.key)_\(key)"
+                }
             }
             //MARK: Firebase.Object.Requests.Stopped ENDS Here.
             
@@ -324,6 +463,7 @@ struct Firebase
             
             enum Payed: String
             {
+                case none               = ""
                 case base               = "payed"
                 case orNot
                 case atTime
@@ -344,6 +484,19 @@ struct Firebase
                     }
                     return all
                 }
+                
+                var grandparent: Object
+                {
+                    return .requests
+                }
+                var parent: Object.Requests
+                {
+                    return .payed
+                }
+                var path: String
+                {
+                    return "\(grandparent.key)_\(parent.key)_\(key)"
+                }
             }
             
             //MARK: Firebase.Object.Requests.Payed ENDS Here.
@@ -352,6 +505,7 @@ struct Firebase
             
             enum Reviewed: String
             {
+                case none               = ""
                 case base               = "reviewed"
                 case orNot
                 case atTime
@@ -373,12 +527,26 @@ struct Firebase
                     }
                     return all
                 }
+                
+                var grandparent: Object
+                {
+                    return .requests
+                }
+                var parent: Object.Requests
+                {
+                    return .reviewed
+                }
+                var path: String
+                {
+                    return "\(grandparent.key)_\(parent.key)_\(key)"
+                }
             }
             
             //MARK: Firebase.Object.Requests.Reviewed ENDS Here.
             
             enum Time: String
             {
+                case none               = ""
                 case base               = "timeSequence"
                 case toCreate
                 case toAccept
@@ -386,6 +554,19 @@ struct Firebase
                 case toStart
                 case toPay
                 case toReview
+                
+                var grandparent: Object
+                {
+                    return .requests
+                }
+                var parent: Object.Requests
+                {
+                    return .time
+                }
+                var path: String
+                {
+                    return "\(grandparent.key)_\(parent.key)_\(key)"
+                }
             }
         }
         
@@ -401,7 +582,7 @@ struct Firebase
     //MARK: Firebase.Object Pointers START Here.
     
     static let getObjectBase                        = Object.base
-    static let getAllUsersNode                      = Object.allUsers
+    static let getUsersNode                         = Object.users
     static let getStudentsNode                      = Object.students
     static let getCoachesNode                       = Object.coaches
     static let getLocationsNode                     = Object.locations
@@ -500,7 +681,7 @@ class DataService
 
 func getFirebaseUserRef(fromObject object: FirebaseUserIDable) -> FIRDatabaseReference
 {
-    if object.coachOrNot
+    if object.coachOrNot!
     {
         return object.firebaseUID.firebaseCoachRef
     }
@@ -559,11 +740,7 @@ extension String
 {
     var firebaseUserRef: FIRDatabaseReference
     {
-        return Firebase.Object.users.DatabaseReference.child(self)
-    }
-    var firebaseAllUsersRef: FIRDatabaseReference
-    {
-        return FirebaseAllUsersURL.child(self)
+        return FirebaseUsersURL.child(self)
     }
     var firebaseStudentRef: FIRDatabaseReference
     {
@@ -573,12 +750,10 @@ extension String
     {
         return FirebaseCoachesURL.child(self)
     }
-    
     var firebaseLocationRef: FIRDatabaseReference
     {
         return FirebaseLocationsURL.child(self)
     }
-    
     var firebaseRequestRef: FIRDatabaseReference
     {
         return FirebaseRequestsURL.child(self)
@@ -588,32 +763,26 @@ extension String
     {
         return firebaseRequestRef.child(Firebase.getRequestCreatedBase.key)
     }
-    
     var requestAcceptedRef: FIRDatabaseReference
     {
         return firebaseRequestRef.child(Firebase.getRequestAcceptedBase.key)
     }
-    
     var requestCommunicatedRef: FIRDatabaseReference
     {
         return firebaseRequestRef.child(Firebase.getRequestCommunicatedBase.key)
     }
-    
     var requestServiceRef: FIRDatabaseReference
     {
         return firebaseRequestRef.child(Firebase.getRequestServiceBase.key)
     }
-    
     var requestPayedRef: FIRDatabaseReference
     {
         return firebaseRequestRef.child(Firebase.getRequestPayedBase.key)
     }
-    
     var requestReviewedRef: FIRDatabaseReference
     {
         return firebaseRequestRef.child(Firebase.getRequestReviewedBase.key)
     }
-    
     var requestTimeRef: FIRDatabaseReference
     {
         return firebaseRequestRef.child(Firebase.getRequestTimeBase.key)
