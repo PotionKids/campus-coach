@@ -25,6 +25,8 @@ class StudentServiceVC:
     var mapHasCenteredOnce                      = false
     var userLocation: CLLocationCoordinate2D    = Constants.Map.Location.BaseInitializer
     
+    private var startingVC                      = ViewController.StudentService
+    
     //MARK: Outlets
     
     @IBOutlet weak var mapView: MKMapView!
@@ -108,11 +110,7 @@ class StudentServiceVC:
     
     @IBAction func signOut(_ sender: Any)
     {
-        signOutOf(viewController: self, withSegue: Constants.StudentServiceVC.Segue.ToSignUpVC)
-//        KeychainWrapper.standard.removeObject(forKey: Constants.Firebase.KeychainWrapper.KeyUID)
-//        try! FIRAuth.auth()?.signOut()
-//        performSegue(withIdentifier: Constants.StudentServiceVC.Segue.ToSignUpVC, sender: nil)
-
+        signOutOf(vc: self, viewController: startingVC)
     }
     
     

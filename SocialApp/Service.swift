@@ -23,13 +23,19 @@ protocol ActivityType: Starting, Ending, TimeIntervalCalculable, FirebaseRequest
         startedAtTime:  String,
         hasEnded:       String,
         endedAtTime:    String
-    )
+            )
     
-//    init?   (
-//        fromServerWithFirebaseRID
-//        firebaseRID:    String
-//    )
+    init?   (
+        withFirebaseRID
+        firebaseRID:    String,
+        fromData
+        data:           AnyDictionary
+            )
     
+    init?   (
+        fromData
+        data:           AnyDictionary
+            )
 }
 extension ActivityType
 {
@@ -60,56 +66,78 @@ extension ActivityType
 
 class Service: ActivityType
 {
-    static var setObject:              Firebase.Object!    = Firebase.Object   .none
-    static var setChildOf:             Firebase.Object!    = Firebase.Object   .requests
-    static var setChild:               Firebase.Child!     = Firebase.Child    .service
+    static var setObject:       Firebase.Object!    = Firebase.Object   .none
+    static var setChildOf:      Firebase.Object!    = Firebase.Object   .requests
+    static var setChild:        Firebase.Child!     = Firebase.Child    .service
     
-    var privateHasStarted:      String!             = YesOrNo.Yes.string
+    var privateHasStarted:      String!             = YesOrNo.Yes       .string
     var privateStartedAtTime:   String!
-    var privateHasEnded:        String!             = YesOrNo.No.string
+    var privateHasEnded:        String!             = YesOrNo.No        .string
     var privateEndedAtTime:     String!
     var privateFirebaseRID:     String!
     
     required init               ()
     {
-        self.privateStartedAtTime   = timeStamp().stampNanoseconds
-        self.privateEndedAtTime     = self.privateStartedAtTime
-        self.privateFirebaseRID     = self.privateStartedAtTime
+        self.privateStartedAtTime                   = timeStamp().stampNanoseconds
+        self.privateEndedAtTime                     = self.privateStartedAtTime
+        self.privateFirebaseRID                     = self.privateStartedAtTime
     }
     
     required convenience init   (
         internallyWithFirebaseRID
         firebaseRID:    String,
         startedAtTime:  String,
-        hasEnded:       String = YesOrNo.No.string,
+        hasEnded:       String                      = YesOrNo.No        .string,
         endedAtTime:    String
-        )
+                                )
     {
         self.init()
-        self.privateStartedAtTime   = startedAtTime
-        self.privateHasEnded        = hasEnded
-        self.privateEndedAtTime     = endedAtTime
-        self.privateFirebaseRID     = firebaseRID
+        self.privateStartedAtTime                   = startedAtTime
+        self.privateHasEnded                        = hasEnded
+        self.privateEndedAtTime                     = endedAtTime
+        self.privateFirebaseRID                     = firebaseRID
     }
     
-//    required convenience init?   (
-//        fromServerWithFirebaseRID
-//        firebaseRID:    String
-//        )
-//    {
-//        let data            = fetchFirebaseObject(from: firebaseRID.requestServiceRef)
-//        guard   let startedAtTime   = data[Constants.Protocols.Starting .startedAtTime] as? String,
-//            let hasEnded        = data[Constants.Protocols.Ending   .hasEnded]      as? String,
-//            let endedAtTime     = data[Constants.Protocols.Ending   .endedAtTime]   as? String
-//            else
-//        {
-//            return nil
-//        }
-//        self.init   (
-//            internallyWithFirebaseRID:  firebaseRID,
-//            startedAtTime:              startedAtTime,
-//            hasEnded:                   hasEnded,
-//            endedAtTime:                endedAtTime
-//        )
-//    }
+    required convenience init?  (
+        withFirebaseRID
+        firebaseRID:    String,
+        fromData
+        data:           AnyDictionary
+                                )
+    {
+        guard   let startedAtTime                   =
+                data[Constants.Protocols.Starting.startedAtTime ] as? String,
+                let hasEnded                        =
+                data[Constants.Protocols.Ending.hasEnded        ] as? String,
+                let endedAtTime                     =
+                data[Constants.Protocols.Ending.endedAtTime     ] as? String
+        else
+        {
+                return nil
+        }
+        
+        self.init   (
+            internallyWithFirebaseRID:  firebaseRID,
+            startedAtTime:              startedAtTime,
+            hasEnded:                   hasEnded,
+            endedAtTime:                endedAtTime
+                    )
+    }
+    
+    required convenience init?  (
+        fromData
+        data:           AnyDictionary
+                                )
+    {
+        guard   let firebaseRID                     =
+                data[Constants.Protocols.FirebaseRequestIDable.firebaseRID] as? String
+        else
+        {
+                return nil
+        }
+        self.init   (
+            withFirebaseRID:    firebaseRID,
+            fromData:           data
+                    )
+    }
 }

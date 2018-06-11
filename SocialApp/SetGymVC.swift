@@ -16,8 +16,8 @@ import SwiftKeychainWrapper
 
 import Alamofire
 
-class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
-    
+class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate
+{
     var coachOnTheWay                           = false
     var locationManager                         = CLLocationManager()
     var mapHasCenteredOnce                      = false
@@ -27,6 +27,8 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     var geoFireRef: FIRDatabaseReference!
     
     var gymChoiceSelected: Int = 0
+    
+    private var startingVC                      = ViewController.SetGym
     
     //MARK: Outlets
     
@@ -72,10 +74,8 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     @IBAction func signOut(_ sender: AnyObject)
     {
-        signOutOf(viewController: self, withSegue: Constants.SetGymVC.Segue.ToSignIn)
-//        KeychainWrapper.standard.removeObject(forKey: Constants.Firebase.KeychainWrapper.KeyUID)
-//        try! FIRAuth.auth()?.signOut()
-//        performSegue(withIdentifier: Constants.SetGymVC.Segue.ToSignIn, sender: nil)
+        Persistence.shared.registerLogOff()
+        signOutOf(vc: self, viewController: startingVC)
     }
     
     
@@ -183,14 +183,15 @@ class SetGymVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-    func centerMapOnLocation(location: CLLocation) {
+    func centerMapOnLocation(location: CLLocation)
+    {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, Constants.Map.Distance.SpanHeight, Constants.Map.Distance.SpanWidth)
         
         mapView.setRegion(coordinateRegion, animated: true)
         
         _ = geoFire.query(with: coordinateRegion)
         
-        mapView.removeAnnotations(mapView.annotations)
+        //mapView.removeAnnotations(mapView.annotations)
     }
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {

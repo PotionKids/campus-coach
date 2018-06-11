@@ -13,7 +13,8 @@ import FirebaseAuth
 
 import SwiftKeychainWrapper
 
-func displayAlert(_ target: UIViewController, title: String, message: String, actionTitle: String? = Constants.Alert.Title.OK, actionStyle: UIAlertActionStyle? = .default) {
+func displayAlert(_ target: UIViewController, title: String, message: String, actionTitle: String? = Constants.Alert.Title.OK, actionStyle: UIAlertActionStyle? = .default)
+{
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
     if let actionTitle = actionTitle, let actionStyle = actionStyle
     {
@@ -24,7 +25,8 @@ func displayAlert(_ target: UIViewController, title: String, message: String, ac
 
 func firebaseAuth(_ isCoach: Bool, credential: FIRAuthCredential, vc: UIViewController)
 {
-    FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
+    FIRAuth.auth()?.signIn(with: credential, completion:
+    {(user, error) in
         if let error = error
         {
             print("KRIS: ERROR - Unable to authenticate with Firebase = \(error)")
@@ -35,8 +37,7 @@ func firebaseAuth(_ isCoach: Bool, credential: FIRAuthCredential, vc: UIViewCont
             {
                 if let vc = vc as? SignUpVC
                 {
-                    vc.userID = user.uid
-                    print("KRIS: User ID = \(vc.userID)")
+                    print("KRIS: User ID = \(user.uid)")
                 }
                 else
                 {
@@ -57,15 +58,16 @@ func extractUserData(user: FIRUser?, isCoach: Bool, credential: FIRAuthCredentia
     if let user = user
     {
         let id = user.uid
-        var userData: FirebaseData = [:]
-        if let credential = credential
+        var userData: FirebaseData  = [:]
+        if let credential           = credential
         {
-            userData = extractProviderData(user: user, isCoach: isCoach, credential: credential)
+            userData                = extractProviderData(user: user, isCoach: isCoach, credential: credential)
         }
         else
         {
-            let loggedInAtTime  = timeStamp().stampNanoseconds
-            userData            =
+            let cell                = configureCell(isCoach: isCoach)
+            let loggedInAtTime      = timeStamp().stampNanoseconds
+            userData                =
                 [
                     Constants.DataService.User.FirebaseUID      : user.uid,
                     Constants.DataService.User.IsCoach          : isCoach.stringYesNo,
@@ -74,7 +76,7 @@ func extractUserData(user: FIRUser?, isCoach: Bool, credential: FIRAuthCredentia
                     Constants.DataService.User.FacebookUID      : Constants.DataService.User.DefaultFacebookUID,
                     Constants.DataService.User.FullName         : Constants.DataService.User.DefaultUserName,
                     Constants.DataService.User.Email            : user.email!,
-                    Constants.DataService.User.Cell             : Constants.Literal.Empty,
+                    Constants.DataService.User.Cell             : cell,
                     Constants.DataService.User.FirebaseRID      : Constants.Literal.Empty,
                     Constants.DataService.User.Requests         : Constants.Literal.Empty,
                     Constants.DataService.User.FirebaseUIDs     : user.uid,
@@ -107,6 +109,7 @@ func extractProviderData(user: FIRUser, isCoach: Bool, credential: FIRAuthCreden
         uid = profile.uid
         if let uid = uid
         {
+            let cell        = configureCell(isCoach: isCoach)
             if  let name    = name,
                 let email   = email
             {
@@ -120,7 +123,7 @@ func extractProviderData(user: FIRUser, isCoach: Bool, credential: FIRAuthCreden
                         Constants.DataService.User.FacebookUID      : uid,
                         Constants.DataService.User.FullName         : name,
                         Constants.DataService.User.Email            : email,
-                        Constants.DataService.User.Cell             : Constants.Literal.Empty,
+                        Constants.DataService.User.Cell             : cell,
                         Constants.DataService.User.FirebaseRID      : Constants.Literal.Empty,
                         Constants.DataService.User.Requests         : Constants.Literal.Empty,
                         Constants.DataService.User.FirebaseUIDs     : user.uid,
@@ -151,9 +154,13 @@ func completeSignIn(isCoach: Bool, user: FIRUser?, credential: FIRAuthCredential
     if let id = id, let userData = userData
     {
         KeychainWrapper.standard.set(id, forKey: Constants.DataService.User.UID)
-        let userObject = User(fromUserData: userData)!
-        Persistence.shared.registerUser(user: userObject)
-        vc.performSegue(withIdentifier: loginSegueIdentifier(isCoach: isCoach), sender: Persistence.shared.user)
+        let userObject  = User(fromUserData: userData)!
+        let _           = Persistence.shared.registerUser(user: userObject)
+        let _           = Persistence.shared.registerLogIn()
+        let _           = Persistence.shared.registerIsCoach(isCoach: isCoach)
+        let startingVC  = ViewController.SignUp
+        let endingVC    = signUpTransitionVC(isCoach: isCoach)
+        vc.performSegue(withIdentifier: startingVC.segueIdentifier(toEndingVC: endingVC), sender: Persistence.shared.user)
     }
     else
     {
@@ -166,33 +173,33 @@ func registerSignUp()
     let _ = Persistence.shared.registerSignUp()
     print("KRIS: Firebase Keys                  \(User.keys.firebase)")
     print("KRIS: Save Keys Register Sign Up     \(User.keys.save)")
-    print("KRIS: User Saved Register Sign Up    \(Persistence.shared.user.anyDictionaryForSaving.forcedStringLiteral)")
+    print("KRIS: User Saved Register Sign Up    \(Persistence.shared.user?.anyDictionaryForSaving.forcedStringLiteral)")
     print("KRIS: The User Has Signed Up Register Sign Up.")
 }
 
 func userIsLoggedIn() -> Bool
 {
-    var status = false
-    if let loggedIn = KeychainWrapper.standard.bool(forKey: Constants.DataService.User.UID)
+    var status          = false
+    if let loggedIn     = KeychainWrapper.standard.bool(forKey: Constants.DataService.User.UID)
     {
-        status = loggedIn
+        status          = loggedIn
     }
     return status
 }
 
 func userHasSignedUp() -> Bool
 {
-    let status  = false
-    let _ = Persistence.shared.registerSignUp()
+    let status          = false
+    let _               = Persistence.shared.registerSignUp()
     return status
 }
 
 func signedUpOrLoggedIn() -> Bool
 {
-    var status: Bool!
-    if let signedIn    = KeychainWrapper.standard.bool(forKey: Constants.DataService.User.UID)
+    var status: Bool    = false
+    if let signedIn     = KeychainWrapper.standard.bool(forKey: Constants.DataService.User.UID)
     {
-        status = signedIn
+        status          = signedIn
     }
     else if let signedUp = UserDefaults.standard.value(forKey: Constants.DataService.User.HasSignedUp) as? Bool
 
@@ -201,6 +208,34 @@ func signedUpOrLoggedIn() -> Bool
         status = signedUp
     }
     return status
+}
+
+func configureCell(isCoach: Bool) -> String
+{
+    if isCoach
+    {
+        return Persistence.shared.coach?    .cell ?? Constants.Literal.Empty
+    }
+    else
+    {
+        return Persistence.shared.student?  .cell ?? Constants.Literal.Empty
+    }
+}
+
+func signUpTransitionVC(isCoach: Bool) -> ViewController
+{
+    var endingVC    = ViewController.SignUp
+    let cell        = configureCell(isCoach: isCoach)
+    if cell.isEmpty
+    {
+        endingVC    = ViewController.SaveCell
+    }
+    else
+    {
+        endingVC    = isCoach ? ViewController.CoachRequests : ViewController.SetGym
+    }
+    
+    return endingVC
 }
 
 func loginSegueIdentifier(isCoach: Bool) -> String
@@ -245,18 +280,6 @@ func serviceSegueIdentifier(isCoach: Bool) -> String
         return Constants.SignUpVC.Segue.ToStudentService
     }
 }
-
-//func serviceSegueSender(isCoach: Bool) -> FirebaseIDable
-//{
-//    if isCoach
-//    {
-//        return selfStudent
-//    }
-//    else
-//    {
-//        return selfRequest
-//    }
-//}
 
 func performLoginSegue(fromViewController vc: UIViewController, forUserWhoIsACoach isCoach: Bool, sender: Any? = nil)
 {

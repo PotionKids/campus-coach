@@ -27,14 +27,19 @@ protocol Reviewable: HappenedType, FirebaseRequestIDable, Pushable
         atTime:         String,
         rating:         String,
         review:         String
-    )
+            )
     
-//    init?   (
-//        fromServerWithFirebaseRID
-//        firebaseRID:    String
-//    )
+    init?   (
+        withFirebaseRID
+        firebaseRID:    String,
+        fromData
+        data:           AnyDictionary
+            )
     
-    func push()
+    init?   (
+        fromData
+        data:           AnyDictionary
+            )    
 }
 extension Reviewable
 {
@@ -69,9 +74,9 @@ extension Reviewable
 
 class Reviewed: Reviewable
 {
-    static var setObject:          Firebase.Object!    = Firebase.Object   .none
-    static var setChildOf:         Firebase.Object!    = Firebase.Object   .requests
-    static var setChild:           Firebase.Child!     = Firebase.Child    .reviewed
+    static var setObject:   Firebase.Object!    = Firebase.Object   .none
+    static var setChildOf:  Firebase.Object!    = Firebase.Object   .requests
+    static var setChild:    Firebase.Child!     = Firebase.Child    .reviewed
     
     var privateOrNot:       String!             = YesOrNo.Yes.string
     var privateAtTime:      String!
@@ -81,8 +86,8 @@ class Reviewed: Reviewable
     
     required init()
     {
-        self.privateAtTime      = timeStamp().stampNanoseconds
-        self.privateFirebaseRID = self.privateAtTime
+        self.privateAtTime                      = timeStamp().stampNanoseconds
+        self.privateFirebaseRID                 = self.privateAtTime
     }
     
     required convenience init   (
@@ -91,33 +96,54 @@ class Reviewed: Reviewable
         atTime:         String,
         rating:         String,
         review:         String
-        )
+                                )
     {
         self.init()
-        self.privateAtTime      = atTime
-        self.privateRating      = rating
-        self.privateReview      = review
-        self.privateFirebaseRID = firebaseRID
+        self.privateAtTime                      = atTime
+        self.privateRating                      = rating
+        self.privateReview                      = review
+        self.privateFirebaseRID                 = firebaseRID
     }
     
-//    required convenience init?  (
-//        fromServerWithFirebaseRID
-//        firebaseRID:    String
-//        )
-//    {
-//        let data    = fetchFirebaseObject(from: firebaseRID.requestReviewedRef)
-//        guard   let atTime  = data[Constants.Protocols.HappenedType .atTime]    as? String,
-//            let rating  = data[Constants.Protocols.Reviewable   .rating]    as? String,
-//            let review  = data[Constants.Protocols.Reviewable   .review]    as? String
-//            else
-//        {
-//            return nil
-//        }
-//        self.init   (
-//            internallyWithFirebaseRID:  firebaseRID,
-//            atTime:                     atTime,
-//            rating:                     rating,
-//            review:                     review
-//        )
-//    }
+    required convenience init?  (
+        withFirebaseRID
+        firebaseRID:    String,
+        fromData
+        data:           AnyDictionary
+                                )
+    {
+        guard   let atTime                      =
+                data[Constants.Protocols.HappenedType.atTime    ] as? String,
+                let rating                      =
+                data[Constants.Protocols.Reviewable.rating      ] as? String,
+                let review                      =
+                data[Constants.Protocols.Reviewable.review      ] as? String
+        else
+        {
+                return nil
+        }
+        self.init   (
+                internallyWithFirebaseRID:  firebaseRID,
+                atTime:                     atTime,
+                rating:                     rating,
+                review:                     review
+                    )
+    }
+    
+    required convenience init?  (
+        fromData
+        data:           AnyDictionary
+                                )
+    {
+        guard   let firebaseRID                 =
+                data[Constants.Protocols.FirebaseRequestIDable.firebaseRID] as? String
+        else
+        {
+                return nil
+        }
+        self.init   (
+                withFirebaseRID:            firebaseRID,
+                fromData:                   data
+                    )
+    }
 }

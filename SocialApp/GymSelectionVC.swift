@@ -17,6 +17,7 @@ import Alamofire
 
 class GymSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 {
+    private var startingVC  = ViewController.GymSelection
     @IBOutlet weak var gymFirstChoiceCoachLabel: UILabel!
     @IBOutlet weak var gymSecondChoiceCoachLabel: UILabel!
     @IBOutlet weak var gymThirdChoiceCoachLabel: UILabel!
@@ -48,10 +49,7 @@ class GymSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBAction func signOutCoach(_ sender: AnyObject)
     {
-        signOutOf(viewController: self, withSegue: Constants.GymSelection.Segue.ToSignUp)
-//        KeychainWrapper.standard.removeObject(forKey: Constants.Firebase.KeychainWrapper.KeyUID)
-//        try! FIRAuth.auth()?.signOut()
-//        performSegue(withIdentifier: Constants.GymSelection.Segue.ToSignUp, sender: nil)
+        signOutOf(vc: self, viewController: startingVC)
     }
     
     @IBOutlet weak var tableView: UITableView!
@@ -90,13 +88,13 @@ class GymSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                     first.occupancy <= second.occupancy
                 })
                 
-                weakSelf?.gymFirstChoiceCoachLabel.text = "\(gymStatisticsDisplay[0].name)"
-                weakSelf?.gymSecondChoiceCoachLabel.text = "\(gymStatisticsDisplay[1].name)"
-                weakSelf?.gymThirdChoiceCoachLabel.text = "\(gymStatisticsDisplay[2].name)"
+                weakSelf?.gymFirstChoiceCoachLabel.text     = "\(gymStatisticsDisplay[0].name)"
+                weakSelf?.gymSecondChoiceCoachLabel.text    = "\(gymStatisticsDisplay[1].name)"
+                weakSelf?.gymThirdChoiceCoachLabel.text     = "\(gymStatisticsDisplay[2].name)"
                 
-                weakSelf?.gymFirstCoachOccupancy.text = "\(gymStatisticsDisplay[0].occupancy) %"
-                weakSelf?.gymSecondCoachOccupancy.text = "\(gymStatisticsDisplay[1].occupancy) %"
-                weakSelf?.gymThirdCoachOccupancy.text = "\(gymStatisticsDisplay[2].occupancy) %"
+                weakSelf?.gymFirstCoachOccupancy.text       = "\(gymStatisticsDisplay[0].occupancy) %"
+                weakSelf?.gymSecondCoachOccupancy.text      = "\(gymStatisticsDisplay[1].occupancy) %"
+                weakSelf?.gymThirdCoachOccupancy.text       = "\(gymStatisticsDisplay[2].occupancy) %"
             }
         }
     }
@@ -143,17 +141,14 @@ class GymSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     {
         let gym     = gyms[indexPath.row]
         let time    = timeStamp().stampNanoseconds
-        let created = Created(internallyWithFirebaseRID: time, byStudent: Persistence.shared.firebaseUID, withName: Persistence.shared.user.fullName, forGymWith: gym.name)
+        let created = Created(internallyWithFirebaseRID: time, byStudent: Persistence.shared.firebaseUID!, withName: Persistence.shared.user!.fullName, forGymWith: gym.name)
         let request = Request(created: created)
-        Persistence.shared.registerRequest(request: request)
-        performServiceSegue(fromViewController: self, forUserWhoIsACoach: Persistence.shared.isCoach!)
-//        selfRequest = Request(byStudent: selfUser.firebaseUID, withName: selfUser.fullName, forGym: gym.name)
-//        selfRequest.push()
-//        print("KRIS: selfRequest Created saveKeys \(selfRequest.created.saveKeys)")
-//        selfRequest.created.saveAnyDictionary()
-//        selfUser.privateFirebaseRID = selfRequest.firebaseRID
-//        selfUser.saveAnyDictionary()
-//        performSegue(withIdentifier: Constants.GymSelection.Segue.ToService, sender: selfRequest)
+        let _       = Persistence.shared.registerRequest(request: request)
+        request.push()
+        let startingVC  = ViewController.GymSelection
+        let endingVC    = ViewController.StudentService
+        
+        performSegue(withIdentifier: startingVC.segueIdentifier(toEndingVC: endingVC), sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)

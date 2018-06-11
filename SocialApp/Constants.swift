@@ -166,6 +166,18 @@ enum PassOrFail: String
 
 extension Bool
 {
+    var isCoach: IsCoach
+    {
+        switch self
+        {
+        case true:
+            return IsCoach.yes
+        case false:
+            return IsCoach.no
+        default:
+            return IsCoach.none
+        }
+    }
     var stringYesNo: String
     {
         return self == true ? YesOrNo.Yes.stringLowerCase : YesOrNo.No.stringLowerCase
@@ -267,91 +279,31 @@ extension String
     }
 }
 
-struct Constants {
+enum ViewController: String
+{
+    case None
+    case SignUp
+    case SaveCell
+    case SetGym
+    case GymSelection
+    case CoachRequests
+    case StudentService
+    case CoachService
     
-    /*
- 
-     struct DataService
-     {
-     struct Firebase
-     {
-     static let BaseNode                     =               Constants.Literal.Empty
-     static let BaseURL                      =               FIRDatabase.database().reference()
-     static let Provider                     =               "firebase"
-     static let Base                         =               "base"
-     static let Requests                     =               "requests"
-     static let Users                        =               "users"
-     static let AllUsers                     =               "allUsers"
-     static let Students                     =               "students"
-     static let Coaches                      =               "coaches"
-     static let Locations                    =               "locations"
-     static let Latitude                     =               "latitude"
-     static let Longitude                    =               "longitude"
-     
-     static let FirebaseRID                  =
-     Constants.DataService.Mirror.FirebaseRID            .lowercaseFirst
-     static let Created                      =
-     Constants.DataService.Mirror.Created                .lowercaseFirst
-     static let Accepted                     =
-     Constants.DataService.Mirror.Accepted               .lowercaseFirst
-     static let Communicated                 =
-     Constants.DataService.Mirror.Communicated           .lowercaseFirst
-     static let Service                      =
-     Constants.DataService.Mirror.Service                .lowercaseFirst
-     static let Payed                        =
-     Constants.DataService.Mirror.Payed                  .lowercaseFirst
-     static let Reviewed                     =
-     Constants.DataService.Mirror.Reviewed               .lowercaseFirst
-     }
-     
-     struct Mirror
-     {
-     static let Firebase                     =
-     Constants.DataService.Firebase.Provider             .capitalized
-     static let Locations                    =
-     Constants.DataService.Firebase.Locations            .capitalized
-     static let Requests                     =
-     Constants.DataService.Firebase.Requests             .capitalized
-     static let Users                        =
-     Constants.DataService.Firebase.Users                .capitalized
-     static let Coaches                      =
-     Constants.DataService.Firebase.Coaches              .capitalized
-     
-     static let FirebaseUID                  =               "FirebaseUID"
-     static let IsCoach                      =               "IsCoach"
-     static let Provider                     =               "Provider"
-     static let FacebookUID                  =               "FacebookUID"
-     static let LoggedInAtTime               =               "LoggedInAtTime"
-     static let FullName                     =               "FullName"
-     static let FirstName                    =               "FirstName"
-     static let Email                        =               "Email"
-     static let Cell                         =               "Cell"
-     static let ImageURLString               =               "ImageURL"
-     static let FirebaseRID                  =               "FirebaseRID"
-     //  static let Requests                     =               "Requests". Defined above.
-     static let FirebaseUIDs                 =               "FirebaseUIDs"
-     static let Rating                       =               "Rating"
-     static let Ratings                      =               "Ratings"
-     static let Review                       =               "Review"
-     static let Reviews                      =               "Reviews"
-     
-     static let Created                      =               "Created"
-     static let Accepted                     =               "Accepted"
-     static let Communicated                 =               "Communicated"
-     static let Service                      =               "Service"
-     static let Payed                        =               "Payed"
-     static let Reviewed                     =               "Reviewed"
-     
-     static let Activated                    =               "Activated"
-     static let Started                      =               "Started"
-     static let Stopped                      =               "Stopped"
-     
-     static let Accept                       =               "Accept"
-     }
+    func segueIdentifier(toEndingVC endingVC: ViewController) -> String
+    {
+        return "\(self.description)To\(endingVC.description)"
+    }
 }
- 
-    */
-    
+
+extension UIViewController
+{
+
+}
+
+
+struct Constants
+{
     struct DataService
     {
         struct Firebase
@@ -395,6 +347,7 @@ struct Constants {
             static let Reviewed                     =
                 Constants.DataService.Mirror.Reviewed               .lowercaseFirst
         }
+        
         struct Mirror
         {
             static let Firebase                     =
@@ -411,8 +364,7 @@ struct Constants {
             static let HasSignedUp                  =               "HasSignedUp"
             static let FirebaseUID                  =               "FirebaseUID"
             static let IsCoach                      =               "IsCoach"
-            static let CoachOrNot                   =
-                "CoachOrNot"
+            static let CoachOrNot                   =               "CoachOrNot"
             static let Provider                     =               "Provider"
             static let FacebookUID                  =               "FacebookUID"
             static let LoggedInAtTime               =               "LoggedInAtTime"
@@ -422,7 +374,6 @@ struct Constants {
             static let Cell                         =               "Cell"
             static let ImageURLString               =               "FacebookImageURLString"
             static let FirebaseRID                  =               "FirebaseRID"
-            //  static let Requests                     =               "Requests". Defined above.
             static let FirebaseUIDs                 =               "FirebaseUIDs"
             static let Rating                       =               "Rating"
             static let Ratings                      =               "Ratings"
@@ -608,12 +559,12 @@ struct Constants {
         struct Segue
         {
             static let SignUpToSetGym           = "SignUpToSetGym"
-            static let SignUpToSetGymMap        = "SignUpToSetGymMap"
-            static let SignUpToSaveCellNumber   = "SignUpToSaveCellNumber"
+            static let SignUpToSetGymMap        = "SignUpToSetGym"
+            static let SignUpToSaveCell         = "SignUpToSaveCell"
             static let SignUpToCoachRequests    = "SignUpToCoachRequests"
-            static let ToStudentService         = "SignUpToStudentServiceVC"
-            static let ToCoachServiceVC         = "SignUpToCoachServiceVC"
-            static let ToSaveCellVC             = "SignUpToSaveCellVC"
+            static let ToStudentService         = "SignUpToStudentService"
+            static let ToCoachServiceVC         = "SignUpToCoachService"
+            static let ToSaveCellVC             = "SignUpToSaveCell"
         }
     }
     
@@ -621,8 +572,8 @@ struct Constants {
     {
         struct Segue
         {
-            static let ToSetGymVC               = "SaveCellToSetGymVC"
-            static let ToCoachRequestsVC        = "SaveCellToCoachRequestsVC"
+            static let ToSetGymVC               = "SaveCellToSetGym"
+            static let ToCoachRequestsVC        = "SaveCellToCoachRequests"
         }
     }
     
@@ -631,7 +582,7 @@ struct Constants {
         struct Segue
         {
             static let CoachRequestsToSignUp    = "CoachRequestsToSignUp"
-            static let ToService                = "CoachRequestsToCoachServiceVC"
+            static let ToService                = "CoachRequestsToCoachService"
         }
         
         struct Cell
@@ -644,7 +595,7 @@ struct Constants {
     {
         struct Segue
         {
-            static let ToSignUp = "CoachServiceToSignUpVC"
+            static let ToSignUp = "CoachServiceToSignUp"
         }
     }
     
@@ -652,7 +603,7 @@ struct Constants {
     {
         struct Segue
         {
-            static let ToSignUpVC = "StudentServiceToSignUpVC"
+            static let ToSignUpVC = "StudentServiceToSignUp"
         }
     }
     
@@ -2248,32 +2199,29 @@ struct Constants {
         }
     }
     
-    struct SaveCellNumber
+    struct SaveCell
     {
         struct Segue
         {
-            static let SaveCellNumberToSetGym = "SaveCellNumberToSetGym"
+            static let SaveCellToSetGym         = "SaveCellToSetGym"
         }
     }
     
-    struct ViewController
+    struct Segue
     {
-        struct Segue
-        {
-            static let LogInToRiderOnMap = "ShowRiderOnMap"
-            static let Logout = "Logout"
-            static let LogInToDriverViewController = "ShowDriverViewController"
-            static let SignUpToSetGym = "SignUpToSetGym"
-            static let SetGymToSignIn = "SetGymToSignIn"
-        }
+        static let LogInToRiderOnMap            = "ShowRiderOnMap"
+        static let Logout                       = "Logout"
+        static let LogInToDriverViewController  = "ShowDriverViewController"
+        static let SignUpToSetGym               = "SignUpToSetGym"
+        static let SetGymToSignIn               = "SetGymToSignIn"
     }
     
     struct SetGymVC
     {
         struct Segue
         {
-            static let ToSignIn         = "SetGymMapToSignIn"
-            static let ToGymSelection   = "SetGymToGymSelection"
+            static let ToSignIn                 = "SetGymToSignUp"
+            static let ToGymSelection           = "SetGymToGymSelection"
         }
     }
     
@@ -2281,13 +2229,13 @@ struct Constants {
     {
         struct Segue
         {
-            static let ToSignUp         = "GymSelectionToSignUp"
-            static let ToRequest        = "GymSelectionToRequest"
-            static let ToService        = "GymSelectionToStudentServiceVC"
+            static let ToSignUp                 = "GymSelectionToSignUp"
+            static let ToRequest                = "GymSelectionToRequest"
+            static let ToService                = "GymSelectionToStudentService"
         }
         struct Cell
         {
-            static let GymCellIdentifier       = "GymSelection"
+            static let GymCellIdentifier        = "GymSelection"
         }
     }
     
@@ -2295,8 +2243,7 @@ struct Constants {
     {
         struct Segue
         {
-            static let Logout = "Logout"
-            static let Driver = Constants.ViewController.Segue.LogInToDriverViewController
+            static let Logout                   = "Logout"
         }
     }
     
@@ -2304,9 +2251,8 @@ struct Constants {
     {
         struct Segue
         {
-            static let Driver = Constants.ViewController.Segue.LogInToDriverViewController
-            static let Logout = "LogOutDriver"
-            static let ShowUserLocation = "ShowUserLocation"
+            static let Logout                   = "LogOutDriver"
+            static let ShowUserLocation         = "ShowUserLocation"
         }
         struct TableView
         {

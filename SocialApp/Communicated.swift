@@ -11,7 +11,7 @@ import Firebase
 
 protocol Communicable: HappenedSequenceType, CallOrTextSequenceType, CoachOrNotSequenceType, FirebaseRequestIDable, Pushable
 {
-    init()
+    init    ()
     
     init    (
         internallyWithFirebaseRID
@@ -22,12 +22,19 @@ protocol Communicable: HappenedSequenceType, CallOrTextSequenceType, CoachOrNotS
         byCallOrText:   String,
         initiatedByCoachOrNot
         byCoachOrNot:   String
-    )
+            )
     
-//    init?   (
-//        fromServerWithFirebaseRID
-//        firebaseRID:    String
-//    )
+    init?   (
+        withFirebaseRID
+        firebaseRID:    String,
+        fromData
+        data:           AnyDictionary
+            )
+    
+    init?   (
+        fromData
+        data:           AnyDictionary
+            )
 }
 
 extension Communicable
@@ -44,10 +51,10 @@ extension Communicable
     
     mutating func stampCommunication(byCallOrText: String, byCoachOrNot: String)
     {
-        let atTime                  = timeStamp().stampNanoseconds
-        self.privateAtTimes         = "\(self.atTimes) \(atTime)"
-        self.privateByCallOrText    = "\(self.byCallOrText) \(byCallOrText)"
-        self.privateByCoachOrNot    = "\(self.byCoachOrNot) \(byCoachOrNot)"
+        let atTime                                  = timeStamp().stampNanoseconds
+        self.privateAtTimes                         = "\(self.atTimes) \(atTime)"
+        self.privateByCallOrText                    = "\(self.byCallOrText) \(byCallOrText)"
+        self.privateByCoachOrNot                    = "\(self.byCoachOrNot) \(byCoachOrNot)"
     }
     
     static var keys: KeysType
@@ -58,20 +65,19 @@ extension Communicable
 
 class Communicated: Communicable
 {
-    static var setObject:              Firebase.Object!    = Firebase.Object   .none
-    static var setChildOf:             Firebase.Object!    = Firebase.Object   .requests
-    static var setChild:               Firebase.Child!     = Firebase.Child    .communicated
+    static var setObject:       Firebase.Object!    = Firebase.Object   .none
+    static var setChildOf:      Firebase.Object!    = Firebase.Object   .requests
+    static var setChild:        Firebase.Child!     = Firebase.Child    .communicated
     
     var privateOrNot:           String!             = YesOrNo.Yes.string
     var privateAtTimes:         String!
     var privateByCallOrText:    String!             = CallOrText.none.string
     var privateByCoachOrNot:    String!             = YesOrNo.No.string
-    var privateFirebaseRID:     String!
+    var privateFirebaseRID:     String!             = Constants.Literal.Empty
     
     required init()
     {
-        self.privateAtTimes     = timeStamp().stampNanoseconds
-        self.privateFirebaseRID = self.privateAtTimes
+        self.privateAtTimes                         = timeStamp().stampNanoseconds
     }
     
     required convenience init   (
@@ -83,33 +89,54 @@ class Communicated: Communicable
         byCallOrText:   String,
         initiatedByCoachOrNot
         byCoachOrNot:   String
-        )
+                                )
     {
         self.init()
-        self.privateAtTimes         = atTimes
-        self.privateByCallOrText    = byCallOrText
-        self.privateByCoachOrNot    = byCoachOrNot
-        self.privateFirebaseRID     = firebaseRID
+        self.privateFirebaseRID                     = firebaseRID
+        self.privateAtTimes                         = atTimes
+        self.privateByCallOrText                    = byCallOrText
+        self.privateByCoachOrNot                    = byCoachOrNot
     }
     
-//    required convenience init?  (
-//        fromServerWithFirebaseRID
-//        firebaseRID:    String
-//        )
-//    {
-//        let data            = fetchFirebaseObject(from: firebaseRID.requestCommunicatedRef)
-//        guard   let atTimes         = data[Constants.Protocols.HappenedSequenceType     .atTimes]       as? String,
-//            let byCallOrText    = data[Constants.Protocols.CallOrTextSequenceType   .byCallOrText]  as? String,
-//            let byCoachOrNot    = data[Constants.Protocols.CoachOrNotSequenceType   .byCoachOrNot]  as? String
-//            else
-//        {
-//            return nil
-//        }
-//        self.init   (
-//            internallyWithFirebaseRID:  firebaseRID,
-//            communicatedAtTimes:        atTimes,
-//            usingCallOrText:            byCallOrText,
-//            initiatedByCoachOrNot:      byCoachOrNot
-//        )
-//    }
+    required convenience init?  (
+        withFirebaseRID
+        firebaseRID:    String,
+        fromData
+        data:           AnyDictionary
+                                )
+    {
+        guard   let atTimes                         =
+                data[Constants.Protocols.HappenedSequenceType.atTimes           ] as? String,
+                let byCallOrText                    =
+                data[Constants.Protocols.CallOrTextSequenceType.byCallOrText    ] as? String,
+                let byCoachOrNot                    =
+                data[Constants.Protocols.CoachOrNotSequenceType.byCoachOrNot    ] as? String
+        else
+        {
+            return nil
+        }
+        self.init   (
+            internallyWithFirebaseRID:  firebaseRID,
+            communicatedAtTimes:        atTimes,
+            usingCallOrText:            byCallOrText,
+            initiatedByCoachOrNot:      byCoachOrNot
+                    )
+    }
+    
+    required convenience init?  (
+        fromData
+        data:           AnyDictionary
+                                )
+    {
+        guard   let firebaseRID =
+                data[Constants.Protocols.FirebaseRequestIDable.firebaseRID  ] as? String
+        else
+        {
+                return nil
+        }
+        self.init   (
+            withFirebaseRID:    firebaseRID,
+            fromData:           data
+                    )
+    }
 }

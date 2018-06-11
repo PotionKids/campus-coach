@@ -32,20 +32,22 @@ protocol PersistenceType
 {
     var privateHasSignedUp      : Bool!                 { get set }
     var privateIsLoggedIn       : Bool!                 { get set }
+    var privateIsCoach          : IsCoach               { get set }
+    var privateCoachOrNot       : Bool!                 { get set }
     
-    var privateUser             : User!                 { get set }
+    var privateUser             : User?                 { get set }
     var privateStudent          : Student?              { get set }
     var privateCoach            : Coach?                { get set }
     var privateRequest          : Request?              { get set }
     
     var hasSignedUp             : Bool                  { get }
     var isLoggedIn              : Bool                  { get }
-    var isCoach                 : Bool?                 { get }
+    var isCoach                 : Bool                  { get }
     
-    var user                    : User                  { get }
+    var user                    : User?                 { get }
     var student                 : Student?              { get }
     var coach                   : Coach?                { get }
-    var firebaseUID             : Key                   { get }
+    var firebaseUID             : Key?                  { get }
     var firebaseRID             : Key?                  { get }
     
     var request                 : Request?              { get }
@@ -73,7 +75,7 @@ protocol PersistenceType
     var keyReviewed             : Key                   { get }
     var keyTimeSequence         : Key                   { get }
     
-    var userRef                 : FIRDatabaseReference  { get }
+    var userRef                 : FIRDatabaseReference? { get }
     var studentRef              : FIRDatabaseReference? { get }
     var coachRef                : FIRDatabaseReference? { get }
     var requestRef              : FIRDatabaseReference? { get }
@@ -95,12 +97,16 @@ extension PersistenceType
     {
         return privateIsLoggedIn
     }
-    var isCoach                 : Bool?
+    var isCoach                 : IsCoach
     {
-        return user.isCoach.bool
+        return privateIsCoach
+    }
+    var coachOrNot              : Bool
+    {
+        return privateCoachOrNot
     }
     
-    var user                    : User
+    var user                    : User?
     {
         return privateUser
     }
@@ -112,9 +118,9 @@ extension PersistenceType
     {
         return privateCoach
     }
-    var firebaseUID             : Key
+    var firebaseUID             : Key?
     {
-        return user             .firebaseUID
+        return user?            .firebaseUID
     }
     var firebaseRID             : Key?
     {
@@ -213,9 +219,9 @@ extension PersistenceType
         return Constants.Protocols.Persistence.timeSaveKeys
     }
     
-    var userRef                 : FIRDatabaseReference
+    var userRef                 : FIRDatabaseReference?
     {
-        return user             .firebaseUserRef
+        return user?            .firebaseUserRef
     }
     var studentRef              : FIRDatabaseReference?
     {
@@ -448,9 +454,12 @@ extension PersistenceType
         switch action
         {
         case .save:
-            if let object       = object
+            if let object       = object as? FirebaseIDable
             {
-                UserDefaults.standard.set(object, forKey: key)
+                let saveKeys    = object.saveKeys
+                let dictionary  = object.anyDictionaryForSaving
+                UserDefaults.standard.set(saveKeys  , forKey: key)
+                UserDefaults.standard.setValuesForKeys(dictionary)
                 success         = UserDefaults.standard.synchronize()
                 if success
                 {
@@ -458,10 +467,11 @@ extension PersistenceType
                 }
             }
         case .retrieve:
-            if let valueSaved   = UserDefaults.standard.value(forKey: key)
+            if let saveKeys     = UserDefaults.standard.value(forKey: key) as? Keys
             {
+                let valueSaved  = UserDefaults.standard.dictionaryWithValues(forKeys: saveKeys)
                 success         = true
-                value           = valueSaved
+                value           = valueSaved.keysShreddedFromSaveToFirebase
             }
         }
         if success && shouldPrint
@@ -494,7 +504,14 @@ extension PersistenceType
         
         if success
         {
-            user                            = value as? User
+            switch action
+            {
+            case .save:
+                user                        = value as? User
+            case .retrieve:
+                let data                    = value as! AnyDictionary
+                user                        = User(fromUserData: data)
+            }
         }
         else
         {
@@ -522,7 +539,14 @@ extension PersistenceType
         
         if success
         {
-            student                         = value as? Student
+            switch action
+            {
+            case .save:
+                student                     = value as? Student
+            case .retrieve:
+                let data                    = value as! AnyDictionary
+                student                     = Student(fromUserData: data)
+            }
         }
         else
         {
@@ -550,7 +574,14 @@ extension PersistenceType
         
         if success
         {
-            coach                           = value as? Coach
+            switch action
+            {
+            case .save:
+                coach                       = value as? Coach
+            case .retrieve:
+                let data                    = value as! AnyDictionary
+                coach                       = Coach(fromUserData: data)
+            }
         }
         else
         {
@@ -578,7 +609,14 @@ extension PersistenceType
         
         if success
         {
-            created                         = value as? Created
+            switch action
+            {
+            case .save:
+                created                     = value as? Created
+            case .retrieve:
+                let data                    = value as! AnyDictionary
+                created                     = Created(fromData: data)
+            }
         }
         else
         {
@@ -606,7 +644,14 @@ extension PersistenceType
         
         if success
         {
-            accepted                        = value as? Accepted
+            switch action
+            {
+            case .save:
+                accepted                    = value as? Accepted
+            case .retrieve:
+                let data                    = value as! AnyDictionary
+                accepted                    = Accepted(fromData: data)
+            }
         }
         else
         {
@@ -634,7 +679,14 @@ extension PersistenceType
         
         if success
         {
-            communicated                    = value as? Communicated
+            switch action
+            {
+            case .save:
+                communicated                = value as? Communicated
+            case .retrieve:
+                let data                    = value as! AnyDictionary
+                communicated                = Communicated(fromData: data)
+            }
         }
         else
         {
@@ -662,7 +714,14 @@ extension PersistenceType
         
         if success
         {
-            service                         = value as? Service
+            switch action
+            {
+            case .save:
+                service                     = value as? Service
+            case .retrieve:
+                let data                    = value as! AnyDictionary
+                service                     = Service(fromData: data)
+            }
         }
         else
         {
@@ -690,7 +749,14 @@ extension PersistenceType
         
         if success
         {
-            payed                           = value as? Payed
+            switch action
+            {
+            case .save:
+                payed                       = value as? Payed
+            case .retrieve:
+                let data                    = value as! AnyDictionary
+                payed                       = Payed(fromData: data)
+            }
         }
         else
         {
@@ -718,7 +784,14 @@ extension PersistenceType
         
         if success
         {
-            reviewed                        = value as? Reviewed
+            switch action
+            {
+            case .save:
+                reviewed                    = value as? Reviewed
+            case .retrieve:
+                let data                    = value as! AnyDictionary
+                reviewed                    = Reviewed(fromData: data)
+            }
         }
         else
         {
@@ -746,7 +819,7 @@ extension PersistenceType
         
         if success
         {
-            time                            = value as? TimeObject
+            time                            = value as! TimeObject
         }
         else
         {
@@ -796,8 +869,8 @@ extension PersistenceType
                                     action:             action,
                                     setOrSaveValue:     object?.reviewed
                                                 )
-        
-        success         = created.success
+
+        success             = created.success
         
         if success
         {
@@ -846,7 +919,7 @@ extension PersistenceType
     
     func saveUser           ()                  -> Bool
     {
-        return actionUser(action: .save, setOrSaveValue: self.user).success
+        return actionUser   (action: .save, setOrSaveValue: self.user   ).success
     }
     
     func saveStudent        ()                  -> Bool
@@ -879,6 +952,19 @@ extension PersistenceType
         return success
     }
     
+    mutating func performMethodIsCoach  (
+                                    method: MethodType                              ,
+                    setOrSaveValue bool:    Bool?
+                                        ) -> Bool
+    {
+        return performMethodBool    (
+                                    method:             method                      ,
+                                    setOrSaveValue:     bool                        ,
+                                    forKey:             self.keyIsCoach             ,
+                                    toSetVariable:      &self.privateCoachOrNot
+                                    )
+    }
+    
     mutating func performMethodLogIn    (
                                     method:             MethodType                  ,
                     setOrSaveValue  bool:               Bool?
@@ -908,7 +994,7 @@ extension PersistenceType
     mutating func performMethodUser     (
                                     method:             MethodType                  ,
                     setOrSaveValue  object:             User?
-                                        )
+                                        ) -> Bool
     {
         let action          : ActionType            =   method.action
         var success         : Bool                  =   false
@@ -923,12 +1009,14 @@ extension PersistenceType
         {
             self.privateUser                        =   user!
         }
+        
+        return success
     }
     
     mutating func performMethodStudent  (
                                     method:             MethodType                  ,
                     setOrSaveValue  object:             Student?
-                                        )
+                                        ) -> Bool
     {
         let action          : ActionType            =   method.action
         var success         : Bool                  =   false
@@ -944,12 +1032,14 @@ extension PersistenceType
         {
             self.privateStudent                     =   student!
         }
+        
+        return success
     }
     
     mutating func performMethodCoach    (
                                     method:             MethodType                  ,
                     setOrSaveValue  object:             Coach?
-                                        )
+                                        ) -> Bool
     {
         let action          : ActionType            =   method.action
         var success         : Bool                  =   false
@@ -964,12 +1054,14 @@ extension PersistenceType
         {
             self.privateCoach                       =   coach!
         }
+        
+        return success
     }
     
     mutating func performMethodCreated  (
                                     method:             MethodType                  ,
                     setOrSaveValue  object:             Created?
-                                        )
+                                        ) -> Bool
     {
         let action          : ActionType            =   method.action
         var success         : Bool                  =   false
@@ -984,12 +1076,14 @@ extension PersistenceType
         {
             self.privateRequest                     =   Request(created: created!)
         }
+        
+        return success
     }
     
     mutating func performMethodAccepted     (
                                     method:             MethodType                  ,
                     setOrSaveValue  object:             Accepted?
-                                            )
+                                            ) -> Bool
     {
         let action          : ActionType            =   method.action
         var success         : Bool                  =   false
@@ -1011,12 +1105,14 @@ extension PersistenceType
                 printNilParentObjectFound(object: .requests)
             }
         }
+        
+        return success
     }
     
     mutating func performMethodCommunicated (
                                     method:             MethodType                  ,
                     setOrSaveValue  object:             Communicated?
-                                            )
+                                            ) -> Bool
     {
         let action          : ActionType            =   method.action
         var success         : Bool                  =   false
@@ -1038,12 +1134,14 @@ extension PersistenceType
                 printNilParentObjectFound(object: .requests)
             }
         }
+        
+        return success
     }
     
     mutating func performMethodService      (
                                     method:             MethodType                  ,
                     setOrSaveValue  object:             Service?
-                                            )
+                                            ) -> Bool
     {
         let action          : ActionType            =   method.action
         var success         : Bool                  =   false
@@ -1065,12 +1163,14 @@ extension PersistenceType
                 printNilParentObjectFound(object: .requests)
             }
         }
+        
+        return success
     }
     
     mutating func performMethodPayed        (
                                     method:             MethodType                  ,
                     setOrSaveValue  object:             Payed?
-                                            )
+                                            ) -> Bool
     {
         let action          : ActionType            =   method.action
         var success         : Bool                  =   false
@@ -1092,12 +1192,14 @@ extension PersistenceType
                 printNilParentObjectFound(object: .requests)
             }
         }
+        
+        return success
     }
     
     mutating func performMethodReviewed     (
                                     method:             MethodType                  ,
                     setOrSaveValue  object:             Reviewed?
-                                            )
+                                            ) -> Bool
     {
         let action          : ActionType            =   method.action
         var success         : Bool                  =   false
@@ -1119,12 +1221,14 @@ extension PersistenceType
                 printNilParentObjectFound(object: .requests)
             }
         }
+        
+        return success
     }
     
     mutating func performMethodRequest      (
                                     method:             MethodType                  ,
                     setOrSaveValue  object:             Request?
-                                            )
+                                            ) -> Bool
     {
         let action          : ActionType            =   method.action
         var success         : Bool                  =   false
@@ -1139,131 +1243,146 @@ extension PersistenceType
         {
             self.privateRequest                     =   request!
         }
+        
+        return success
     }
     
-    
-    mutating func registerLogIn         () -> Bool
+    mutating func registerIsCoach       (isCoach: Bool) -> Bool
     {
-        return performMethodLogIn              (method: .register, setOrSaveValue: true)
+        return performMethodIsCoach(method: .register, setOrSaveValue: isCoach)
     }
-    mutating func registerSignUp        () -> Bool
+    
+    mutating func registerLogIn         ()  -> Bool
     {
-        return performMethodSignUp             (method: .register, setOrSaveValue: true)
+        return performMethodLogIn       (method: .register, setOrSaveValue: true)
+    }
+    mutating func registerLogOff        () -> Bool
+    {
+        return performMethodLogIn       (method: .register, setOrSaveValue: false)
+    }
+    mutating func registerSignUp        ()  -> Bool
+    {
+        return performMethodSignUp      (method: .register, setOrSaveValue: true)
     }
     mutating func registerUser          (
                                     user:               User?
-                                        )
+                                        )   -> Bool
     {
-        performMethodUser               (method: .register, setOrSaveValue: user)
+        return performMethodUser               (method: .register, setOrSaveValue: user)
     }
     mutating func registerStudent       (
                                     student:            Student?
-                                        )
+                                        )   -> Bool
     {
-        performMethodStudent            (method: .register, setOrSaveValue: student)
+        return performMethodStudent            (method: .register, setOrSaveValue: student)
     }
     mutating func registerCoach         (
                                     coach:              Coach?
-                                        )
+                                        )   -> Bool
     {
-        performMethodCoach              (method: .register, setOrSaveValue: coach)
+        return performMethodCoach              (method: .register, setOrSaveValue: coach)
     }
     mutating func registerCreated       (
                                     created:            Created?
-                                        )
+                                        )   -> Bool
     {
-        performMethodCreated            (method: .register, setOrSaveValue: created)
+        return performMethodCreated            (method: .register, setOrSaveValue: created)
     }
     mutating func registerAccepted      (
                                     accepted:           Accepted?
-                                        )
+                                        )   -> Bool
     {
-        performMethodAccepted           (method: .register, setOrSaveValue: accepted)
+        return performMethodAccepted           (method: .register, setOrSaveValue: accepted)
     }
     mutating func registerCommunicated  (
                                     communicated:       Communicated?
-                                        )
+                                        )   -> Bool
     {
-        performMethodCommunicated       (method: .register, setOrSaveValue: communicated)
+        return performMethodCommunicated       (method: .register, setOrSaveValue: communicated)
     }
     mutating func registerService       (
                                     service:            Service?
-                                        )
+                                        )   -> Bool
     {
-        performMethodService            (method: .register, setOrSaveValue: service)
+        return performMethodService            (method: .register, setOrSaveValue: service)
     }
     mutating func registerPayed         (
                                     payed:              Payed?
-                                        )
+                                        )   -> Bool
     {
-        performMethodPayed              (method: .register, setOrSaveValue: payed)
+        return performMethodPayed              (method: .register, setOrSaveValue: payed)
     }
     mutating func registerReviewed      (
                                     reviewed:           Reviewed?
-                                        )
+                                        )   -> Bool
     {
-        performMethodReviewed           (method: .register, setOrSaveValue: reviewed)
+        return performMethodReviewed           (method: .register, setOrSaveValue: reviewed)
     }
     mutating func registerRequest       (
                                     request:            Request?
-                                        )
+                                        )   -> Bool
     {
-        performMethodRequest            (method: .register, setOrSaveValue: request)
+        return performMethodRequest            (method: .register, setOrSaveValue: request)
     }
     
-    
+    mutating func configureIsCoach      () -> Bool
+    {
+        return performMethodIsCoach         (method: .configure, setOrSaveValue: nil)
+    }
     mutating func configureLogIn        () -> Bool
     {
-        return performMethodLogIn              (method: .configure, setOrSaveValue: nil)
+        return performMethodLogIn           (method: .configure, setOrSaveValue: nil)
     }
     mutating func configureSignUp       () -> Bool
     {
-        return performMethodSignUp             (method: .configure, setOrSaveValue: nil)
+        return performMethodSignUp          (method: .configure, setOrSaveValue: nil)
     }
-    mutating func configureUser         ()
+    mutating func configureUser         () -> Bool
     {
-        performMethodUser               (method: .configure, setOrSaveValue: nil)
+        return performMethodUser            (method: .configure, setOrSaveValue: nil)
     }
-    mutating func configureStudent      ()
+    mutating func configureStudent      () -> Bool
     {
-        performMethodStudent            (method: .configure, setOrSaveValue: nil)
+        return performMethodStudent         (method: .configure, setOrSaveValue: nil)
     }
-    mutating func configureCoach        ()
+    mutating func configureCoach        () -> Bool
     {
-        performMethodCoach              (method: .configure, setOrSaveValue: nil)
+        return performMethodCoach           (method: .configure, setOrSaveValue: nil)
     }
-    mutating func configureCreated      ()
+    mutating func configureCreated      () -> Bool
     {
-        performMethodCreated            (method: .configure, setOrSaveValue: nil)
+        return performMethodCreated         (method: .configure, setOrSaveValue: nil)
     }
-    mutating func configureAccepted     ()
+    mutating func configureAccepted     () -> Bool
     {
-        performMethodAccepted           (method: .configure, setOrSaveValue: nil)
+        return performMethodAccepted        (method: .configure, setOrSaveValue: nil)
     }
-    mutating func configureCommunicated ()
+    mutating func configureCommunicated () -> Bool
     {
-        performMethodCommunicated       (method: .configure, setOrSaveValue: nil)
+        return performMethodCommunicated    (method: .configure, setOrSaveValue: nil)
     }
-    mutating func configureService      ()
+    mutating func configureService      () -> Bool
     {
-        performMethodService            (method: .configure, setOrSaveValue: nil)
+        return performMethodService         (method: .configure, setOrSaveValue: nil)
     }
-    mutating func configurePayed        ()
+    mutating func configurePayed        () -> Bool
     {
-        performMethodPayed              (method: .configure, setOrSaveValue: nil)
+        return performMethodPayed           (method: .configure, setOrSaveValue: nil)
     }
-    mutating func configureReviewed     ()
+    mutating func configureReviewed     () -> Bool
     {
-        performMethodReviewed           (method: .configure, setOrSaveValue: nil)
+        return performMethodReviewed        (method: .configure, setOrSaveValue: nil)
     }
-    mutating func configureRequest      ()
+    mutating func configureRequest      () -> Bool
     {
-        performMethodRequest            (method: .configure, setOrSaveValue: nil)
+        return performMethodRequest         (method: .configure, setOrSaveValue: nil)
     }
 }
 
 class Persistence: PersistenceType
 {
+    var isCoach: Bool = false
+
     enum Action: String
     {
         case save
@@ -1305,8 +1424,10 @@ class Persistence: PersistenceType
     
     var privateIsLoggedIn       : Bool!             = false
     var privateHasSignedUp      : Bool!             = false
-    var privateIsCoach          : IsCoach!          = IsCoach.none
-    var privateUser             : User!             = User()
+    var privateIsCoach          : IsCoach           = IsCoach.none
+    var privateCoachOrNot       : Bool!             = false
+
+    var privateUser             : User?
     var privateStudent          : Student?
     var privateCoach            : Coach?
     var privateRequest          : Request?

@@ -31,12 +31,13 @@ class SaveCellVC: UIViewController, UITextFieldDelegate
             }
             else
             {
-                Persistence.shared.privateUser.privateCell = cell
+                Persistence.shared.privateUser!.privateCell = cell
                 let _ = Persistence.shared.saveUser()
+                print("KRIS: Cell Number is saved as \n\n KRIS: \(Persistence.shared.user!.cell)")
             }
         }
         registerSignUp()
-        performSignUpSegue(fromViewController: self, forUserWhoIsACoach: Persistence.shared.isCoach!, sender: Persistence.shared.user)
+        performSignUpSegue(fromViewController: self, forUserWhoIsACoach: Persistence.shared.isCoach, sender: Persistence.shared.user)
     }
     
     override func viewDidLoad()

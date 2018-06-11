@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="WWQ-Oc-wcr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="WWQ-Oc-wcr">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -24,77 +24,36 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image=" Login" translatesAutoresizingMaskIntoConstraints="NO" id="y7p-AP-d42">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleAspectFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="OGr-8Y-CAy">
-                                <rect key="frame" x="97" y="96" width="181" height="252"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image=" Coach Watch and Weights Trimmed" translatesAutoresizingMaskIntoConstraints="NO" id="UEI-Te-zpA">
-                                        <rect key="frame" x="0.0" y="0.0" width="181" height="163"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="163" id="wL9-YS-f4p"/>
-                                            <constraint firstAttribute="width" constant="181" id="wN8-U5-Qn4"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Campus Coach" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2BH-rR-oYL">
-                                        <rect key="frame" x="32.5" y="173" width="116" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="JZV-g2-Rt9"/>
-                                            <constraint firstAttribute="width" constant="116" id="NWU-Re-0Ju"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="18"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EXo-gV-ZGe">
-                                        <rect key="frame" x="2.5" y="204" width="176" height="48"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="48" id="Ets-iZ-o0U"/>
-                                            <constraint firstAttribute="width" constant="176" id="f1C-L9-Ilg"/>
-                                        </constraints>
-                                        <state key="normal" backgroundImage=" Facebook"/>
-                                        <connections>
-                                            <action selector="facebookClockIn:" destination="WWQ-Oc-wcr" eventType="touchUpInside" id="nyM-Bs-uQM"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PJn-2s-OQ1">
-                                <rect key="frame" x="67.5" y="410" width="240" height="90"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nb4-Zj-Kzt">
-                                        <rect key="frame" x="26" y="12.5" width="94" height="65"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="65" id="ABa-4f-Zc5"/>
-                                            <constraint firstAttribute="width" constant="94" id="gxo-SR-NcP"/>
-                                        </constraints>
-                                        <state key="normal" backgroundImage=" User"/>
-                                        <connections>
-                                            <action selector="userIndicate:" destination="WWQ-Oc-wcr" eventType="touchUpInside" id="R5s-gs-syh"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EBM-K3-PDa">
-                                        <rect key="frame" x="128" y="6" width="104" height="78"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="78" id="bog-6g-dlL"/>
-                                            <constraint firstAttribute="width" constant="104" id="gKY-Uc-S6X"/>
-                                        </constraints>
-                                        <state key="normal" backgroundImage=" Coach"/>
-                                        <connections>
-                                            <action selector="coachIndicate:" destination="WWQ-Oc-wcr" eventType="touchUpInside" id="voS-d0-PR0"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image=" Coach Watch and Weights Trimmed" translatesAutoresizingMaskIntoConstraints="NO" id="UEI-Te-zpA">
+                                <rect key="frame" x="97" y="96" width="181" height="163"/>
                                 <constraints>
-                                    <constraint firstItem="nb4-Zj-Kzt" firstAttribute="leading" secondItem="PJn-2s-OQ1" secondAttribute="leading" constant="26" id="392-1p-jzN"/>
-                                    <constraint firstItem="EBM-K3-PDa" firstAttribute="centerY" secondItem="PJn-2s-OQ1" secondAttribute="centerY" id="HRb-TW-4zK"/>
-                                    <constraint firstItem="nb4-Zj-Kzt" firstAttribute="centerY" secondItem="PJn-2s-OQ1" secondAttribute="centerY" id="KBO-7d-zxH"/>
-                                    <constraint firstAttribute="width" constant="240" id="LKe-40-ZpM"/>
-                                    <constraint firstAttribute="trailing" secondItem="EBM-K3-PDa" secondAttribute="trailing" constant="8" id="ig3-zz-3Ys"/>
-                                    <constraint firstAttribute="height" constant="90" id="p85-WV-OQ2"/>
+                                    <constraint firstAttribute="height" constant="163" id="XOz-SV-cUx"/>
+                                    <constraint firstAttribute="width" constant="181" id="geC-05-72e"/>
                                 </constraints>
-                            </view>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Campus Coach" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2BH-rR-oYL">
+                                <rect key="frame" x="129.5" y="269" width="116" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="116" id="owK-kt-q57"/>
+                                    <constraint firstAttribute="height" constant="21" id="wYk-9e-QMn"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EXo-gV-ZGe">
+                                <rect key="frame" x="99.5" y="300" width="176" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="LWW-Mh-CUe"/>
+                                    <constraint firstAttribute="width" constant="176" id="bAR-zu-rBY"/>
+                                </constraints>
+                                <state key="normal" backgroundImage=" Facebook"/>
+                                <connections>
+                                    <action selector="facebookClockIn:" destination="WWQ-Oc-wcr" eventType="touchUpInside" id="nyM-Bs-uQM"/>
+                                </connections>
+                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="abc@psu.edu" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wQy-pP-EaT">
-                                <rect key="frame" x="97" y="520" width="181" height="30"/>
+                                <rect key="frame" x="97" y="424" width="181" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="55j-gy-y5E"/>
                                     <constraint firstAttribute="width" constant="181" id="7HH-e1-JMT"/>
@@ -106,8 +65,8 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="abcdefgh" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="urC-o1-Qzh">
                                 <rect key="frame" x="97" y="570" width="181" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="181" id="5a8-5O-104"/>
-                                    <constraint firstAttribute="height" constant="30" id="VJL-xM-CIO"/>
+                                    <constraint firstAttribute="width" constant="181" id="Ro3-Lg-nUd"/>
+                                    <constraint firstAttribute="height" constant="30" id="rte-DL-hfO"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -116,8 +75,8 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wc9-fQ-oyi">
                                 <rect key="frame" x="125" y="620" width="125" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="EIP-Pc-0vH"/>
-                                    <constraint firstAttribute="width" constant="125" id="g60-W2-d2x"/>
+                                    <constraint firstAttribute="height" constant="40" id="0Fa-P1-FNk"/>
+                                    <constraint firstAttribute="width" constant="125" id="Pv5-DI-p6F"/>
                                 </constraints>
                                 <state key="normal" backgroundImage=" Sign In"/>
                                 <connections>
@@ -127,34 +86,76 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="123" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kh9-VB-eZa">
                                 <rect key="frame" x="86" y="372" width="203" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="203" id="Ujr-aV-kPg"/>
-                                    <constraint firstAttribute="height" constant="30" id="vJd-9U-Dkc"/>
+                                    <constraint firstAttribute="width" constant="203" id="hwo-VX-lbO"/>
+                                    <constraint firstAttribute="height" constant="30" id="uaE-bg-STs"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PJn-2s-OQ1">
+                                <rect key="frame" x="67" y="472" width="240" height="90"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nb4-Zj-Kzt">
+                                        <rect key="frame" x="26" y="12.5" width="94" height="65"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="94" id="LdX-Gc-Oed"/>
+                                            <constraint firstAttribute="height" constant="65" id="pDL-rN-PZV"/>
+                                        </constraints>
+                                        <state key="normal" backgroundImage=" User"/>
+                                        <connections>
+                                            <action selector="userIndicate:" destination="WWQ-Oc-wcr" eventType="touchUpInside" id="R5s-gs-syh"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EBM-K3-PDa">
+                                        <rect key="frame" x="128" y="6" width="104" height="78"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="104" id="cBs-I6-oMy"/>
+                                            <constraint firstAttribute="height" constant="78" id="vvT-dj-6VI"/>
+                                        </constraints>
+                                        <state key="normal" backgroundImage=" Coach"/>
+                                        <connections>
+                                            <action selector="coachIndicate:" destination="WWQ-Oc-wcr" eventType="touchUpInside" id="voS-d0-PR0"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="nb4-Zj-Kzt" firstAttribute="centerY" secondItem="PJn-2s-OQ1" secondAttribute="centerY" id="0Z4-MZ-eXZ"/>
+                                    <constraint firstAttribute="height" constant="90" id="0Zv-0e-X5Z"/>
+                                    <constraint firstItem="EBM-K3-PDa" firstAttribute="leading" secondItem="nb4-Zj-Kzt" secondAttribute="trailing" constant="8" id="2a2-0O-o92"/>
+                                    <constraint firstItem="EBM-K3-PDa" firstAttribute="leading" secondItem="nb4-Zj-Kzt" secondAttribute="trailing" constant="8" id="3De-N1-LsJ"/>
+                                    <constraint firstAttribute="width" constant="240" id="8VR-xN-D4B"/>
+                                    <constraint firstAttribute="trailing" secondItem="EBM-K3-PDa" secondAttribute="trailing" constant="8" id="fgc-4M-Nv8"/>
+                                    <constraint firstItem="EBM-K3-PDa" firstAttribute="centerY" secondItem="PJn-2s-OQ1" secondAttribute="centerY" id="xf7-3e-3bH"/>
+                                    <constraint firstItem="nb4-Zj-Kzt" firstAttribute="leading" secondItem="PJn-2s-OQ1" secondAttribute="leading" constant="26" id="y8J-Oa-KpN"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="wQy-pP-EaT" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="37u-If-s44"/>
-                            <constraint firstItem="OGr-8Y-CAy" firstAttribute="top" secondItem="U6q-f1-pYg" secondAttribute="bottom" constant="76" id="9Ig-l6-SC4"/>
-                            <constraint firstItem="Wc9-fQ-oyi" firstAttribute="top" secondItem="urC-o1-Qzh" secondAttribute="bottom" constant="20" id="9Ur-BQ-s9y"/>
-                            <constraint firstItem="PJn-2s-OQ1" firstAttribute="top" secondItem="OGr-8Y-CAy" secondAttribute="bottom" constant="62" id="CYe-MJ-BFA"/>
-                            <constraint firstItem="OGr-8Y-CAy" firstAttribute="centerX" secondItem="y7p-AP-d42" secondAttribute="centerX" id="Kmf-ek-E71"/>
-                            <constraint firstItem="wQy-pP-EaT" firstAttribute="top" secondItem="PJn-2s-OQ1" secondAttribute="bottom" constant="20" id="LsC-RE-giZ"/>
-                            <constraint firstItem="urC-o1-Qzh" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="OmM-En-m2J"/>
-                            <constraint firstItem="PJn-2s-OQ1" firstAttribute="top" secondItem="Kh9-VB-eZa" secondAttribute="bottom" constant="8" id="RNk-Zj-7R2"/>
+                            <constraint firstItem="EXo-gV-ZGe" firstAttribute="top" secondItem="2BH-rR-oYL" secondAttribute="bottom" constant="10" id="4UJ-3e-uAv"/>
+                            <constraint firstItem="UEI-Te-zpA" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="6pT-Tn-wGE"/>
+                            <constraint firstItem="Kh9-VB-eZa" firstAttribute="top" secondItem="EXo-gV-ZGe" secondAttribute="bottom" constant="24" id="8fH-dM-tHN"/>
+                            <constraint firstItem="2BH-rR-oYL" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="Acm-D0-PqI"/>
+                            <constraint firstItem="Kh9-VB-eZa" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="EzM-FG-ra4"/>
+                            <constraint firstItem="aei-jC-smk" firstAttribute="top" secondItem="Wc9-fQ-oyi" secondAttribute="bottom" constant="7" id="GES-Tq-Jm7"/>
+                            <constraint firstItem="UEI-Te-zpA" firstAttribute="top" secondItem="U6q-f1-pYg" secondAttribute="bottom" constant="76" id="HVv-0g-2b6"/>
+                            <constraint firstItem="Wc9-fQ-oyi" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="KeB-GC-Bvv"/>
+                            <constraint firstItem="2BH-rR-oYL" firstAttribute="top" secondItem="UEI-Te-zpA" secondAttribute="bottom" constant="10" id="VLf-b9-gif"/>
                             <constraint firstItem="y7p-AP-d42" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="adp-On-IW9"/>
+                            <constraint firstItem="wQy-pP-EaT" firstAttribute="top" secondItem="Kh9-VB-eZa" secondAttribute="bottom" constant="22" id="c00-0x-aLL"/>
                             <constraint firstItem="y7p-AP-d42" firstAttribute="centerY" secondItem="nqk-wU-JRL" secondAttribute="centerY" id="cnu-mg-sM4"/>
-                            <constraint firstItem="PJn-2s-OQ1" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="hYJ-DH-f2n"/>
+                            <constraint firstItem="EXo-gV-ZGe" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="ffn-gp-ZGt"/>
+                            <constraint firstItem="urC-o1-Qzh" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="hh7-KG-xkG"/>
                             <constraint firstItem="y7p-AP-d42" firstAttribute="leading" secondItem="nqk-wU-JRL" secondAttribute="leading" id="iO9-vO-3EO"/>
                             <constraint firstAttribute="trailing" secondItem="y7p-AP-d42" secondAttribute="trailing" id="ikA-TZ-DZ4"/>
-                            <constraint firstItem="urC-o1-Qzh" firstAttribute="top" secondItem="wQy-pP-EaT" secondAttribute="bottom" constant="20" id="mY1-zt-rFq"/>
-                            <constraint firstItem="Kh9-VB-eZa" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="pqn-aO-Y1s"/>
-                            <constraint firstItem="Wc9-fQ-oyi" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="tU5-j9-ukN"/>
+                            <constraint firstItem="Wc9-fQ-oyi" firstAttribute="top" secondItem="urC-o1-Qzh" secondAttribute="bottom" constant="20" id="nYf-uT-oPh"/>
                             <constraint firstItem="y7p-AP-d42" firstAttribute="top" secondItem="nqk-wU-JRL" secondAttribute="top" id="v7d-ov-eXv"/>
                             <constraint firstItem="y7p-AP-d42" firstAttribute="bottom" secondItem="aei-jC-smk" secondAttribute="top" id="wYA-R5-xuj"/>
+                            <constraint firstItem="urC-o1-Qzh" firstAttribute="top" secondItem="PJn-2s-OQ1" secondAttribute="bottom" constant="8" id="yiu-Sm-FqC"/>
+                            <constraint firstItem="PJn-2s-OQ1" firstAttribute="centerX" secondItem="nqk-wU-JRL" secondAttribute="centerX" id="zl3-TU-8p9"/>
                         </constraints>
                     </view>
                     <connections>
@@ -164,11 +165,11 @@
                         <outlet property="passwordTextField" destination="urC-o1-Qzh" id="VOr-EJ-XnQ"/>
                         <outlet property="signInButton" destination="Wc9-fQ-oyi" id="fAR-Nq-1eM"/>
                         <outlet property="userIndicateButton" destination="nb4-Zj-Kzt" id="uqQ-RO-J8t"/>
-                        <segue destination="rfn-7V-i1c" kind="show" identifier="SignUpToSetGymMap" id="mbH-Wz-Sio"/>
+                        <segue destination="rfn-7V-i1c" kind="show" identifier="SignUpToSetGym" id="mbH-Wz-Sio"/>
                         <segue destination="y1e-b3-uoO" kind="show" identifier="SignUpToCoachRequests" id="HwV-oh-DCG"/>
-                        <segue destination="Tyh-qs-0BM" kind="show" identifier="SignUpToStudentServiceVC" id="Sbg-n7-eem"/>
-                        <segue destination="AKT-RS-XAy" kind="show" identifier="SignUpToCoachServiceVC" id="r7d-Mv-2H7"/>
-                        <segue destination="3U6-Ca-wjt" kind="show" identifier="SignUpToSaveCellVC" id="OEJ-rb-xje"/>
+                        <segue destination="Tyh-qs-0BM" kind="show" identifier="SignUpToStudentService" id="Sbg-n7-eem"/>
+                        <segue destination="AKT-RS-XAy" kind="show" identifier="SignUpToCoachService" id="r7d-Mv-2H7"/>
+                        <segue destination="3U6-Ca-wjt" kind="show" identifier="SignUpToSaveCell" id="OEJ-rb-xje"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4br-U9-oUp" sceneMemberID="firstResponder"/>
@@ -268,8 +269,8 @@
                     </view>
                     <connections>
                         <outlet property="cellNumberTextField" destination="cQ3-9K-8o2" id="ff7-NC-gUT"/>
-                        <segue destination="rfn-7V-i1c" kind="show" identifier="SaveCellToSetGymVC" id="g9i-7w-dS7"/>
-                        <segue destination="y1e-b3-uoO" kind="show" identifier="SaveCellToCoachRequestsVC" id="6Aq-yY-9MW"/>
+                        <segue destination="rfn-7V-i1c" kind="show" identifier="SaveCellToSetGym" id="g9i-7w-dS7"/>
+                        <segue destination="y1e-b3-uoO" kind="show" identifier="SaveCellToCoachRequests" id="6Aq-yY-9MW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dHY-tz-Vtm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -533,7 +534,7 @@
                         <outlet property="gymThirdChoiceLabel" destination="qRk-iL-sel" id="ujh-mk-B3O"/>
                         <outlet property="gymThirdChoiceOccupancyLabel" destination="izb-CV-qXG" id="uVA-c7-JS1"/>
                         <outlet property="mapView" destination="sAN-RP-py7" id="APP-PO-u1Q"/>
-                        <segue destination="WWQ-Oc-wcr" kind="show" identifier="SetGymMapToSignIn" id="ehu-ZY-uP1"/>
+                        <segue destination="WWQ-Oc-wcr" kind="show" identifier="SetGymToSignUp" id="ehu-ZY-uP1"/>
                         <segue destination="IBE-JM-582" kind="presentation" identifier="SetGymToGymSelection" id="7QT-Kz-M69"/>
                     </connections>
                 </viewController>
@@ -794,7 +795,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="116"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="D1L-0e-WL5" id="sMP-pU-91u">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="115"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="115.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8SD-z8-HYQ">
@@ -976,7 +977,7 @@
                         <outlet property="gymThirdCoachOccupancy" destination="wwA-6g-dKT" id="CZw-xh-BaC"/>
                         <outlet property="tableView" destination="3Kn-H0-GPY" id="Wvm-C2-LZh"/>
                         <segue destination="WWQ-Oc-wcr" kind="show" identifier="CoachRequestsToSignUp" id="i9u-lN-gI5"/>
-                        <segue destination="AKT-RS-XAy" kind="show" identifier="CoachRequestsToCoachServiceVC" id="zwz-CR-VTH"/>
+                        <segue destination="AKT-RS-XAy" kind="show" identifier="CoachRequestsToCoachService" id="zwz-CR-VTH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DZY-qx-2sE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1231,7 +1232,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="116"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V6X-6l-7OH" id="psw-af-Ryo">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="115"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="115.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EF1-4G-dMK">
@@ -1413,7 +1414,7 @@
                         <outlet property="gymThirdCoachOccupancy" destination="Jqj-PD-9w7" id="LIj-qD-vBD"/>
                         <outlet property="tableView" destination="dlE-1w-RoL" id="E7F-tE-fjh"/>
                         <segue destination="WWQ-Oc-wcr" kind="show" identifier="GymSelectionToSignUp" id="76z-ZK-euC"/>
-                        <segue destination="Tyh-qs-0BM" kind="show" identifier="GymSelectionToStudentServiceVC" id="2g4-BN-4kz"/>
+                        <segue destination="Tyh-qs-0BM" kind="show" identifier="GymSelectionToStudentService" id="2g4-BN-4kz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LXC-GH-OCr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1861,7 +1862,7 @@
                         <outlet property="signOutLabel" destination="r2Q-f5-uJL" id="YTb-oC-eqq"/>
                         <outlet property="userImage" destination="pas-XE-03g" id="Bg7-37-V2R"/>
                         <outlet property="userName" destination="rsC-G1-pET" id="OSJ-zP-XVC"/>
-                        <segue destination="WWQ-Oc-wcr" kind="show" identifier="CoachServiceToSignUpVC" id="uPu-Ub-bf0"/>
+                        <segue destination="WWQ-Oc-wcr" kind="show" identifier="CoachServiceToSignUp" id="uPu-Ub-bf0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nea-94-rSd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2275,7 +2276,7 @@
                         <outlet property="signOutLabel" destination="dCq-JC-FHv" id="kyD-ld-hU2"/>
                         <outlet property="userImage" destination="hGj-6W-KZm" id="lWV-dv-0lm"/>
                         <outlet property="userName" destination="4y5-Qd-Onn" id="ZYR-6U-aqM"/>
-                        <segue destination="WWQ-Oc-wcr" kind="show" identifier="StudentServiceToSignUpVC" id="lZm-KP-MMb"/>
+                        <segue destination="WWQ-Oc-wcr" kind="show" identifier="StudentServiceToSignUp" id="lZm-KP-MMb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8qV-cp-FCB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2313,10 +2314,10 @@
         <image name="User Wide" width="63" height="38"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="g9i-7w-dS7"/>
-        <segue reference="uPu-Ub-bf0"/>
-        <segue reference="r7d-Mv-2H7"/>
+        <segue reference="lZm-KP-MMb"/>
         <segue reference="Sbg-n7-eem"/>
-        <segue reference="6Aq-yY-9MW"/>
+        <segue reference="r7d-Mv-2H7"/>
+        <segue reference="mbH-Wz-Sio"/>
+        <segue reference="HwV-oh-DCG"/>
     </inferredMetricsTieBreakers>
 </document>

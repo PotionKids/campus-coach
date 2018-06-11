@@ -14,6 +14,7 @@ import Alamofire
 class CoachServiceVC: UIViewController, MFMessageComposeViewControllerDelegate
 {
 
+    private var startingVC      = ViewController.CoachService
     //MARK: Outlets
     
     var gymChoiceSelected:  Int = 0
@@ -99,7 +100,7 @@ class CoachServiceVC: UIViewController, MFMessageComposeViewControllerDelegate
     
     @IBAction func signOut(_ sender: Any)
     {
-        signOutOf(viewController: self, withSegue: Constants.CoachServiceVC.Segue.ToSignUp)
+        signOutOf(vc: self, viewController: startingVC)
     }
     
     

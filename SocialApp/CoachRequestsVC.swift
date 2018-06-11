@@ -18,6 +18,8 @@ import Alamofire
 
 class CoachRequestsVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 {
+    private var startingVC  = ViewController.CoachRequests
+    
     @IBOutlet weak var gymFirstChoiceCoachLabel: UILabel!
     @IBOutlet weak var gymSecondChoiceCoachLabel: UILabel!
     @IBOutlet weak var gymThirdChoiceCoachLabel: UILabel!
@@ -49,10 +51,7 @@ class CoachRequestsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBAction func signOutCoach(_ sender: AnyObject)
     {
-        signOutOf(viewController: self, withSegue: Constants.CoachRequestsVC.Segue.CoachRequestsToSignUp)
-//        KeychainWrapper.standard.removeObject(forKey: Constants.Firebase.KeychainWrapper.KeyUID)
-//        try! FIRAuth.auth()?.signOut()
-//        performSegue(withIdentifier: Constants.CoachRequestsVC.Segue.CoachRequestsToSignUp, sender: nil)
+        signOutOf(vc: self, viewController: startingVC)
     }
     
     @IBOutlet weak var tableView: UITableView!
@@ -174,15 +173,6 @@ class CoachRequestsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        //Persistence.shared.acceptRequest(request: requestArray[indexPath.row])
-//        selfRequest                 = requestArray[indexPath.row]
-//        selfRequest.created.saveAnyDictionary()
-//        selfUser.privateFirebaseRID = selfRequest.firebaseRID
-//        selfUser.saveAnyDictionary()
-//        selfRequest.accept(byCoach: selfUser.firebaseUID, withName: selfUser.fullName, atTheGym: YesOrNo.Yes.string, timeToReach: Constants.Calendar.Date.ReferenceTime_mm_ss)
-//        selfRequest.push()
-//        selfRequest.accepted!.saveAnyDictionary()
-        
         studentRef          = Persistence.shared.studentRef!
         _studentRefHandle   = studentRef.observe(.value, with:
             {(snapshot) in
@@ -194,9 +184,12 @@ class CoachRequestsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                     //selfStudent.saveAnyDictionary()
                     print("KRIS: Accepted Request Created by Student \(Persistence.shared.student?.stringDictionary))")
                 }
-        })
-        performServiceSegue(fromViewController: self, forUserWhoIsACoach: true, sender: Persistence.shared.student)
-//        performSegue(withIdentifier: Constants.CoachRequestsVC.Segue.ToService, sender: selfStudent)
+            })
+        
+        let startingVC      = ViewController.CoachRequests
+        let endingVC        = ViewController.CoachService
+        let segueIdentifier = startingVC.segueIdentifier(toEndingVC: endingVC)
+        performSegue(withIdentifier: segueIdentifier, sender: nil)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int

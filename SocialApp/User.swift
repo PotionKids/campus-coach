@@ -11,9 +11,10 @@ import Firebase
 
 protocol UserType: FirebaseUserIDable, ProviderSpecifiable, LoginTimeStampable, FacebookImageRetrievable, Nameable, Emailable, Textable, FirebaseRequestIDable, RequestArchivable, FirebaseUIDListType, RatingArchivable, ReviewArchivable, Pushable
 {
-    init()
+    init    ()
     
-    init(internallyWithFirebaseUID
+    init    (
+        internallyWithFirebaseUID
         firebaseUID:    String,
          whoIsACoachOrNot
         isCoach:        String,
@@ -41,14 +42,12 @@ protocol UserType: FirebaseUserIDable, ProviderSpecifiable, LoginTimeStampable, 
         ratings:        String,
          andAllReviews
         reviews:        String
-    )
+            )
     
     init?   (
         fromUserData
         data:   AnyDictionary
-            )
-    
-//    init?(fromServerWithFirebaseUID firebaseUID: String, forUserWhoIsACoachOrNot isCoach: Bool)
+            )    
 }
 extension UserType
 {
@@ -78,7 +77,7 @@ extension UserType
     }
 }
 
-class User: UserType
+class User: NSObject, UserType
 {
     static var setObject:       Firebase.Object!    = Firebase.Object.users
     static var setChildOf:      Firebase.Object!    = Firebase.Object.none
@@ -105,7 +104,7 @@ class User: UserType
     var privateRatings:         String! = Constants.DataService.User.DefaultRating.string
     var privateReviews:         String! = Constants.Literal.Empty
     
-    required init()
+    required override init()
     {
         self.privateLoggedInAtTime  = timeStamp().stampNanoseconds
     }
@@ -171,59 +170,53 @@ class User: UserType
         data:   AnyDictionary
                                 )
     {
-        guard   let firebaseUID = data[Constants.Protocols.FirebaseUserIDable       .firebaseUID]       as? String,
-                let isCoach     = data[Constants.Protocols.CoachTaggable            .isCoach]           as? String,
-                let provider    = data[Constants.Protocols.ProviderSpecifiable      .provider]          as? String,
-                let logInTime   = data[Constants.Protocols.LoginTimeStampable       .loggedInAtTime]    as? String,
-                let facebookUID = data[Constants.Protocols.FacebookUserIDable       .facebookUID]       as? String,
-                let fullName    = data[Constants.Protocols.Nameable                 .fullName]          as? String,
-                let email       = data[Constants.Protocols.Emailable                .email]             as? String,
-                let cell        = data[Constants.Protocols.Textable                 .cell]              as? String,
-                let firebaseRID = data[Constants.Protocols.FirebaseRequestIDable    .firebaseRID]       as? String,
-                let requests    = data[Constants.Protocols.RequestArchivable        .requests]          as? String,
-                let userIDs     = data[Constants.Protocols.FirebaseUIDListType      .firebaseUIDs]
-                    as? String,
-                let rating      = data[Constants.Protocols.RatingArchivable         .rating]            as? String,
-                let ratings     = data[Constants.Protocols.RatingArchivable         .ratings]           as? String,
-                let reviews     = data[Constants.Protocols.ReviewArchivable         .reviews]           as? String
+        guard   let firebaseUID =
+                data[Constants.Protocols.FirebaseUserIDable       .firebaseUID      ] as? String,
+                let isCoach     =
+                data[Constants.Protocols.CoachTaggable            .isCoach          ] as? String,
+                let provider    =
+                data[Constants.Protocols.ProviderSpecifiable      .provider         ] as? String,
+                let logInTime   =
+                data[Constants.Protocols.LoginTimeStampable       .loggedInAtTime   ] as? String,
+                let facebookUID =
+                data[Constants.Protocols.FacebookUserIDable       .facebookUID      ] as? String,
+                let fullName    =
+                data[Constants.Protocols.Nameable                 .fullName         ] as? String,
+                let email       =
+                data[Constants.Protocols.Emailable                .email            ] as? String,
+                let cell        =
+                data[Constants.Protocols.Textable                 .cell             ] as? String,
+                let firebaseRID =
+                data[Constants.Protocols.FirebaseRequestIDable    .firebaseRID      ] as? String,
+                let requests    =
+                data[Constants.Protocols.RequestArchivable        .requests         ] as? String,
+                let userIDs     =
+                data[Constants.Protocols.FirebaseUIDListType      .firebaseUIDs     ] as? String,
+                let rating      =
+                data[Constants.Protocols.RatingArchivable         .rating           ] as? String,
+                let ratings     =
+                data[Constants.Protocols.RatingArchivable         .ratings          ] as? String,
+                let reviews     =
+                data[Constants.Protocols.ReviewArchivable         .reviews          ] as? String
         else
         {
             return nil
         }
         self.init   (
-            internallyWithFirebaseUID:          firebaseUID,
-            whoIsACoachOrNot:                   isCoach,
-            withProvider:                       provider,
-            whoLoggedInAt:                      logInTime,
-            withFacebookUID:                    facebookUID,
-            whoseFullNameIs:                    fullName,
-            andEmailIs:                         email,
-            andCellNumberIs:                    cell,
-            withActiveRequestWithFirebaseRID:   firebaseRID,
-            withPastRequests:                   requests,
-            andHasRatedOrBeenRatedBy:           userIDs,
-            withAnAverageRatingOf:              rating,
-            withAllRatings:                     ratings,
-            andAllReviews:                      reviews
+                internallyWithFirebaseUID:          firebaseUID,
+                whoIsACoachOrNot:                   isCoach,
+                withProvider:                       provider,
+                whoLoggedInAt:                      logInTime,
+                withFacebookUID:                    facebookUID,
+                whoseFullNameIs:                    fullName,
+                andEmailIs:                         email,
+                andCellNumberIs:                    cell,
+                withActiveRequestWithFirebaseRID:   firebaseRID,
+                withPastRequests:                   requests,
+                andHasRatedOrBeenRatedBy:           userIDs,
+                withAnAverageRatingOf:              rating,
+                withAllRatings:                     ratings,
+                andAllReviews:                      reviews
                     )
     }
-    
-//    required convenience init? (fromServerWithFirebaseUID firebaseUID: String, forUserWhoIsACoachOrNot isCoach: Bool)
-//    {
-//        var data = [Key : Value]()
-//        if isCoach
-//        {
-//            data = fetchFirebaseObject(from: firebaseUID.firebaseCoachRef)
-//            print("KRIS: Coach Data from Firebase = \(data)")
-//        }
-//        else
-//        {
-//            data = fetchFirebaseObject(from: firebaseUID.firebaseStudentRef)
-//            print("KRIS: Student Data from Firebase = \(data)")
-//
-//        }
-//        self.init   (
-//            fromUserData:   data
-//                    )
-//    }
 }

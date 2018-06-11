@@ -9,7 +9,6 @@
 import UIKit
 import Firebase
 import FirebaseAuth
-
 import FBSDKCoreKit
 import FBSDKLoginKit
 
@@ -17,7 +16,7 @@ import SwiftKeychainWrapper
 
 extension String
 {
-    func isEmpty() -> Bool
+    var isEmpty: Bool
     {
         return self == ""
     }
@@ -25,9 +24,13 @@ extension String
 
 extension Optional
 {
-    func isNil() -> Bool
+    var isNil: Bool
     {
         return self == nil
+    }
+    var isNotNil: Bool
+    {
+        return self != nil
     }
 }
 
@@ -38,22 +41,62 @@ enum IsCoach: String
     case none
 }
 
-internal var hasSignedUp: Bool?
+class SignUpVC: UIViewController, UITextFieldDelegate
+{
+    private var startingVC              = ViewController.SignUp
+    private var hasSignedUp:    Bool    = false
+    private var isLoggedIn:     Bool    = false
+    private var coachOrNot:     Bool?
+    private var userID:         String?
+    private var studentID:      String?
+    private var coachID:        String?
+    private var requestID:      String?
 
-class SignUpVC: UIViewController {
-    
-    private var isCoach: IsCoach = .none
+    private var isCoach:        IsCoach = .none
     {
         willSet
         {
             coachOrNot = newValue.bool
         }
     }
-    private var coachOrNot: Bool?
     
-    var userID:     String!
+    private var user:           User?
+    {
+        willSet
+        {
+            userID      = newValue?.firebaseUID
+        }
+    }
+    private var student:        Student?
+    {
+        willSet
+        {
+            studentID   = newValue?.firebaseUID
+        }
+    }
+    private var coach:          Coach?
+    {
+        willSet
+        {
+            coachID     = newValue?.firebaseUID
+        }
+    }
+    private var request:        Request?
+    {
+        willSet
+        {
+            requestID   = newValue?.firebaseRID
+        }
+    }
     
     @IBOutlet weak var cellNumberTextField: UITextField!
+    {
+        didSet
+        {
+            cellNumberTextField.delegate    = self
+            cellNumberTextField.text        = "+1(814)321-7651"
+        }
+    }
     
     
     @IBAction func facebookClockIn(_ sender: AnyObject)
@@ -79,6 +122,11 @@ class SignUpVC: UIViewController {
                 {
                     print("KRIS: Successfully authenticated with Facebook.")
                     let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+                    if !self.hasSignedUp
+                    {
+                        self.hasSignedUp = true
+                        Persistence.shared.registerSignUp()
+                    }
                     firebaseAuth(self.coachOrNot!, credential: credential, vc: self)
                 }
             }
@@ -115,7 +163,21 @@ class SignUpVC: UIViewController {
     }
     
     @IBOutlet weak var emailTextField: UITextField!
+    {
+        didSet
+        {
+            emailTextField.delegate     = self
+            emailTextField.text         = "abc@def.com"
+        }
+    }
     @IBOutlet weak var passwordTextField: UITextField!
+    {
+        didSet
+        {
+            passwordTextField.delegate  = self
+            passwordTextField.text      = "abcdef"
+        }
+    }
     
     @IBOutlet weak var signInButton: UIButton!
     @IBAction func signIn(_ sender: AnyObject)
@@ -129,15 +191,15 @@ class SignUpVC: UIViewController {
             if let email = emailTextField.text,
                 let password = passwordTextField.text
             {
-                if email.isEmpty() && !password.isEmpty()
+                if email.isEmpty && !password.isEmpty
                 {
                     displayAlert(self, title: Constants.Alert.Title.EmptyUserName, message: Constants.Alert.Message.EmptyUserName)
                 }
-                else if !email.isEmpty() && password.isEmpty()
+                else if !email.isEmpty && password.isEmpty
                 {
                     displayAlert(self, title: Constants.Alert.Title.EmptyPassword, message: Constants.Alert.Message.EmptyPassword)
                 }
-                else if email.isEmpty() && password.isEmpty()
+                else if email.isEmpty && password.isEmpty
                 {
                     displayAlert(self, title: Constants.Alert.Title.EmptyUserNameAndPassword, message: Constants.Alert.Message.EmptyUserNameAndPassword)
                 }
@@ -146,7 +208,8 @@ class SignUpVC: UIViewController {
                     FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
                         if error != nil
                         {
-                            FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
+                            FIRAuth.auth()?.createUser(withEmail: email, password: password, completion:
+                            { (user, error) in
                                 if let error = error
                                 {
                                     print("KRIS: Unable to create user using email in Firebase. Erro \(error)")
@@ -154,12 +217,16 @@ class SignUpVC: UIViewController {
                                 else
                                 {
                                     print("KRIS: Successfully created a new user with email in Firebase.")
+                                    self.hasSignedUp    = true
+                                    self.isLoggedIn     = true
+                                    Persistence.shared.registerSignUp()
                                     completeSignIn(isCoach: self.coachOrNot!, user: user, credential: nil, vc: self)
                                 }
                             })
                         }
                         else
                         {
+                            self.isLoggedIn     = true
                             completeSignIn(isCoach: self.coachOrNot!, user: user, credential: nil, vc: self)
                         }
                     })
@@ -168,38 +235,113 @@ class SignUpVC: UIViewController {
         }
     }
     
-    override func viewDidLoad()
+    override func viewDidLoad   ()
     {
-        super.viewDidLoad()
-        if signedUpOrLoggedIn()
+        super.viewDidLoad       ()
+        
+        configureSignUp         ()
+        configureLogIn          ()
+//        configureUser           ()
+    }
+    
+    func configureDatabase      ()
+    {
+        // Check if the Request Created by User is Accepted if Student
+        // Check if the Request Created by User has Started if Student
+        // Check if the Request Created by User has Stopped if Student
+        // Check if the Request Stopped by User has been Payed for if Coach
+        // Check if the Request Stopped by User has been Reviewed if Coach
+    }
+    
+    func configureIsCoach       ()
+    {
+        let _                   = Persistence.shared.configureIsCoach   ()
+        self.coachOrNot         = Persistence.shared.isCoach
+        self.isCoach            = coachOrNot!.isCoach
+    }
+    
+    func configureSignUp        ()
+    {
+        let _                   = Persistence.shared.configureSignUp    ()
+        self.hasSignedUp        = Persistence.shared.hasSignedUp
+    }
+    
+    func configureLogIn         ()
+    {
+        let _                   = Persistence.shared.configureLogIn     ()
+        self.isLoggedIn         = Persistence.shared.isLoggedIn
+    }
+    
+    func configureUser          ()
+    {
+        configureIsCoach        ()
+        configureStudent        ()
+        configureCoach          ()
+        
+        switch self.isCoach
         {
-            print("KRIS: The User has Signed Up View Did Load.")
-            Persistence.shared.configureUser()
-            print("KRIS: selfUserDefault is \(Persistence.shared.user.anyDictionaryForSaving.forcedStringLiteral)")
+        case .yes:
+            if let userData     = self.coach?.anyDictionary
+            {
+                self.user           = User(fromUserData: userData)
+            }
+        case .no:
+            if let userData        = self.student?.anyDictionary
+            {
+                self.user           = User(fromUserData: userData)
+            }
+        case .none:
+            break
         }
+    }
+    
+    func configureStudent       ()
+    {
+        let _                   = Persistence.shared.configureStudent   ()
+        self.student            = Persistence.shared.student
+    }
+    
+    func configureCoach         ()
+    {
+        let _                   = Persistence.shared.configureCoach     ()
+        self.coach              = Persistence.shared.coach
+    }
+    
+    func configureRequest       ()
+    {
+        let _                   = Persistence.shared.configureRequest   ()
+        self.request            = Persistence.shared.request
     }
     
     override func viewDidAppear(_ animated: Bool)
     {
-        if signedUpOrLoggedIn()
+        configureUser           ()
+        configureRequest        ()
+        configureLogIn          ()
+        
+        if let userID       = KeychainWrapper.standard.string(forKey: Constants.DataService.User.UID)
         {
-            Persistence.shared.configureUser()
-            if !Persistence.shared.user.firebaseUID.isEmpty
-            {
-                print("KRIS: ID found in Keychain. \(Persistence.shared.user.firebaseUID)")
-                if Persistence.shared.isCoach != .none
+            print("KRIS: USERID in Keychain is \(userID)")
+            print("KRIS: USERID in Persistence is \(self.coachID!)")
+
+            var endingVC        = ViewController.None
+            if coachOrNot!
                 {
-                    if Persistence.shared.firebaseRID.isNil()
+                    if isLoggedIn
                     {
-                        performLoginSegue(fromViewController: self, forUserWhoIsACoach: Persistence.shared.user.coachOrNot!)
-                     }
-                    else
-                    {
-                        print("KRIS: The Firebase RID is \(Persistence.shared.firebaseRID)")
-                        print("KRIS: The Request is \(Persistence.shared.request!.stringDictionary)")
-                        Persistence.shared.configureCreated()
-                        performServiceSegue(fromViewController: self, forUserWhoIsACoach: Persistence.shared.isCoach!)
+                        endingVC        = ViewController.CoachRequests
+                        let identifier  = startingVC.segueIdentifier(toEndingVC: endingVC)
+                        performSegue(withIdentifier: identifier, sender: nil)
                     }
+                }
+            else
+            {
+                print("KRIS: It is true that the User is Logged In.")
+                if isLoggedIn
+                {
+                    endingVC        = ViewController.SetGym
+                    let identifier  = startingVC.segueIdentifier(toEndingVC: endingVC)
+                    performSegue(withIdentifier: identifier, sender: nil)
                 }
             }
         }
@@ -229,8 +371,15 @@ class SignUpVC: UIViewController {
             saveCellVC.user = Persistence.shared.user
         }
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        textField.resignFirstResponder()
+        return true
+    }
 
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
